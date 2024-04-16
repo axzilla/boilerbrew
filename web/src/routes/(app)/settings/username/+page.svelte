@@ -19,7 +19,7 @@
 		},
 		onUpdated: ({ form: f }) => {
 			if (f.errors.username) {
-				toast.error('Failed to update usernam!');
+				toast.error('Failed to update username!');
 			}
 			if (f.valid) {
 				toast.success(f.message);
@@ -41,7 +41,7 @@
 			<Form.Field {form} name="username">
 				<Form.Control let:attrs>
 					<Form.Label>Username</Form.Label>
-					<Input {...attrs} bind:value={$formData.username} />
+					<Input autofocus {...attrs} bind:value={$formData.username} />
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>

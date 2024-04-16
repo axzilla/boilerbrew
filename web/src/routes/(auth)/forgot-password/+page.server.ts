@@ -19,7 +19,7 @@ export const actions: Actions = {
 		const formData = form.data;
 		try {
 			await locals.pb.collection('users').requestPasswordReset(formData.email);
-			return { success: true };
+			return { form };
 		} catch (err) {
 			console.log('Error: ', err);
 			return setError(form, '');

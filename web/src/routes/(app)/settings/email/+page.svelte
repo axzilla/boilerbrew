@@ -40,7 +40,13 @@
 			<Form.Field {form} name="email">
 				<Form.Control let:attrs>
 					<Form.Label>Email</Form.Label>
-					<Input {...attrs} bind:value={$formData.email} type="email" disabled={isLoading} />
+					<Input
+						{...attrs}
+						autofocus
+						bind:value={$formData.email}
+						type="email"
+						disabled={isLoading}
+					/>
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>

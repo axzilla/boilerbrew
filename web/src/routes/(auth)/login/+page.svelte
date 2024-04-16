@@ -30,10 +30,10 @@
 		<form action="?/login" method="POST" use:enhance>
 			<div class="grid gap-4">
 				<div class="grid gap-2">
-					<Form.Field {form} name="email">
+					<Form.Field {form} name="login">
 						<Form.Control let:attrs>
-							<Form.Label>Email</Form.Label>
-							<Input {...attrs} bind:value={$formData.email} type="email" />
+							<Form.Label>Username or Email</Form.Label>
+							<Input {...attrs} bind:value={$formData.login} />
 						</Form.Control>
 						<Form.FieldErrors />
 					</Form.Field>

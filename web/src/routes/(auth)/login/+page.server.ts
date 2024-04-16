@@ -19,7 +19,7 @@ export const actions: Actions = {
 		}
 		const formData = form.data;
 		try {
-			await locals.pb.collection('users').authWithPassword(formData.email, formData.password);
+			await locals.pb.collection('users').authWithPassword(formData.login, formData.password);
 			if (!locals.pb?.authStore?.model?.verified) {
 				locals.pb.authStore.clear();
 				return { status: 403, body: { notVerified: true } };

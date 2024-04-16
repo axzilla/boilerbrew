@@ -41,6 +41,7 @@
 				<Form.Control let:attrs>
 					<Form.Label>Old Password</Form.Label>
 					<Input
+						autofocus
 						{...attrs}
 						bind:value={$formData.oldPassword}
 						type="password"

@@ -7,14 +7,19 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { updateEmailSchema } from '$lib/schemas.js';
+	import { goto } from '$app/navigation';
 
 	export let data;
 
 	const form = superForm(data.form, {
 		validators: zod(updateEmailSchema),
 		onUpdated: ({ form: f }) => {
-			if (f.errors) {
+			if (f.errors.email) {
 				toast.error('Failed to authenticate!');
+			}
+			if (f.valid) {
+				toast.success('Check your email to reset your password!');
+				// goto('/login');
 			}
 		}
 	});
