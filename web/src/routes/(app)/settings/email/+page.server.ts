@@ -2,6 +2,7 @@ import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { updateEmailSchema } from '$lib/schemas';
 import { message, setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
+import { ClientResponseError } from 'pocketbase';
 
 export const load = async ({ locals }: { locals: App.Locals }) => {
 	if (!locals.pb.authStore.isValid) {
@@ -24,9 +25,11 @@ export const actions: Actions = {
 			await locals.pb.collection('users').requestEmailChange(formData.email);
 			return message(form, 'Please confirm via your email.');
 		} catch (err) {
-			console.log(err.response?.data);
-			if (err.response?.data?.newEmail) {
-				return setError(form, 'email', err.response?.data?.newEmail.message);
+			if (err instanceof ClientResponseError) {
+				console.log(err.response?.data);
+				if (err.response?.data?.newEmail) {
+					return setError(form, 'email', err.response?.data?.newEmail.message);
+				}
 			}
 		}
 	}
