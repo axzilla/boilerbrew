@@ -15,6 +15,21 @@
 		await fetch('/api/logout');
 		goto('/login');
 	}
+
+	const navigation = [
+		{
+			title: 'Dashboard',
+			href: '/'
+		},
+		{
+			title: 'Todos',
+			href: '/todos'
+		},
+		{
+			title: 'Settings',
+			href: '/settings'
+		}
+	];
 </script>
 
 <!--TODO: Make mobile menu dissapear when click a menu link-->
@@ -26,10 +41,10 @@
 			<a href="/" class="flex items-center gap-2 text-lg font-semibold md:text-base">
 				<Package2 class="h-6 w-6" />
 			</a>
-			<a href="/" class="text-foreground transition-colors hover:text-foreground"> Dashboard </a>
-			<a href="/settings" class="text-muted-foreground transition-colors hover:text-foreground">
-				Settings
-			</a>
+
+			{#each navigation as { title, href }}
+				<a {href} class="text-foreground transition-colors hover:text-foreground">{title} </a>
+			{/each}
 		</nav>
 		<Sheet.Root>
 			<Sheet.Trigger asChild let:builder>
@@ -43,8 +58,9 @@
 					<a href="/" class="flex items-center gap-2 text-lg font-semibold">
 						<Package2 class="h-6 w-6" />
 					</a>
-					<a href="/" class="hover:text-foreground"> Dashboard </a>
-					<a href="/settings" class="text-muted-foreground hover:text-foreground">Settings</a>
+					{#each navigation as { title, href }}
+						<a {href} class="text-foreground transition-colors hover:text-foreground">{title} </a>
+					{/each}
 				</nav>
 			</Sheet.Content>
 		</Sheet.Root>
