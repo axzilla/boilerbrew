@@ -1,5 +1,7 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
+	import { Button } from '$lib/components/ui/button';
+	import { cn } from '$lib/utils';
 
 	const navigation = [
 		{
@@ -24,12 +26,21 @@
 	class="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]"
 >
 	<nav class="grid gap-4 text-sm text-muted-foreground">
-		{#each navigation as navItem}
-			<a
-				href={navItem.href}
-				class="font-medium {$page.url.pathname === navItem.href ? 'active' : 'active'}"
-				>{navItem.title}</a
+		{#each navigation as item}
+			{@const isActive = $page.url.pathname === item.href}
+			<Button
+				href={item.href}
+				variant="ghost"
+				class={cn(!isActive && 'hover:underline', 'relative justify-start hover:bg-transparent')}
+				data-sveltekit-noscroll
 			>
+				{#if isActive}
+					<div class="absolute inset-0 rounded-md bg-muted" />
+				{/if}
+				<div class="relative">
+					{item.title}
+				</div>
+			</Button>
 		{/each}
 	</nav>
 	<div class="grid gap-6">
