@@ -7,6 +7,8 @@
 	import { DataTableFacetedFilter, DataTableViewOptions } from './index.js';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { Input } from '$lib/components/ui/input/index.js';
+	import CirclePlus from 'lucide-svelte/icons/circle-plus';
+	import Trash from 'lucide-svelte/icons/trash';
 
 	export let tableModel: TableViewModel<Task>;
 	export let data: Task[];
@@ -53,7 +55,6 @@
 			type="search"
 			bind:value={$filterValue}
 		/>
-
 		<DataTableFacetedFilter
 			bind:filterValues={$filterValues.status}
 			title="Status"
@@ -66,6 +67,10 @@
 			options={priorities}
 			counts={counts.priority}
 		/>
+		<Button size="sm" class="h-8 border-dashed">
+			<CirclePlus class="mr-2 h-4 w-4" />
+			Add Task
+		</Button>
 		{#if showReset}
 			<Button
 				on:click={() => {

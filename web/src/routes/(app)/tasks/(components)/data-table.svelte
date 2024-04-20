@@ -11,7 +11,6 @@
 	} from 'svelte-headless-table/plugins';
 	import type { Task } from '../(data)/schemas.js';
 	import {
-		DataTableCheckbox,
 		DataTableColumnHeader,
 		DataTablePagination,
 		DataTablePriorityCell,
@@ -41,42 +40,6 @@
 	});
 
 	const columns = table.createColumns([
-		table.display({
-			id: 'select',
-			header: (_, { pluginStates }) => {
-				const { allPageRowsSelected } = pluginStates.select;
-				return createRender(DataTableCheckbox, {
-					checked: allPageRowsSelected,
-					'aria-label': 'Select all'
-				});
-			},
-			cell: ({ row }, { pluginStates }) => {
-				const { getRowState } = pluginStates.select;
-				const { isSelected } = getRowState(row);
-				return createRender(DataTableCheckbox, {
-					checked: isSelected,
-					'aria-label': 'Select row',
-					class: 'translate-y-[2px]'
-				});
-			},
-			plugins: {
-				sort: {
-					disable: true
-				}
-			}
-		}),
-		table.column({
-			accessor: 'id',
-			header: () => {
-				return 'Task';
-			},
-			id: 'task',
-			plugins: {
-				sort: {
-					disable: true
-				}
-			}
-		}),
 		table.column({
 			accessor: 'title',
 			header: 'Title',
@@ -84,8 +47,7 @@
 			cell: ({ value, row }) => {
 				if (row.isData()) {
 					return createRender(DataTableTitleCell, {
-						value,
-						labelValue: row.original.label
+						value
 					});
 				}
 				return value;
@@ -196,13 +158,7 @@
 								{#each row.cells as cell (cell.id)}
 									<Subscribe attrs={cell.attrs()} let:attrs>
 										<Table.Cell {...attrs}>
-											{#if cell.id === 'task'}
-												<div class="w-[80px]">
-													<Render of={cell.render()} />
-												</div>
-											{:else}
-												<Render of={cell.render()} />
-											{/if}
+											<Render of={cell.render()} />
 										</Table.Cell>
 									</Subscribe>
 								{/each}
