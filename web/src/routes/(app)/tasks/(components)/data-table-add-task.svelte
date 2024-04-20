@@ -6,7 +6,6 @@
 	import { Label } from '$lib/components/ui/label/index.js';
 	import CirclePlus from 'lucide-svelte/icons/circle-plus';
 	import { priorities, statuses } from '../(data)/data';
-	import { Rabbit } from 'lucide-svelte';
 </script>
 
 <Dialog.Root>
@@ -19,11 +18,10 @@
 	<Dialog.Content class="sm:max-w-[425px]">
 		<Dialog.Header>
 			<Dialog.Title>Add Task</Dialog.Title>
-			<Dialog.Description>Enter task details and submit to create a new task.</Dialog.Description>
 		</Dialog.Header>
 		<div class="grid gap-4 py-4">
 			<div class="relative hidden flex-col items-start gap-8 md:flex">
-				<form class="grid w-full items-start gap-6">
+				<form action="/?ceateTask" method="POST" class="grid w-full items-start gap-6">
 					<div class="grid gap-3">
 						<Label for="content">Details</Label>
 						<Textarea
@@ -79,7 +77,7 @@
 			</div>
 		</div>
 		<Dialog.Footer>
-			<Button type="submit">Save Task</Button>
+			<Button type="submit">Save</Button>
 		</Dialog.Footer>
 	</Dialog.Content>
 </Dialog.Root>

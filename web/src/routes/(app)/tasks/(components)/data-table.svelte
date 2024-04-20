@@ -16,7 +16,7 @@
 		DataTablePriorityCell,
 		DataTableRowActions,
 		DataTableStatusCell,
-		DataTableTitleCell,
+		DataTableDetailsCell,
 		DataTableToolbar
 	} from './index.js';
 
@@ -41,12 +41,12 @@
 
 	const columns = table.createColumns([
 		table.column({
-			accessor: 'title',
-			header: 'Title',
-			id: 'title',
+			accessor: 'details',
+			header: 'Details',
+			id: 'details',
 			cell: ({ value, row }) => {
 				if (row.isData()) {
-					return createRender(DataTableTitleCell, {
+					return createRender(DataTableDetailsCell, {
 						value
 					});
 				}
