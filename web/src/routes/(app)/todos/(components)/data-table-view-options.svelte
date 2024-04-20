@@ -1,5 +1,5 @@
 <script lang="ts">
-	import MixerHorizontal from 'svelte-radix/MixerHorizontal.svelte';
+	import SlidersHorizontal from 'lucide-svelte/icons/sliders-horizontal';
 	import type { TableViewModel } from 'svelte-headless-table';
 	import type { Task } from '../(data)/schemas.js';
 	import { Button } from '$lib/components/ui/button/index.js';
@@ -24,7 +24,7 @@
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button variant="outline" size="sm" class="ml-auto hidden h-8 lg:flex" builders={[builder]}>
-			<MixerHorizontal class="mr-2 h-4 w-4" />
+			<SlidersHorizontal class="mr-2 h-4 w-4" />
 			View
 		</Button>
 	</DropdownMenu.Trigger>

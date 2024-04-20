@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { TableViewModel } from 'svelte-headless-table';
-	import Cross2 from 'svelte-radix/Cross2.svelte';
+	import X from 'lucide-svelte/icons/x';
 	import type { Writable } from 'svelte/store';
 	import { priorities, statuses } from '../(data)/data.js';
 	import type { Task } from '../(data)/schemas.js';
@@ -77,7 +77,7 @@
 				class="h-8 px-2 lg:px-3"
 			>
 				Reset
-				<Cross2 class="ml-2 h-4 w-4" />
+				<X class="ml-2 h-4 w-4" />
 			</Button>
 		{/if}
 	</div>

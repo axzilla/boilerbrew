@@ -1,8 +1,8 @@
 <script lang="ts">
-	import ChevronRight from 'svelte-radix/ChevronRight.svelte';
-	import ChevronLeft from 'svelte-radix/ChevronLeft.svelte';
-	import DoubleArrowRight from 'svelte-radix/DoubleArrowRight.svelte';
-	import DoubleArrowLeft from 'svelte-radix/DoubleArrowLeft.svelte';
+	import ChevronRight from 'lucide-svelte/icons/chevron-right';
+	import ChevronLeft from 'lucide-svelte/icons/chevron-left';
+	import ChevronsRight from 'lucide-svelte/icons/chevrons-right';
+	import ChevronsLeft from 'lucide-svelte/icons/chevrons-left';
 	import type { TableViewModel } from 'svelte-headless-table';
 	import type { Task } from '../(data)/schemas.js';
 	import * as Select from '$lib/components/ui/select/index.js';
@@ -51,7 +51,7 @@
 				disabled={!$hasPreviousPage}
 			>
 				<span class="sr-only">Go to first page</span>
-				<DoubleArrowLeft size={15} />
+				<ChevronsLeft size={15} />
 			</Button>
 			<Button
 				variant="outline"
@@ -78,7 +78,7 @@
 				on:click={() => ($pageIndex = Math.ceil($rows.length / $pageRows.length) - 1)}
 			>
 				<span class="sr-only">Go to last page</span>
-				<DoubleArrowRight size={15} />
+				<ChevronsRight size={15} />
 			</Button>
 		</div>
 	</div>

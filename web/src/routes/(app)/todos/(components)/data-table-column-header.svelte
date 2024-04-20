@@ -1,8 +1,8 @@
 <script lang="ts">
-	import EyeNone from 'svelte-radix/EyeNone.svelte';
-	import ArrowDown from 'svelte-radix/ArrowDown.svelte';
-	import ArrowUp from 'svelte-radix/ArrowUp.svelte';
-	import CaretSort from 'svelte-radix/CaretSort.svelte';
+	import EyeOff from 'lucide-svelte/icons/eye-off';
+	import ArrowDown from 'lucide-svelte/icons/arrow-down';
+	import ArrowUp from 'lucide-svelte/icons/arrow-up';
+	import ChevronsUpDown from 'lucide-svelte/icons/chevrons-up-down';
 	import type { TableViewModel } from 'svelte-headless-table';
 	import type { Task } from '../(data)/schemas.js';
 	import { cn } from '$lib/utils.js';
@@ -70,7 +70,7 @@
 					{:else if props.sort.order === 'asc'}
 						<ArrowUp class="ml-2 h-4 w-4" />
 					{:else}
-						<CaretSort class="ml-2 h-4 w-4" />
+						<ChevronsUpDown class="ml-2 h-4 w-4" />
 					{/if}
 				</Button>
 			</DropdownMenu.Trigger>
@@ -85,7 +85,7 @@
 				</DropdownMenu.Item>
 				<DropdownMenu.Separator />
 				<DropdownMenu.Item on:click={handleHide}>
-					<EyeNone class="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+					<EyeOff class="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
 					Hide
 				</DropdownMenu.Item>
 			</DropdownMenu.Content>

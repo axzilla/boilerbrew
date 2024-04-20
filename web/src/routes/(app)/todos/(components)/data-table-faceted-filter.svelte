@@ -1,6 +1,6 @@
 <script lang="ts">
-	import PlusCircled from 'svelte-radix/PlusCircled.svelte';
-	import Check from 'svelte-radix/Check.svelte';
+	import CirclePlus from 'lucide-svelte/icons/circle-plus';
+	import Check from 'lucide-svelte/icons/check';
 	import type { statuses } from '../(data)/data.js';
 	import * as Command from '$lib/components/ui/command/index.js';
 	import * as Popover from '$lib/components/ui/popover/index.js';
@@ -28,7 +28,7 @@
 <Popover.Root bind:open>
 	<Popover.Trigger asChild let:builder>
 		<Button builders={[builder]} variant="outline" size="sm" class="h-8 border-dashed">
-			<PlusCircled class="mr-2 h-4 w-4" />
+			<CirclePlus class="mr-2 h-4 w-4" />
 			{title}
 
 			{#if filterValues.length > 0}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import DotsHorizontal from 'svelte-radix/DotsHorizontal.svelte';
+	import Ellpipsis from 'lucide-svelte/icons/ellipsis';
 	import { labels } from '../(data)/data.js';
 	import { type Task, taskSchema } from '../(data)/schemas.js';
 	import { Button } from '$lib/components/ui/button/index.js';
@@ -16,7 +16,7 @@
 			builders={[builder]}
 			class="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
 		>
-			<DotsHorizontal class="h-4 w-4" />
+			<Ellpipsis class="h-4 w-4" />
 			<span class="sr-only">Open Menu</span>
 		</Button>
 	</DropdownMenu.Trigger>
