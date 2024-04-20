@@ -65,40 +65,31 @@
 			</Sheet.Content>
 		</Sheet.Root>
 		<div class="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-			<form class="ml-auto flex-1 sm:flex-initial">
-				<div class="relative">
-					<Search class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-					<Input
-						type="search"
-						placeholder="Search products..."
-						class="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-					/>
-				</div>
-			</form>
-
-			<DropdownMenu.Root>
-				<DropdownMenu.Trigger asChild let:builder>
-					<Button builders={[builder]} variant="secondary" size="icon" class="rounded-full">
-						<CircleUser class="h-5 w-5" />
-					</Button>
-				</DropdownMenu.Trigger>
-				<DropdownMenu.Content class="w-56" align="end">
-					<DropdownMenu.Label class="font-normal">
-						<div class="flex flex-col space-y-1">
-							<p class="text-sm font-medium leading-none">{data.user?.username}</p>
-							<p class="text-xs leading-none text-muted-foreground">{data.user?.email}</p>
-						</div>
-					</DropdownMenu.Label>
-					<DropdownMenu.Separator />
-					<DropdownMenu.Group>
-						<a href="/settings" class="block">
-							<DropdownMenu.Item>Settings</DropdownMenu.Item>
-						</a>
-					</DropdownMenu.Group>
-					<DropdownMenu.Separator />
-					<DropdownMenu.Item on:click={logout}>Log out</DropdownMenu.Item>
-				</DropdownMenu.Content>
-			</DropdownMenu.Root>
+			<span class="ml-auto flex-1 sm:flex-initial">
+				<DropdownMenu.Root>
+					<DropdownMenu.Trigger asChild let:builder>
+						<Button builders={[builder]} variant="secondary" size="icon" class="rounded-full">
+							<CircleUser class="h-5 w-5" />
+						</Button>
+					</DropdownMenu.Trigger>
+					<DropdownMenu.Content class="w-56" align="end">
+						<DropdownMenu.Label class="font-normal">
+							<div class="flex flex-col space-y-1">
+								<p class="text-sm font-medium leading-none">{data.user?.username}</p>
+								<p class="text-xs leading-none text-muted-foreground">{data.user?.email}</p>
+							</div>
+						</DropdownMenu.Label>
+						<DropdownMenu.Separator />
+						<DropdownMenu.Group>
+							<a href="/settings" class="block">
+								<DropdownMenu.Item>Settings</DropdownMenu.Item>
+							</a>
+						</DropdownMenu.Group>
+						<DropdownMenu.Separator />
+						<DropdownMenu.Item on:click={logout}>Log out</DropdownMenu.Item>
+					</DropdownMenu.Content>
+				</DropdownMenu.Root>
+			</span>
 		</div>
 	</header>
 	<main class="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
