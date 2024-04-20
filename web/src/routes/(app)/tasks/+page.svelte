@@ -1,6 +1,8 @@
 <script lang="ts">
 	import DataTable from './(components)/data-table.svelte';
-	import data from './(data)/tasks.json';
+	// import data from './(data)/tasks.json';
+
+	export let data;
 </script>
 
 <div class="h-full flex-1 flex-col space-y-8 p-8 md:flex">
@@ -10,5 +12,5 @@
 			<p class="text-muted-foreground">Here's a list of your tasks!</p>
 		</div>
 	</div>
-	<DataTable {data} />
+	<DataTable data={data.tasks} />
 </div>
