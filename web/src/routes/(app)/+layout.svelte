@@ -22,8 +22,8 @@
 			href: '/'
 		},
 		{
-			title: 'Todos',
-			href: '/todos'
+			title: 'Tasks',
+			href: '/tasks'
 		},
 		{
 			title: 'Settings',
