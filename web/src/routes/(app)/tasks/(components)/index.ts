@@ -1,4 +1,5 @@
 export { default as DataTableTitleCell } from './data-table-title-cell.svelte';
+export { default as DataTableAddTask } from './data-table-add-task.svelte';
 export { default as DataTableStatusCell } from './data-table-status-cell.svelte';
 export { default as DataTableRowActions } from './data-table-row-actions.svelte';
 export { default as DataTablePriorityCell } from './data-table-priority-cell.svelte';
