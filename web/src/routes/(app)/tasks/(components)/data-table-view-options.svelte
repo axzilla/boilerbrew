@@ -1,7 +1,7 @@
 <script lang="ts">
 	import SlidersHorizontal from 'lucide-svelte/icons/sliders-horizontal';
 	import type { TableViewModel } from 'svelte-headless-table';
-	import type { Task } from '../(data)/schemas.js';
+	import type { Task } from '$lib/schemas';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 

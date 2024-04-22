@@ -3,16 +3,17 @@
 	import X from 'lucide-svelte/icons/x';
 	import type { Writable } from 'svelte/store';
 	import { priorities, statuses } from '../(data)/data.js';
-	import type { Task } from '../(data)/schemas.js';
+	import type { Task } from '$lib/schemas';
 	import { DataTableAddTask, DataTableFacetedFilter, DataTableViewOptions } from './index.js';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { Input } from '$lib/components/ui/input/index.js';
-	import CirclePlus from 'lucide-svelte/icons/circle-plus';
+	import type { PageData } from '../$types.js';
+	import { tasks } from '$lib/stores.js';
 
 	export let tableModel: TableViewModel<Task>;
-	export let data: Task[];
+	export let data: PageData;
 
-	const counts = data.reduce<{
+	const counts = $tasks.reduce<{
 		status: { [index: string]: number };
 		priority: { [index: string]: number };
 	}>(
@@ -66,7 +67,7 @@
 			options={priorities}
 			counts={counts.priority}
 		/>
-		<DataTableAddTask />
+		<DataTableAddTask {data} />
 		{#if showReset}
 			<Button
 				on:click={() => {

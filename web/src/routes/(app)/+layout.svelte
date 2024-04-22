@@ -2,14 +2,17 @@
 	import CircleUser from 'lucide-svelte/icons/circle-user';
 	import Menu from 'lucide-svelte/icons/menu';
 	import Package2 from 'lucide-svelte/icons/package-2';
-	import Search from 'lucide-svelte/icons/search';
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import { Input } from '$lib/components/ui/input';
 	import * as Sheet from '$lib/components/ui/sheet';
 	import { goto } from '$app/navigation';
+	import { tasks } from '$lib/stores';
 
 	export let data;
+
+	$: if (data && data.tasks) {
+		tasks.set(data.tasks);
+	}
 
 	async function logout() {
 		await fetch('/api/logout');

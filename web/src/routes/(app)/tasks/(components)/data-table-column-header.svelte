@@ -4,7 +4,7 @@
 	import ArrowUp from 'lucide-svelte/icons/arrow-up';
 	import ChevronsUpDown from 'lucide-svelte/icons/chevrons-up-down';
 	import type { TableViewModel } from 'svelte-headless-table';
-	import type { Task } from '../(data)/schemas.js';
+	import type { Task } from '$lib/schemas';
 	import { cn } from '$lib/utils.js';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';

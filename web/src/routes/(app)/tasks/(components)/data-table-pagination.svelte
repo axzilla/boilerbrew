@@ -4,7 +4,8 @@
 	import ChevronsRight from 'lucide-svelte/icons/chevrons-right';
 	import ChevronsLeft from 'lucide-svelte/icons/chevrons-left';
 	import type { TableViewModel } from 'svelte-headless-table';
-	import type { Task } from '../(data)/schemas.js';
+	import type { Task } from '$lib/schemas';
+
 	import * as Select from '$lib/components/ui/select/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
 

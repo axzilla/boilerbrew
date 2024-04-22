@@ -94,3 +94,17 @@ export const updatePasswordSchema = z
 		}
 	});
 export type UpdatePasswordSchema = typeof updatePasswordSchema;
+
+export const taskSchema = z.object({
+	// id: z.string(),
+	details: z
+		.string({ required_error: 'Details is required' })
+		.min(1, { message: 'Details is required' }),
+	status: z
+		.string({ required_error: 'Status is required' })
+		.min(1, { message: 'Status is required' }),
+	priority: z
+		.string({ required_error: 'Priority is required' })
+		.min(1, { message: 'Priority is required' })
+});
+export type Task = z.infer<typeof taskSchema>;

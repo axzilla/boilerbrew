@@ -9,7 +9,6 @@
 		addSortBy,
 		addTableFilter
 	} from 'svelte-headless-table/plugins';
-	import type { Task } from '../(data)/schemas.js';
 	import {
 		DataTableColumnHeader,
 		DataTablePagination,
@@ -19,12 +18,14 @@
 		DataTableDetailsCell,
 		DataTableToolbar
 	} from './index.js';
-
 	import * as Table from '$lib/components/ui/table/index.js';
 
-	export let data: Task[];
+	import type { PageData } from '../$types.js';
+	import { tasks } from '$lib/stores.js';
 
-	const table = createTable(readable(data), {
+	export let data: PageData;
+
+	const table = createTable(tasks, {
 		select: addSelectedRows(),
 		sort: addSortBy({
 			toggleOrder: ['asc', 'desc']
@@ -167,7 +168,7 @@
 					{/each}
 				{:else}
 					<Table.Row>
-						<Table.Cell colspan={columns.length} class="h-24 text-center">No results.</Table.Cell>
+						<Table.Cell colspan={columns.length} class="h-21 text-center">No results.</Table.Cell>
 					</Table.Row>
 				{/if}
 			</Table.Body>
