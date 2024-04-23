@@ -4,7 +4,7 @@
 	import type { Writable } from 'svelte/store';
 	import { priorities, statuses } from '../(data)/data.js';
 	import type { Task } from '$lib/schemas';
-	import { DataTableAddTask, DataTableFacetedFilter, DataTableViewOptions } from './index.js';
+	import { DataTableTaskForm, DataTableFacetedFilter, DataTableViewOptions } from './index.js';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import type { PageData } from '../$types.js';
@@ -55,6 +55,7 @@
 			type="search"
 			bind:value={$filterValue}
 		/>
+		<DataTableTaskForm {data} />
 		<DataTableFacetedFilter
 			bind:filterValues={$filterValues.status}
 			title="Status"
@@ -67,7 +68,6 @@
 			options={priorities}
 			counts={counts.priority}
 		/>
-		<DataTableAddTask {data} />
 		{#if showReset}
 			<Button
 				on:click={() => {

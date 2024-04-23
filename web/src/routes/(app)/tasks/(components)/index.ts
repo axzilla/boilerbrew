@@ -1,5 +1,5 @@
 export { default as DataTableDetailsCell } from './data-table-details-cell.svelte';
-export { default as DataTableAddTask } from './data-table-add-task.svelte';
+export { default as DataTableTaskForm } from './data-table-task-form.svelte';
 export { default as DataTableStatusCell } from './data-table-status-cell.svelte';
 export { default as DataTableRowActions } from './data-table-row-actions.svelte';
 export { default as DataTablePriorityCell } from './data-table-priority-cell.svelte';
