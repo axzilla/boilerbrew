@@ -1,5 +1,5 @@
 import { fail, redirect } from '@sveltejs/kit';
-import { updatePasswordSchema } from '$lib/schemas';
+import { UpdatePasswordSchema } from '$lib/schemas';
 import { zod } from 'sveltekit-superforms/adapters';
 import { setError, superValidate } from 'sveltekit-superforms';
 
@@ -9,13 +9,13 @@ export const load = async ({ locals }) => {
 	}
 
 	return {
-		form: await superValidate(zod(updatePasswordSchema))
+		form: await superValidate(zod(UpdatePasswordSchema))
 	};
 };
 
 export const actions = {
 	updatePassword: async ({ request, locals }) => {
-		const form = await superValidate(request, zod(updatePasswordSchema));
+		const form = await superValidate(request, zod(UpdatePasswordSchema));
 		if (!form.valid) {
 			return fail(400, { form });
 		}

@@ -1,14 +1,13 @@
 import { z } from 'zod';
 
-export const loginUserSchema = z.object({
+export const LoginUserSchema = z.object({
 	login: z
 		.string({ required_error: 'Username or email is required' })
 		.min(1, { message: 'Username or email is required' }),
 	password: z.string({ required_error: 'Password is required' })
 });
-export type LoginUserSchema = typeof loginUserSchema;
 
-export const registerUserSchema = z
+export const RegisterUserSchema = z
 	.object({
 		email: z
 			.string({ required_error: 'Email is required' })
@@ -40,25 +39,22 @@ export const registerUserSchema = z
 			});
 		}
 	});
-export type RegisterUserSchema = typeof registerUserSchema;
 
-export const updateEmailSchema = z.object({
+export const UpdateEmailSchema = z.object({
 	email: z
 		.string({ required_error: 'Email is required' })
 		.email({ message: 'Email must be a valid email' })
 });
-export type UpdateEmailSchema = typeof updateEmailSchema;
 
-export const updateUsernameSchema = z.object({
+export const UpdateUsernameSchema = z.object({
 	username: z
 		.string({ required_error: 'Username is required' })
 		.min(3, { message: 'Username must be at least 3 characters' })
 		.max(24, { message: 'Username must be 24 characters or less' })
 		.regex(/^[a-zA-Z0-9]*$/, { message: 'Username can only contain letters or numbers.' })
 });
-export type UpdateUsernameSchema = typeof updateUsernameSchema;
 
-export const updatePasswordSchema = z
+export const UpdatePasswordSchema = z
 	.object({
 		oldPassword: z
 			.string({ required_error: 'Old password is required' })
@@ -93,10 +89,9 @@ export const updatePasswordSchema = z
 			});
 		}
 	});
-export type UpdatePasswordSchema = typeof updatePasswordSchema;
 
-export const taskSchema = z.object({
-	// id: z.string(),
+export const TaskSchema = z.object({
+	id: z.string().optional(),
 	details: z
 		.string({ required_error: 'Details is required' })
 		.min(1, { message: 'Details is required' }),
@@ -107,4 +102,4 @@ export const taskSchema = z.object({
 		.string({ required_error: 'Priority is required' })
 		.min(1, { message: 'Priority is required' })
 });
-export type Task = z.infer<typeof taskSchema>;
+export type Task = z.infer<typeof TaskSchema>;

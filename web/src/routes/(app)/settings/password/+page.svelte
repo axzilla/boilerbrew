@@ -7,13 +7,14 @@
 	import { toast } from 'svelte-sonner';
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
 	import { zod } from 'sveltekit-superforms/adapters';
-	import { updatePasswordSchema } from '$lib/schemas.js';
+	import { UpdatePasswordSchema } from '$lib/schemas.js';
 
 	export let data;
+
 	let isLoading = false;
 
 	const form = superForm(data.form, {
-		validators: zod(updatePasswordSchema),
+		validators: zod(UpdatePasswordSchema),
 		onSubmit: () => {
 			isLoading = true;
 		},

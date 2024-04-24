@@ -1,5 +1,5 @@
 import { fail, redirect, type Actions } from '@sveltejs/kit';
-import { registerUserSchema } from '$lib/schemas';
+import { RegisterUserSchema } from '$lib/schemas';
 import { generateUsername } from '$lib/utils';
 import type { PageServerLoad } from './$types';
 import { setError, superValidate } from 'sveltekit-superforms';
@@ -7,13 +7,13 @@ import { zod } from 'sveltekit-superforms/adapters';
 
 export const load: PageServerLoad = async () => {
 	return {
-		form: await superValidate(zod(registerUserSchema))
+		form: await superValidate(zod(RegisterUserSchema))
 	};
 };
 
 export const actions = {
 	register: async ({ locals, request }) => {
-		const form = await superValidate(request, zod(registerUserSchema));
+		const form = await superValidate(request, zod(RegisterUserSchema));
 		if (!form.valid) {
 			return fail(400, { form });
 		}

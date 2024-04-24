@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { statuses } from "../(data)/data.js";
+	import { statuses } from '../(data)/data.js';
 
 	export let value: string;
-	const status = statuses.find((status) => status.value === value);
-	const Icon = status?.icon;
+
+	$: status = statuses.find((status) => status.value === value);
+	$: Icon = status?.icon;
 </script>
 
 {#if status}

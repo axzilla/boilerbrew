@@ -6,12 +6,12 @@
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
-	import { updateEmailSchema } from '$lib/schemas.js';
+	import { UpdateEmailSchema } from '$lib/schemas.js';
 
 	export let data;
 
 	const form = superForm(data.form, {
-		validators: zod(updateEmailSchema),
+		validators: zod(UpdateEmailSchema),
 		onUpdated: ({ form: f }) => {
 			if (f.errors.email) {
 				toast.error('Failed to authenticate!');

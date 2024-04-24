@@ -1,22 +1,13 @@
 <script lang="ts">
-	import Ellpipsis from 'lucide-svelte/icons/ellipsis';
 	import { Button } from '$lib/components/ui/button/index.js';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
+	import { Bolt, Trash } from 'lucide-svelte';
+	import type { Task } from '$lib/schemas';
+
+	export let row: Task;
+	export let openDialog: (task: Task | null) => void;
 </script>
 
-<DropdownMenu.Root>
-	<DropdownMenu.Trigger asChild let:builder>
-		<Button
-			variant="ghost"
-			builders={[builder]}
-			class="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
-		>
-			<Ellpipsis class="h-4 w-4" />
-			<span class="sr-only">Open Menu</span>
-		</Button>
-	</DropdownMenu.Trigger>
-	<DropdownMenu.Content class="w-[160px]" align="end">
-		<DropdownMenu.Item>Edit</DropdownMenu.Item>
-		<DropdownMenu.Item>Delete</DropdownMenu.Item>
-	</DropdownMenu.Content>
-</DropdownMenu.Root>
+<Button on:click={() => openDialog(row)} variant="ghost" size="sm" class="h-8"
+	><Bolt class="h-4 w-4" /></Button
+>
+<Button variant="ghost" size="sm" class="h-8"><Trash class="h-4 w-4" /></Button>

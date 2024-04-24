@@ -4,14 +4,14 @@
 	import type { Writable } from 'svelte/store';
 	import { priorities, statuses } from '../(data)/data.js';
 	import type { Task } from '$lib/schemas';
-	import { DataTableTaskForm, DataTableFacetedFilter, DataTableViewOptions } from './index.js';
+	import { DataTableFacetedFilter, DataTableViewOptions } from './index.js';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { Input } from '$lib/components/ui/input/index.js';
-	import type { PageData } from '../$types.js';
 	import { tasks } from '$lib/stores.js';
+	import { CirclePlus } from 'lucide-svelte';
 
 	export let tableModel: TableViewModel<Task>;
-	export let data: PageData;
+	export let openDialog: (task: Task | null) => void;
 
 	const counts = $tasks.reduce<{
 		status: { [index: string]: number };
@@ -55,7 +55,10 @@
 			type="search"
 			bind:value={$filterValue}
 		/>
-		<DataTableTaskForm {data} />
+		<Button on:click={() => openDialog(null)} size="sm" class="h-8 border-dashed">
+			<CirclePlus class="mr-2 h-4 w-4" />
+			Add Task
+		</Button>
 		<DataTableFacetedFilter
 			bind:filterValues={$filterValues.status}
 			title="Status"

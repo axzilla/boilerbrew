@@ -18,7 +18,7 @@
 		});
 	}
 
-	const hidableCols = ['title', 'status', 'priority'];
+	const hidableCols = ['details', 'status', 'priority'];
 </script>
 
 <DropdownMenu.Root>

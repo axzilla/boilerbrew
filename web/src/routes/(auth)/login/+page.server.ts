@@ -1,19 +1,18 @@
 import { fail, redirect, type Actions } from '@sveltejs/kit';
-import { loginUserSchema } from '$lib/schemas';
-
+import { LoginUserSchema } from '$lib/schemas';
 import type { PageServerLoad } from './$types.js';
 import { superValidate, setError } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 
 export const load: PageServerLoad = async () => {
 	return {
-		form: await superValidate(zod(loginUserSchema))
+		form: await superValidate(zod(LoginUserSchema))
 	};
 };
 
 export const actions: Actions = {
 	login: async ({ request, locals }) => {
-		const form = await superValidate(request, zod(loginUserSchema));
+		const form = await superValidate(request, zod(LoginUserSchema));
 		if (!form.valid) {
 			return fail(400, { form });
 		}

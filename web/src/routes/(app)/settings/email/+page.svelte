@@ -6,14 +6,15 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { toast } from 'svelte-sonner';
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
-	import { updateEmailSchema } from '$lib/schemas.js';
+	import { UpdateEmailSchema } from '$lib/schemas.js';
 	import { zod } from 'sveltekit-superforms/adapters';
 
 	export let data;
+
 	let isLoading = false;
 
 	const form = superForm(data.form, {
-		validators: zod(updateEmailSchema),
+		validators: zod(UpdateEmailSchema),
 		onSubmit: () => {
 			isLoading = true;
 		},

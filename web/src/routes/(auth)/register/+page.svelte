@@ -5,13 +5,13 @@
 	import * as Form from '$lib/components/ui/form';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
-	import { registerUserSchema } from '$lib/schemas.js';
+	import { RegisterUserSchema } from '$lib/schemas.js';
 	import { zod } from 'sveltekit-superforms/adapters';
 
 	export let data;
 
 	const form = superForm(data.form, {
-		validators: zod(registerUserSchema),
+		validators: zod(RegisterUserSchema),
 		onUpdated: ({ form: f }) => {
 			if (f.errors) {
 				toast.error('Failed to register!');

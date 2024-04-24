@@ -1,5 +1,5 @@
 import { fail, redirect, type Actions } from '@sveltejs/kit';
-import { updateUsernameSchema } from '$lib/schemas';
+import { UpdateUsernameSchema } from '$lib/schemas';
 import { zod } from 'sveltekit-superforms/adapters';
 import { message, setError, superValidate } from 'sveltekit-superforms';
 
@@ -9,13 +9,13 @@ export const load = async ({ locals }: { locals: App.Locals }) => {
 	}
 
 	return {
-		form: await superValidate(locals.user, zod(updateUsernameSchema))
+		form: await superValidate(locals.user, zod(UpdateUsernameSchema))
 	};
 };
 
 export const actions: Actions = {
 	updateUsername: async ({ request, locals }) => {
-		const form = await superValidate(request, zod(updateUsernameSchema));
+		const form = await superValidate(request, zod(UpdateUsernameSchema));
 		if (!form.valid) {
 			return fail(400, { form });
 		}

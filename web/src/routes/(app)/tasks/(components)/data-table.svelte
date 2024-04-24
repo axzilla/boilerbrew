@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { get, readable } from 'svelte/store';
+	import { get } from 'svelte/store';
 	import { Render, Subscribe, createRender, createTable } from 'svelte-headless-table';
 	import {
 		addColumnFilters,
@@ -19,11 +19,10 @@
 		DataTableToolbar
 	} from './index.js';
 	import * as Table from '$lib/components/ui/table/index.js';
-
-	import type { PageData } from '../$types.js';
 	import { tasks } from '$lib/stores.js';
+	import type { Task } from '$lib/schemas.js';
 
-	export let data: PageData;
+	export let openDialog: (task: Task | null) => void;
 
 	const table = createTable(tasks, {
 		select: addSelectedRows(),
@@ -113,7 +112,8 @@
 			cell: ({ row }) => {
 				if (row.isData() && row.original) {
 					return createRender(DataTableRowActions, {
-						row: row.original
+						row: row.original,
+						openDialog
 					});
 				}
 				return '';
@@ -126,8 +126,8 @@
 	const { headerRows, pageRows, tableAttrs, tableBodyAttrs } = tableModel;
 </script>
 
-<div class="space-y-4">
-	<DataTableToolbar {tableModel} {data} />
+<div class="space-y-2">
+	<DataTableToolbar {openDialog} {tableModel} />
 	<div class="rounded-md border">
 		<Table.Root {...$tableAttrs}>
 			<Table.Header>
@@ -168,7 +168,7 @@
 					{/each}
 				{:else}
 					<Table.Row>
-						<Table.Cell colspan={columns.length} class="h-21 text-center">No results.</Table.Cell>
+						<Table.Cell colspan={columns.length} class="h-18 text-center">No results.</Table.Cell>
 					</Table.Row>
 				{/if}
 			</Table.Body>
