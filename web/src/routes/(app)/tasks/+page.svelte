@@ -8,7 +8,7 @@
 	let open = false;
 	let currentTask: Task | null = null;
 
-	function openDialog(task: Task | null = null): void {
+	function openTaskFormDialog(task: Task | null = null): void {
 		currentTask = task;
 		open = true;
 	}
@@ -28,5 +28,5 @@
 			<p class="text-muted-foreground">Here's a list of your tasks!</p>
 		</div>
 	</div>
-	<DataTable {openDialog} />
+	<DataTable {openTaskFormDialog} />
 </div>

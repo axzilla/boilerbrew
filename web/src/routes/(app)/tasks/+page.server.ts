@@ -11,25 +11,34 @@ export const load: PageServerLoad = async () => {
 
 export const actions: Actions = {
 	createTask: async ({ request, locals }) => {
-		const form = await superValidate(request, zod(TaskSchema));
+		const formData = await request.formData();
+		const form = await superValidate(formData, zod(TaskSchema));
 
 		if (!form.valid) {
 			return fail(400, { form });
 		}
-		const formData = form.data;
+
 		try {
-			if (formData.id) {
-				const task = await locals.pb.collection('tasks').update(formData.id, formData);
-				return { form, task };
-			} else {
+			if (!form.data.id) {
+				// CREATE TASK
 				const task = await locals.pb
 					.collection('tasks')
-					.create({ ...formData, user_id: locals.user?.id });
+					.create({ ...form.data, user_id: locals.user?.id });
+
 				return { form, task };
+			} else {
+				if (formData.has('delete')) {
+					// DELETE TASK
+					const task = await locals.pb.collection('tasks').delete(form.data.id);
+					return { form, task };
+				} else {
+					// UPDATE TASK
+					const task = await locals.pb.collection('tasks').update(form.data.id, form.data);
+					return { form, task };
+				}
 			}
 		} catch (err) {
 			console.log('Error: ', err);
-			console.log(err.response.data);
 			return setError(form, '');
 		}
 	}

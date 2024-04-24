@@ -22,7 +22,7 @@
 	import { tasks } from '$lib/stores.js';
 	import type { Task } from '$lib/schemas.js';
 
-	export let openDialog: (task: Task | null) => void;
+	export let openTaskFormDialog: (task: Task | null) => void;
 
 	const table = createTable(tasks, {
 		select: addSelectedRows(),
@@ -113,7 +113,7 @@
 				if (row.isData() && row.original) {
 					return createRender(DataTableRowActions, {
 						row: row.original,
-						openDialog
+						openTaskFormDialog
 					});
 				}
 				return '';
@@ -127,7 +127,7 @@
 </script>
 
 <div class="space-y-2">
-	<DataTableToolbar {openDialog} {tableModel} />
+	<DataTableToolbar {openTaskFormDialog} {tableModel} />
 	<div class="rounded-md border">
 		<Table.Root {...$tableAttrs}>
 			<Table.Header>

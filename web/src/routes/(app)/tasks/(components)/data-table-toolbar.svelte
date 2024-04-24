@@ -11,7 +11,7 @@
 	import { CirclePlus } from 'lucide-svelte';
 
 	export let tableModel: TableViewModel<Task>;
-	export let openDialog: (task: Task | null) => void;
+	export let openTaskFormDialog: (task: Task | null) => void;
 
 	const counts = $tasks.reduce<{
 		status: { [index: string]: number };
@@ -55,7 +55,7 @@
 			type="search"
 			bind:value={$filterValue}
 		/>
-		<Button on:click={() => openDialog(null)} size="sm" class="h-8 border-dashed">
+		<Button on:click={() => openTaskFormDialog(null)} size="sm" class="h-8 border-dashed">
 			<CirclePlus class="mr-2 h-4 w-4" />
 			Add Task
 		</Button>

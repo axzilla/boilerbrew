@@ -32,17 +32,40 @@
 			}
 		},
 		onResult({ result }) {
-			// TODO: "data" does not exists on type "ActionResult"
-			if (result && result.data && result.data.task) {
-				tasks.update((currentTasks) => {
-					const index = currentTasks.findIndex((t) => t.id === result.data.task.id);
-					return index !== -1
-						? [...currentTasks.slice(0, index), result.data.task, ...currentTasks.slice(index + 1)]
-						: [...currentTasks, result.data.task];
-				});
-			} else {
-				console.error('Failed to retrieve task data:', result);
+			if (!result) {
+				console.error('No result provided');
+				return;
 			}
+
+			const { data } = result;
+
+			if (!data || !data.task || !data.form) {
+				console.error('Failed to retrieve task data:', result);
+				return;
+			}
+
+			tasks.update((currentTasks) => {
+				// Find the index of the task if it exists
+				const index = currentTasks.findIndex(
+					(t) => t.id === (data.task === true ? data.form.data.id : data.task.id)
+				);
+
+				if (data.task === true) {
+					// DELETE TASK
+					if (index === -1) {
+						console.error('Task to delete not found:', data.form.data.id);
+						return currentTasks;
+					}
+					return [...currentTasks.slice(0, index), ...currentTasks.slice(index + 1)];
+				} else {
+					// UPDATE OR CREATE TASK
+					if (index !== -1) {
+						return [...currentTasks.slice(0, index), data.task, ...currentTasks.slice(index + 1)];
+					} else {
+						return [...currentTasks, data.task];
+					}
+				}
+			});
 		}
 	});
 
@@ -60,7 +83,7 @@
 		<!-- <SuperDebug data={$formData} /> -->
 
 		<Dialog.Header>
-			<Dialog.Title>Add Task</Dialog.Title>
+			<Dialog.Title>{currentTask ? 'Edit' : 'Add'} Task</Dialog.Title>
 		</Dialog.Header>
 		<form action="?/createTask" method="POST" use:enhance>
 			<div class="grid gap-4 py-4">
@@ -156,6 +179,17 @@
 				</div>
 			</div>
 			<Dialog.Footer>
+				{#if $formData.id}
+					<Button
+						type="submit"
+						variant="outline"
+						name="delete"
+						on:click={(e) => !confirm('Are you sure?') && e.preventDefault()}
+						class="danger"
+					>
+						Delete
+					</Button>
+				{/if}
 				<Button type="submit">Save</Button>
 			</Dialog.Footer>
 		</form>
