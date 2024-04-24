@@ -14,14 +14,10 @@
 	const { pageRows, pluginStates, rows } = tableModel;
 
 	const { hasNextPage, hasPreviousPage, pageIndex, pageCount, pageSize } = pluginStates.page;
-
-	const { selectedDataIds } = pluginStates.select;
 </script>
 
 <div class="flex items-center justify-between px-2">
-	<div class="flex-1 text-sm text-muted-foreground">
-		{Object.keys($selectedDataIds).length} of {$rows.length} row(s) selected.
-	</div>
+	<div class="flex-1 text-sm text-muted-foreground" />
 	<div class="flex items-center space-x-6 lg:space-x-8">
 		<div class="flex items-center space-x-2">
 			<p class="text-sm font-medium">Rows per page</p>

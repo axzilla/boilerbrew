@@ -7,6 +7,8 @@
 	import * as Sheet from '$lib/components/ui/sheet';
 	import { goto } from '$app/navigation';
 	import { tasks } from '$lib/stores';
+	import { page } from '$app/stores';
+	import { cn } from '$lib/utils.js';
 
 	export let data;
 
@@ -22,7 +24,7 @@
 	const navigation = [
 		{
 			title: 'Dashboard',
-			href: '/'
+			href: '/dashboard'
 		},
 		{
 			title: 'Tasks',
@@ -46,7 +48,16 @@
 			</a>
 
 			{#each navigation as { title, href }}
-				<a {href} class="text-foreground transition-colors hover:text-foreground">{title} </a>
+				{@const isActive = $page.url.pathname.includes(href)}
+
+				<a
+					{href}
+					class={cn(
+						isActive ? 'text-foreground' : 'text-muted-foreground',
+						'relative justify-start hover:bg-transparent'
+					)}>{title}</a
+				>
+				<!-- <a {href} class="text-muted-foreground hover:text-foreground">{title}</a> -->
 			{/each}
 		</nav>
 		<Sheet.Root>
@@ -62,7 +73,16 @@
 						<Package2 class="h-6 w-6" />
 					</a>
 					{#each navigation as { title, href }}
-						<a {href} class="text-foreground transition-colors hover:text-foreground">{title} </a>
+						{@const isActive = $page.url.pathname.includes(href)}
+
+						<a
+							{href}
+							class={cn(
+								isActive ? 'text-foreground' : 'text-muted-foreground',
+								'relative justify-start hover:bg-transparent'
+							)}>{title}</a
+						>
+						<!-- <a {href} class="text-muted-foreground hover:text-foreground">{title}</a> -->
 					{/each}
 				</nav>
 			</Sheet.Content>

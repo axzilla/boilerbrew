@@ -28,6 +28,7 @@
 	<nav class="grid gap-4 text-sm text-muted-foreground">
 		{#each navigation as item}
 			{@const isActive = $page.url.pathname === item.href}
+
 			<Button
 				href={item.href}
 				variant="ghost"
