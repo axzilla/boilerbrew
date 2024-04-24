@@ -1,9 +1,9 @@
-import { fail, redirect } from '@sveltejs/kit';
+import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { UpdatePasswordSchema } from '$lib/schemas';
 import { zod } from 'sveltekit-superforms/adapters';
 import { setError, superValidate } from 'sveltekit-superforms';
 
-export const load = async ({ locals }) => {
+export const load = async ({ locals }: { locals: App.Locals }) => {
 	if (!locals.pb.authStore.isValid) {
 		redirect(303, '/login');
 	}
@@ -13,7 +13,7 @@ export const load = async ({ locals }) => {
 	};
 };
 
-export const actions = {
+export const actions: Actions = {
 	updatePassword: async ({ request, locals }) => {
 		const form = await superValidate(request, zod(UpdatePasswordSchema));
 		if (!form.valid) {

@@ -11,7 +11,7 @@ export const load: PageServerLoad = async () => {
 	};
 };
 
-export const actions = {
+export const actions: Actions = {
 	register: async ({ locals, request }) => {
 		const form = await superValidate(request, zod(RegisterUserSchema));
 		if (!form.valid) {
@@ -30,4 +30,4 @@ export const actions = {
 		}
 		redirect(303, '/login');
 	}
-} satisfies Actions;
+};
