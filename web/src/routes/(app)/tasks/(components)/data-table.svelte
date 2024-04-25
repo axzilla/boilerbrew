@@ -126,7 +126,7 @@
 	const { headerRows, pageRows, tableAttrs, tableBodyAttrs } = tableModel;
 </script>
 
-<div class="space-y-2">
+<div class="space-y-4">
 	<DataTableToolbar {openTaskFormDialog} {tableModel} />
 	<div class="rounded-md border">
 		<Table.Root {...$tableAttrs}>

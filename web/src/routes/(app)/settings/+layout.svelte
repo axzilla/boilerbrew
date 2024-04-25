@@ -1,47 +1,49 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { Button } from '$lib/components/ui/button';
 	import { cn } from '$lib/utils';
+	import Mail from 'lucide-svelte/icons/mail';
+	import User from 'lucide-svelte/icons/user';
+	import Lock from 'lucide-svelte/icons/lock';
 
 	const navigation = [
 		{
 			title: 'Email',
-			href: '/settings/email'
+			href: '/settings/email',
+			icon: Mail
 		},
 		{
 			title: 'Username',
-			href: '/settings/username'
+			href: '/settings/username',
+			icon: User
 		},
 		{
 			title: 'Password',
-			href: '/settings/password'
+			href: '/settings/password',
+			icon: Lock
 		}
 	];
 </script>
 
-<div class="mx-auto grid w-full max-w-6xl gap-2">
-	<h1 class="text-3xl font-semibold">Settings</h1>
-</div>
 <div
-	class="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]"
+	class="p-8 mx-auto grid w-full items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]"
 >
-	<nav class="grid gap-4 text-sm text-muted-foreground">
-		{#each navigation as item}
-			{@const isActive = $page.url.pathname === item.href}
+	<nav class="grid items-start text-sm font-medium">
+		{#each navigation as { title, href, icon }}
+			{@const isActive = $page.url.pathname === href}
 
-			<Button
-				href={item.href}
-				variant="ghost"
-				class={cn(!isActive && 'hover:underline', 'relative justify-start hover:bg-transparent')}
-				data-sveltekit-noscroll
+			<a
+				{href}
+				class={cn(
+					isActive && 'bg-muted',
+					'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary'
+				)}
 			>
-				{#if isActive}
-					<div class="absolute inset-0 rounded-md bg-muted" />
+				{#if icon}
+					{@const Icon = icon}
+					<Icon class="h-4 w-4" />
 				{/if}
-				<div class="relative">
-					{item.title}
-				</div>
-			</Button>
+				{title}
+			</a>
 		{/each}
 	</nav>
 	<div class="grid gap-6">
