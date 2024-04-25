@@ -1,4 +1,5 @@
 <script lang="ts">
+	// TODO: Icons are not reactive
 	import { priorities } from '../(data)/data.js';
 
 	export let value: string;

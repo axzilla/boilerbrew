@@ -92,6 +92,8 @@ export const UpdatePasswordSchema = z
 
 export const TaskSchema = z.object({
 	id: z.string().optional(),
+	created: z.date().optional(),
+	updated: z.date().optional(),
 	details: z
 		.string({ required_error: 'Details is required' })
 		.min(1, { message: 'Details is required' }),

@@ -3,7 +3,6 @@
 
 	export let title: string;
 	export let value: string;
-	export let subValue: string;
 </script>
 
 <Card.Root>
@@ -13,6 +12,5 @@
 	</Card.Header>
 	<Card.Content>
 		<div class="text-2xl font-bold">{value}</div>
-		<p class="text-xs text-muted-foreground">{subValue}</p>
 	</Card.Content>
 </Card.Root>
