@@ -2,8 +2,12 @@
 	import SlidersHorizontal from 'lucide-svelte/icons/sliders-horizontal';
 	import type { TableViewModel } from 'svelte-headless-table';
 	import type { Task } from '$lib/schemas';
-	import { Button } from '$lib/components/ui/button/index.js';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
+	import { Button } from '$lib/components/ui/button';
+	import { DropdownMenu, DropdownMenuTrigger } from '$lib/components/ui/dropdown-menu';
+	import DropdownMenuContent from '$lib/components/ui/dropdown-menu/dropdown-menu-content.svelte';
+	import DropdownMenuSeparator from '$lib/components/ui/dropdown-menu/dropdown-menu-separator.svelte';
+	import DropdownMenuLabel from '$lib/components/ui/dropdown-menu/dropdown-menu-label.svelte';
+	import DropdownMenuCheckboxItem from '$lib/components/ui/dropdown-menu/dropdown-menu-checkbox-item.svelte';
 
 	export let tableModel: TableViewModel<Task>;
 	const { pluginStates, flatColumns } = tableModel;
@@ -21,25 +25,25 @@
 	const hidableCols = ['details', 'status', 'priority'];
 </script>
 
-<DropdownMenu.Root>
-	<DropdownMenu.Trigger asChild let:builder>
+<DropdownMenu>
+	<DropdownMenuTrigger asChild let:builder>
 		<Button variant="outline" size="sm" class="ml-auto hidden h-8 lg:flex" builders={[builder]}>
 			<SlidersHorizontal class="mr-2 h-4 w-4" />
 			View
 		</Button>
-	</DropdownMenu.Trigger>
-	<DropdownMenu.Content>
-		<DropdownMenu.Label>Toggle columns</DropdownMenu.Label>
-		<DropdownMenu.Separator />
+	</DropdownMenuTrigger>
+	<DropdownMenuContent>
+		<DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+		<DropdownMenuSeparator />
 		{#each flatColumns as col}
 			{#if hidableCols.includes(col.id)}
-				<DropdownMenu.CheckboxItem
+				<DropdownMenuCheckboxItem
 					checked={!$hiddenColumnIds.includes(col.id)}
 					on:click={() => handleHide(col.id)}
 				>
 					{col.header}
-				</DropdownMenu.CheckboxItem>
+				</DropdownMenuCheckboxItem>
 			{/if}
 		{/each}
-	</DropdownMenu.Content>
-</DropdownMenu.Root>
+	</DropdownMenuContent>
+</DropdownMenu>

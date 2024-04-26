@@ -17,10 +17,15 @@
 		DataTableStatusCell,
 		DataTableDetailsCell,
 		DataTableToolbar
-	} from './index.js';
-	import * as Table from '$lib/components/ui/table/index.js';
+	} from '.';
+	import { Table } from '$lib/components/ui/table';
 	import { tasks } from '$lib/stores.js';
 	import type { Task } from '$lib/schemas.js';
+	import TableHeader from '$lib/components/ui/table/table-header.svelte';
+	import TableRow from '$lib/components/ui/table/table-row.svelte';
+	import TableHead from '$lib/components/ui/table/table-head.svelte';
+	import TableBody from '$lib/components/ui/table/table-body.svelte';
+	import TableCell from '$lib/components/ui/table/table-cell.svelte';
 
 	export let openTaskFormDialog: (task: Task | null) => void;
 
@@ -129,14 +134,14 @@
 <div class="space-y-4">
 	<DataTableToolbar {openTaskFormDialog} {tableModel} />
 	<div class="rounded-md border">
-		<Table.Root {...$tableAttrs}>
-			<Table.Header>
+		<Table {...$tableAttrs}>
+			<TableHeader>
 				{#each $headerRows as headerRow}
 					<Subscribe rowAttrs={headerRow.attrs()}>
-						<Table.Row>
+						<TableRow>
 							{#each headerRow.cells as cell (cell.id)}
 								<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()} let:props>
-									<Table.Head {...attrs}>
+									<TableHead {...attrs}>
 										{#if cell.id !== 'select' && cell.id !== 'actions'}
 											<DataTableColumnHeader {props} {tableModel} cellId={cell.id}>
 												<Render of={cell.render()} /></DataTableColumnHeader
@@ -144,35 +149,35 @@
 										{:else}
 											<Render of={cell.render()} />
 										{/if}
-									</Table.Head>
+									</TableHead>
 								</Subscribe>
 							{/each}
-						</Table.Row>
+						</TableRow>
 					</Subscribe>
 				{/each}
-			</Table.Header>
-			<Table.Body {...$tableBodyAttrs}>
+			</TableHeader>
+			<TableBody {...$tableBodyAttrs}>
 				{#if $pageRows.length}
 					{#each $pageRows as row (row.id)}
 						<Subscribe rowAttrs={row.attrs()} let:rowAttrs>
-							<Table.Row {...rowAttrs}>
+							<TableRow {...rowAttrs}>
 								{#each row.cells as cell (cell.id)}
 									<Subscribe attrs={cell.attrs()} let:attrs>
-										<Table.Cell {...attrs}>
+										<TableCell {...attrs}>
 											<Render of={cell.render()} />
-										</Table.Cell>
+										</TableCell>
 									</Subscribe>
 								{/each}
-							</Table.Row>
+							</TableRow>
 						</Subscribe>
 					{/each}
 				{:else}
-					<Table.Row>
-						<Table.Cell colspan={columns.length} class="h-18 text-center">No results.</Table.Cell>
-					</Table.Row>
+					<TableRow>
+						<TableCell colspan={columns.length} class="h-18 text-center">No results.</TableCell>
+					</TableRow>
 				{/if}
-			</Table.Body>
-		</Table.Root>
+			</TableBody>
+		</Table>
 	</div>
 	<DataTablePagination {tableModel} />
 </div>

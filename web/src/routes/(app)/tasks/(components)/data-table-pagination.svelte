@@ -5,9 +5,11 @@
 	import ChevronsLeft from 'lucide-svelte/icons/chevrons-left';
 	import type { TableViewModel } from 'svelte-headless-table';
 	import type { Task } from '$lib/schemas';
-
-	import * as Select from '$lib/components/ui/select/index.js';
-	import { Button } from '$lib/components/ui/button/index.js';
+	import { Select, SelectValue } from '$lib/components/ui/select';
+	import { Button } from '$lib/components/ui/button';
+	import SelectTrigger from '$lib/components/ui/select/select-trigger.svelte';
+	import SelectContent from '$lib/components/ui/select/select-content.svelte';
+	import SelectItem from '$lib/components/ui/select/select-item.svelte';
 
 	export let tableModel: TableViewModel<Task>;
 
@@ -21,21 +23,21 @@
 	<div class="flex items-center space-x-6 lg:space-x-8">
 		<div class="flex items-center space-x-2">
 			<p class="text-sm font-medium">Rows per page</p>
-			<Select.Root
+			<Select
 				onSelectedChange={(selected) => pageSize.set(Number(selected?.value))}
 				selected={{ value: 10, label: '10' }}
 			>
-				<Select.Trigger class="h-8 w-[70px]">
-					<Select.Value placeholder="Select page size" />
-				</Select.Trigger>
-				<Select.Content>
-					<Select.Item value="10">10</Select.Item>
-					<Select.Item value="20">20</Select.Item>
-					<Select.Item value="30">30</Select.Item>
-					<Select.Item value="40">40</Select.Item>
-					<Select.Item value="50">50</Select.Item>
-				</Select.Content>
-			</Select.Root>
+				<SelectTrigger class="h-8 w-[70px]">
+					<SelectValue placeholder="Select page size" />
+				</SelectTrigger>
+				<SelectContent>
+					<SelectItem value="10">10</SelectItem>
+					<SelectItem value="20">20</SelectItem>
+					<SelectItem value="30">30</SelectItem>
+					<SelectItem value="40">40</SelectItem>
+					<SelectItem value="50">50</SelectItem>
+				</SelectContent>
+			</Select>
 		</div>
 		<div class="flex w-[100px] items-center justify-center text-sm font-medium">
 			Page {$pageIndex + 1} of {$pageCount}

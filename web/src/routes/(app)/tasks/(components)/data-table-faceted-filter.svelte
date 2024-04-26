@@ -2,12 +2,19 @@
 	import CirclePlus from 'lucide-svelte/icons/circle-plus';
 	import Check from 'lucide-svelte/icons/check';
 	import type { statuses } from '../(data)/data.js';
-	import * as Command from '$lib/components/ui/command/index.js';
-	import * as Popover from '$lib/components/ui/popover/index.js';
-	import { Button } from '$lib/components/ui/button/index.js';
+	import { Command } from '$lib/components/ui/command';
+	import { Popover, PopoverTrigger } from '$lib/components/ui/popover';
+	import { Button } from '$lib/components/ui/button';
 	import { cn } from '$lib/utils.js';
-	import { Separator } from '$lib/components/ui/separator/index.js';
-	import { Badge } from '$lib/components/ui/badge/index.js';
+	import { Separator } from '$lib/components/ui/separator';
+	import { Badge } from '$lib/components/ui/badge';
+	import PopoverContent from '$lib/components/ui/popover/popover-content.svelte';
+	import CommandList from '$lib/components/ui/command/command-list.svelte';
+	import CommandItem from '$lib/components/ui/command/command-item.svelte';
+	import CommandSeparator from '$lib/components/ui/command/command-separator.svelte';
+	import CommandGroup from '$lib/components/ui/command/command-group.svelte';
+	import CommandEmpty from '$lib/components/ui/command/command-empty.svelte';
+	import CommandInput from '$lib/components/ui/command/command-input.svelte';
 
 	export let filterValues: string[] = [];
 	export let title: string;
@@ -25,8 +32,8 @@
 	}
 </script>
 
-<Popover.Root bind:open>
-	<Popover.Trigger asChild let:builder>
+<Popover bind:open>
+	<PopoverTrigger asChild let:builder>
 		<Button builders={[builder]} variant="outline" size="sm" class="h-8 border-dashed">
 			<CirclePlus class="mr-2 h-4 w-4" />
 			{title}
@@ -51,16 +58,16 @@
 				</div>
 			{/if}
 		</Button>
-	</Popover.Trigger>
-	<Popover.Content class="w-[200px] p-0" align="start" side="bottom">
-		<Command.Root>
-			<Command.Input placeholder={title} />
-			<Command.List>
-				<Command.Empty>No results found.</Command.Empty>
-				<Command.Group>
+	</PopoverTrigger>
+	<PopoverContent class="w-[200px] p-0" align="start" side="bottom">
+		<Command>
+			<CommandInput placeholder={title} />
+			<CommandList>
+				<CommandEmpty>No results found.</CommandEmpty>
+				<CommandGroup>
 					{#each options as option}
 						{@const Icon = option.icon}
-						<Command.Item
+						<CommandItem
 							value={option.value}
 							onSelect={(currentValue) => {
 								handleSelect(currentValue);
@@ -85,21 +92,21 @@
 									{counts[option.value]}
 								</span>
 							{/if}
-						</Command.Item>
+						</CommandItem>
 					{/each}
-				</Command.Group>
+				</CommandGroup>
 				{#if filterValues.length > 0}
-					<Command.Separator />
-					<Command.Item
+					<CommandSeparator />
+					<CommandItem
 						class="justify-center text-center"
 						onSelect={() => {
 							filterValues = [];
 						}}
 					>
 						Clear filters
-					</Command.Item>
+					</CommandItem>
 				{/if}
-			</Command.List>
-		</Command.Root>
-	</Popover.Content>
-</Popover.Root>
+			</CommandList>
+		</Command>
+	</PopoverContent>
+</Popover>

@@ -4,12 +4,19 @@
 	import StickyNote from 'lucide-svelte/icons/sticky-note';
 	import ScrollText from 'lucide-svelte/icons/scroll-text';
 	import { Button } from '$lib/components/ui/button';
-	import * as Card from '$lib/components/ui/card';
-	import * as Table from '$lib/components/ui/table';
+	import { Card, CardHeader } from '$lib/components/ui/card';
+	import { Table } from '$lib/components/ui/table';
 	import DashboardCard from '$lib/components/containers/dashboard-card.svelte';
 	import { tasks } from '$lib/stores';
 	import DataTablePriorityCell from '../tasks/(components)/data-table-priority-cell.svelte';
 	import DataTableStatusCell from '../tasks/(components)/data-table-status-cell.svelte';
+	import CardTitle from '$lib/components/ui/card/card-title.svelte';
+	import CardContent from '$lib/components/ui/card/card-content.svelte';
+	import TableHeader from '$lib/components/ui/table/table-header.svelte';
+	import TableRow from '$lib/components/ui/table/table-row.svelte';
+	import TableHead from '$lib/components/ui/table/table-head.svelte';
+	import TableBody from '$lib/components/ui/table/table-body.svelte';
+	import TableCell from '$lib/components/ui/table/table-cell.svelte';
 
 	const taskCount = $tasks.length.toString();
 	const backlogTaskCount = $tasks.filter((task) => task.status === 'backlog').length.toString();
@@ -33,42 +40,42 @@
 		</DashboardCard>
 	</div>
 	<div class="grid gap-4 grid-cols-3">
-		<Card.Root class="col-span-3">
-			<Card.Header class="flex flex-row items-center">
+		<Card class="col-span-3">
+			<CardHeader class="flex flex-row items-center">
 				<div class="grid gap-2">
-					<Card.Title>Recent Tasks</Card.Title>
+					<CardTitle>Recent Tasks</CardTitle>
 				</div>
 				<Button href="/tasks" size="sm" class="ml-auto gap-1">
 					View All
 					<ArrowUpRight class="h-4 w-4" />
 				</Button>
-			</Card.Header>
-			<Card.Content>
-				<Table.Root>
-					<Table.Header>
-						<Table.Row>
-							<Table.Head>Details</Table.Head>
-							<Table.Head>Status</Table.Head>
-							<Table.Head>Priority</Table.Head>
-						</Table.Row>
-					</Table.Header>
-					<Table.Body>
+			</CardHeader>
+			<CardContent>
+				<Table>
+					<TableHeader>
+						<TableRow>
+							<TableHead>Details</TableHead>
+							<TableHead>Status</TableHead>
+							<TableHead>Priority</TableHead>
+						</TableRow>
+					</TableHeader>
+					<TableBody>
 						{#each recentTasks as task (task.id)}
-							<Table.Row>
-								<Table.Cell>
+							<TableRow>
+								<TableCell>
 									<div class="font-medium">{task.details}</div>
-								</Table.Cell>
-								<Table.Cell>
+								</TableCell>
+								<TableCell>
 									<DataTableStatusCell value={task.status} />
-								</Table.Cell>
-								<Table.Cell>
+								</TableCell>
+								<TableCell>
 									<DataTablePriorityCell value={task.priority} />
-								</Table.Cell>
-							</Table.Row>
+								</TableCell>
+							</TableRow>
 						{/each}
-					</Table.Body>
-				</Table.Root>
-			</Card.Content>
-		</Card.Root>
+					</TableBody>
+				</Table>
+			</CardContent>
+		</Card>
 	</div>
 </div>

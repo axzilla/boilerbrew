@@ -4,9 +4,9 @@
 	import type { Writable } from 'svelte/store';
 	import { priorities, statuses } from '../(data)/data.js';
 	import type { Task } from '$lib/schemas';
-	import { DataTableFacetedFilter, DataTableViewOptions } from './index.js';
+	import { DataTableFacetedFilter, DataTableViewOptions } from '.';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { Input } from '$lib/components/ui/input/index.js';
+	import { Input } from '$lib/components/ui/input';
 	import { tasks } from '$lib/stores.js';
 	import { CirclePlus } from 'lucide-svelte';
 

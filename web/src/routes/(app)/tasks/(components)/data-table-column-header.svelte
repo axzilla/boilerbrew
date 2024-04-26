@@ -6,8 +6,11 @@
 	import type { TableViewModel } from 'svelte-headless-table';
 	import type { Task } from '$lib/schemas';
 	import { cn } from '$lib/utils.js';
-	import { Button } from '$lib/components/ui/button/index.js';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
+	import { Button } from '$lib/components/ui/button';
+	import { DropdownMenu, DropdownMenuTrigger } from '$lib/components/ui/dropdown-menu';
+	import DropdownMenuContent from '$lib/components/ui/dropdown-menu/dropdown-menu-content.svelte';
+	import DropdownMenuItem from '$lib/components/ui/dropdown-menu/dropdown-menu-item.svelte';
+	import DropdownMenuSeparator from '$lib/components/ui/dropdown-menu/dropdown-menu-separator.svelte';
 
 	let className: string | undefined | null = undefined;
 	export { className as class };
@@ -56,8 +59,8 @@
 
 {#if !props.sort.disabled}
 	<div class={cn('flex items-center', className)}>
-		<DropdownMenu.Root>
-			<DropdownMenu.Trigger asChild let:builder>
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild let:builder>
 				<Button
 					variant="ghost"
 					builders={[builder]}
@@ -73,23 +76,23 @@
 						<ChevronsUpDown class="ml-2 h-4 w-4" />
 					{/if}
 				</Button>
-			</DropdownMenu.Trigger>
-			<DropdownMenu.Content align="start">
-				<DropdownMenu.Item on:click={handleAscSort}>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent align="start">
+				<DropdownMenuItem on:click={handleAscSort}>
 					<ArrowUp class="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
 					Asc
-				</DropdownMenu.Item>
-				<DropdownMenu.Item on:click={handleDescSort}>
+				</DropdownMenuItem>
+				<DropdownMenuItem on:click={handleDescSort}>
 					<ArrowDown class="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
 					Desc
-				</DropdownMenu.Item>
-				<DropdownMenu.Separator />
-				<DropdownMenu.Item on:click={handleHide}>
+				</DropdownMenuItem>
+				<DropdownMenuSeparator />
+				<DropdownMenuItem on:click={handleHide}>
 					<EyeOff class="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
 					Hide
-				</DropdownMenu.Item>
-			</DropdownMenu.Content>
-		</DropdownMenu.Root>
+				</DropdownMenuItem>
+			</DropdownMenuContent>
+		</DropdownMenu>
 	</div>
 {:else}
 	<slot />

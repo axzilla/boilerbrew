@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button/index.js';
+	import { Button } from '$lib/components/ui/button';
 	import { Bolt } from 'lucide-svelte';
 	import type { Task } from '$lib/schemas';
 

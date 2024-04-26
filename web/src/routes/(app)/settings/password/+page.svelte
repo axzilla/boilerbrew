@@ -1,13 +1,19 @@
 <script lang="ts">
-	import * as Card from '$lib/components/ui/card';
+	import { Card } from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
-	import * as Form from '$lib/components/ui/form';
+	import { FormControl, FormField } from '$lib/components/ui/form';
 	import { superForm } from 'sveltekit-superforms';
 	import { toast } from 'svelte-sonner';
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { UpdatePasswordSchema } from '$lib/schemas.js';
+	import CardHeader from '$lib/components/ui/card/card-header.svelte';
+	import CardTitle from '$lib/components/ui/card/card-title.svelte';
+	import CardContent from '$lib/components/ui/card/card-content.svelte';
+	import FormLabel from '$lib/components/ui/form/form-label.svelte';
+	import FormFieldErrors from '$lib/components/ui/form/form-field-errors.svelte';
+	import CardFooter from '$lib/components/ui/card/card-footer.svelte';
 
 	export let data;
 
@@ -32,15 +38,15 @@
 	const { form: formData, enhance } = form;
 </script>
 
-<Card.Root>
+<Card>
 	<form action="?/updatePassword" method="POST" use:enhance>
-		<Card.Header>
-			<Card.Title>Change Password</Card.Title>
-		</Card.Header>
-		<Card.Content>
-			<Form.Field {form} name="oldPassword">
-				<Form.Control let:attrs>
-					<Form.Label>Old Password</Form.Label>
+		<CardHeader>
+			<CardTitle>Change Password</CardTitle>
+		</CardHeader>
+		<CardContent>
+			<FormField {form} name="oldPassword">
+				<FormControl let:attrs>
+					<FormLabel>Old Password</FormLabel>
 					<Input
 						autofocus
 						{...attrs}
@@ -48,36 +54,36 @@
 						type="password"
 						disabled={isLoading}
 					/>
-				</Form.Control>
-				<Form.FieldErrors />
-			</Form.Field>
-			<Form.Field {form} name="password">
-				<Form.Control let:attrs>
-					<Form.Label>Password</Form.Label>
+				</FormControl>
+				<FormFieldErrors />
+			</FormField>
+			<FormField {form} name="password">
+				<FormControl let:attrs>
+					<FormLabel>Password</FormLabel>
 					<Input {...attrs} bind:value={$formData.password} type="password" disabled={isLoading} />
-				</Form.Control>
-				<Form.FieldErrors />
-			</Form.Field>
-			<Form.Field {form} name="passwordConfirm">
-				<Form.Control let:attrs>
-					<Form.Label>Confirm New Password</Form.Label>
+				</FormControl>
+				<FormFieldErrors />
+			</FormField>
+			<FormField {form} name="passwordConfirm">
+				<FormControl let:attrs>
+					<FormLabel>Confirm New Password</FormLabel>
 					<Input
 						{...attrs}
 						bind:value={$formData.passwordConfirm}
 						type="password"
 						disabled={isLoading}
 					/>
-				</Form.Control>
-				<Form.FieldErrors />
-			</Form.Field>
-		</Card.Content>
-		<Card.Footer class="border-t px-6 py-4">
+				</FormControl>
+				<FormFieldErrors />
+			</FormField>
+		</CardContent>
+		<CardFooter class="border-t px-6 py-4">
 			<Button type="submit" disabled={isLoading}>
 				{#if isLoading}
 					<LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
 				{/if}
 				Save
 			</Button>
-		</Card.Footer>
+		</CardFooter>
 	</form>
-</Card.Root>
+</Card>
