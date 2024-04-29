@@ -1,0 +1,29 @@
+<script lang="ts">
+	import { Button } from '$lib/components/ui/button';
+	import { Card, CardTitle } from '$lib/components/ui/card';
+	import {
+		DropdownMenu,
+		DropdownMenuContent,
+		DropdownMenuItem,
+		DropdownMenuTrigger
+	} from '$lib/components/ui/dropdown-menu';
+	import { type List } from '$lib/schemas';
+	import { Ellipsis } from 'lucide-svelte/icons';
+
+	export let list: List;
+	export let setCurrentList: (list: List) => void;
+</script>
+
+<Card class="min-w-72 flex items-start justify-between gap-2 p-2">
+	<CardTitle class="text-sm font-medium p-2 flex-1">{list.name}</CardTitle>
+	<DropdownMenu>
+		<DropdownMenuTrigger asChild let:builder>
+			<Button builders={[builder]} size="icon" variant="ghost">
+				<Ellipsis class="h-5 w-5" />
+			</Button>
+		</DropdownMenuTrigger>
+		<DropdownMenuContent align="start">
+			<DropdownMenuItem on:click={() => setCurrentList(list)}>Delete</DropdownMenuItem>
+		</DropdownMenuContent>
+	</DropdownMenu>
+</Card>

@@ -1,1 +1,1 @@
-export { default as NewBoardCard } from './new-board-card.svelte';
+export { default as ListFormAdd } from './list-form-add.svelte';

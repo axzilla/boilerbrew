@@ -105,3 +105,10 @@ export const TaskSchema = z.object({
 		.min(1, { message: 'Priority is required' })
 });
 export type Task = z.infer<typeof TaskSchema>;
+
+export const ListSchema = z.object({
+	id: z.string(),
+	name: z.string(),
+	user_id: z.string()
+});
+export type List = z.infer<typeof ListSchema>;
