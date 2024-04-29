@@ -47,6 +47,14 @@
 				<FormField {form} name="name">
 					<FormControl let:attrs>
 						<Textarea
+							on:keydown={(event) => {
+								if (event.key === 'Enter') {
+									event.preventDefault();
+									if ($formData.name) {
+										form.submit(); // Absenden des Formulars
+									}
+								}
+							}}
 							rows={1}
 							autofocus
 							placeholder="Enter list title..."
