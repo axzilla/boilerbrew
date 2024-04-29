@@ -21,6 +21,6 @@
 
 <DataTableTaskForm {data} bind:currentTask {closeDialog} bind:open />
 
-<div class="h-full flex-1 flex-col p-8 flex">
+<div class="h-full flex-1 flex-col flex">
 	<DataTable {openTaskFormDialog} />
 </div>

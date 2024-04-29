@@ -27,7 +27,7 @@
 		.slice(0, 10);
 </script>
 
-<div class="h-full gap-4 flex-1 flex-col p-8 flex">
+<div class="h-full gap-4 flex-1 flex-col flex">
 	<div class="grid gap-4 md:grid-cols-1 lg:grid-cols-3">
 		<DashboardCard title="Total Tasks" value={taskCount}>
 			<StickyNote slot="icon" class="h-4 w-4 text-muted-foreground" />

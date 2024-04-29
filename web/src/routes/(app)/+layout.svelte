@@ -47,6 +47,11 @@
 			icon: Home
 		},
 		{
+			title: 'Boards',
+			href: '/boards',
+			icon: Home
+		},
+		{
 			title: 'Tasks',
 			href: '/tasks',
 			icon: AlarmClockCheck
@@ -167,7 +172,7 @@
 				</DropdownMenuContent>
 			</DropdownMenu>
 		</header>
-		<main class="w-full flex justify-center">
+		<main class="flex-1 p-8">
 			<slot />
 		</main>
 	</div>
