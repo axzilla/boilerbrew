@@ -9,7 +9,7 @@
 	} from '$lib/components/ui/dialog';
 	import { ListSchema, type List } from '$lib/schemas';
 	import { lists } from '$lib/stores';
-	import  { superForm } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 
 	export let list: List;
@@ -34,7 +34,6 @@
 {#if open}
 	<Dialog bind:open>
 		<DialogContent class="sm:max-w-[425px]">
-			{list.id}
 			<DialogHeader>
 				<DialogTitle>Delete List?</DialogTitle>
 			</DialogHeader>
