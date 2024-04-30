@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 };
 
 export const actions: Actions = {
-	createList: async ({ request, locals }) => {
+	createOrUpdateList: async ({ request, locals }) => {
 		const formData = await request.formData();
 		const form = await superValidate(formData, zod(ListSchema));
 
@@ -20,9 +20,15 @@ export const actions: Actions = {
 		}
 
 		try {
-			const list = await locals.pb
-				.collection('lists')
-				.create({ ...form.data, user_id: locals.user?.id });
+			let list: List;
+
+			if (form.data.id) {
+				list = await locals.pb.collection('lists').update(form.data.id, form.data);
+			} else {
+				list = await locals.pb
+					.collection('lists')
+					.create({ ...form.data, user_id: locals.user?.id });
+			}
 
 			return { form, list };
 		} catch (err) {
