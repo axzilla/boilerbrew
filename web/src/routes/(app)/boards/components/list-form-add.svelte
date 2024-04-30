@@ -23,11 +23,6 @@
 
 	const form = superForm(data.form, {
 		validators: zod(ListSchema),
-		onUpdated: ({ form: f }) => {
-			if (f.valid) {
-				toggleOpen();
-			}
-		},
 		onResult({ result }) {
 			const { data } = result;
 

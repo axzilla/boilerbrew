@@ -39,7 +39,7 @@
 			</DialogHeader>
 			<form action="?/deleteList" method="POST" use:enhance>
 				<DialogFooter>
-					<Button type="submit" variant="outline" name="delete" class="danger">Delete</Button>
+					<Button type="submit" variant="outline" name="delete">Delete</Button>
 					<Button type="submit" on:click={() => (open = false)}>Cancel</Button>
 				</DialogFooter>
 			</form>
