@@ -11,11 +11,10 @@
 	lists.set(data.lists);
 
 	let currentList: List;
-	let open = false;
+	let openDelete = false;
 
 	function setCurrentList(list: List) {
 		currentList = list;
-		open = true;
 	}
 </script>
 
@@ -24,13 +23,13 @@
 		<!-- FIX: Why w-1? -->
 		<div class="flex gap-2 w-1 items-start">
 			{#each $lists as list}
-				<ListCard {list} {setCurrentList} />
+				<ListCard bind:openDelete {list} {setCurrentList} />
 			{/each}
 			<ListFormAdd {data} />
 		</div>
 	</ScrollArea>
 </div>
 
-{#if open}
-	<ListFormDelete bind:open list={currentList} />
+{#if openDelete}
+	<ListFormDelete bind:openDelete list={currentList} />
 {/if}

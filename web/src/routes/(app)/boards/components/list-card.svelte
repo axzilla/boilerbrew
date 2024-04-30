@@ -11,6 +11,7 @@
 	import { Ellipsis } from 'lucide-svelte/icons';
 
 	export let list: List;
+	export let openDelete = false;
 	export let setCurrentList: (list: List) => void;
 </script>
 
@@ -23,7 +24,12 @@
 			</Button>
 		</DropdownMenuTrigger>
 		<DropdownMenuContent align="start">
-			<DropdownMenuItem on:click={() => setCurrentList(list)}>Delete</DropdownMenuItem>
+			<DropdownMenuItem
+				on:click={() => {
+					setCurrentList(list);
+					openDelete = true;
+				}}>Delete</DropdownMenuItem
+			>
 		</DropdownMenuContent>
 	</DropdownMenu>
 </Card>
