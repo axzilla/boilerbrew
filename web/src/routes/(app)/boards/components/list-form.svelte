@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { XIcon } from 'lucide-svelte';
+	import { CirclePlus } from 'lucide-svelte';
 	import { ListSchema, type List } from '$lib/schemas';
 	import { superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
@@ -35,10 +35,11 @@
 	const { form: formData, enhance } = form;
 </script>
 
-<form class="" action="?/createOrUpdateList" method="POST" use:enhance>
-	<FormField {form} name="name">
+<form action="?/createOrUpdateList" method="POST" use:enhance class="flex gap-2">
+	<FormField {form} name="name" class="flex-1">
 		<FormControl let:attrs>
 			<Textarea
+				class="font-bold"
 				on:keydown={(event) => {
 					if (event.key === 'Enter') {
 						event.preventDefault();
@@ -48,7 +49,6 @@
 					}
 				}}
 				rows={1}
-				autofocus
 				placeholder="Enter list title..."
 				{...attrs}
 				bind:value={$formData.name}
@@ -56,10 +56,9 @@
 		</FormControl>
 	</FormField>
 	{#if !$formData.id}
-		<div class="flex align-middle gap-2">
-			<Button disabled={!$formData.name} type="submit">Add List</Button>
-			<Button on:click={() => console.log('closed')} variant="ghost" size="icon">
-				<XIcon />
+		<div class="flex-row align-middle gap-2">
+			<Button size="icon" variant="ghost" disabled={!$formData.name} type="submit">
+				<CirclePlus class="h-5 w-5" />
 			</Button>
 		</div>
 	{/if}

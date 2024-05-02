@@ -22,7 +22,7 @@
 		{#each $lists as list}
 			<ListCard bind:openDelete {list} {setCurrentList} />
 		{/each}
-		<Card>
+		<Card class="min-w-72 p-2">
 			<ListForm list={null} {data} />
 		</Card>
 	</div>
