@@ -90,22 +90,6 @@ export const UpdatePasswordSchema = z
 		}
 	});
 
-export const TaskSchema = z.object({
-	id: z.string().optional(),
-	created: z.date().optional(),
-	updated: z.date().optional(),
-	details: z
-		.string({ required_error: 'Details is required' })
-		.min(1, { message: 'Details is required' }),
-	status: z
-		.string({ required_error: 'Status is required' })
-		.min(1, { message: 'Status is required' }),
-	priority: z
-		.string({ required_error: 'Priority is required' })
-		.min(1, { message: 'Priority is required' })
-});
-export type Task = z.infer<typeof TaskSchema>;
-
 export const ListSchema = z.object({
 	id: z.string(),
 	name: z.string(),

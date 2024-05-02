@@ -15,7 +15,6 @@
 	} from '$lib/components/ui/dropdown-menu';
 	import { Sheet, SheetTrigger, SheetContent } from '$lib/components/ui/sheet';
 	import { goto } from '$app/navigation';
-	import { tasks } from '$lib/stores';
 	import { page } from '$app/stores';
 	import Home from 'lucide-svelte/icons/home';
 	import { Bolt } from 'lucide-svelte';
@@ -31,10 +30,6 @@
 
 	export let data;
 
-	$: if (data && data.tasks) {
-		tasks.set(data.tasks);
-	}
-
 	async function logout() {
 		await fetch('/api/logout');
 		goto('/login');
@@ -42,19 +37,9 @@
 
 	const navigation = [
 		{
-			title: 'Dashboard',
-			href: '/dashboard',
-			icon: Home
-		},
-		{
 			title: 'Boards',
 			href: '/boards',
 			icon: Home
-		},
-		{
-			title: 'Tasks',
-			href: '/tasks',
-			icon: AlarmClockCheck
 		},
 		{
 			title: 'Settings',
@@ -113,7 +98,7 @@
 				</SheetTrigger>
 				<SheetContent side="left" class="flex flex-col">
 					<nav class="grid gap-2 text-lg font-medium">
-						<a href="/dashboard" class="flex items-center gap-2 text-lg font-semibold">
+						<a href="/" class="flex items-center gap-2 text-lg font-semibold">
 							<Beer class="h-6 w-6" />
 							{config.appName}
 						</a>
