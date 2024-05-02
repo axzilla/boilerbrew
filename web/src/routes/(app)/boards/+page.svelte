@@ -17,19 +17,16 @@
 	}
 </script>
 
-<div class="overflow-scroll h-full">
-	<ScrollArea class="h-full" orientation="horizontal">
-		<!-- FIX: Why w-1? -->
-		<div class="flex gap-2 w-1 items-start">
-			{#each $lists as list}
-				<ListCard bind:openDelete {list} {setCurrentList} />
-			{/each}
-			<Card>
-				<ListForm list={null} {data} />
-			</Card>
-		</div>
-	</ScrollArea>
-</div>
+<ScrollArea class="h-full" orientation="horizontal">
+	<div class="flex gap-2 items-start">
+		{#each $lists as list}
+			<ListCard bind:openDelete {list} {setCurrentList} />
+		{/each}
+		<Card>
+			<ListForm list={null} {data} />
+		</Card>
+	</div>
+</ScrollArea>
 
 {#if openDelete}
 	<ListFormDelete bind:openDelete list={currentList} />

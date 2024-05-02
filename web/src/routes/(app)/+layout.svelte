@@ -64,8 +64,8 @@
 	];
 </script>
 
-<div class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-	<div class="hidden border-r bg-muted/40 md:block">
+<div class="flex min-h-screen">
+	<div class="hidden flex-none md:block md:w-[280px] bg-muted/40 border-r">
 		<div class="flex h-full max-h-screen flex-col gap-2">
 			<div class="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
 				<a href="/" class="flex items-center gap-2 font-semibold">
@@ -103,7 +103,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="flex flex-col">
+	<div class="flex-1 overflow-x-auto">
 		<header class="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
 			<Sheet>
 				<SheetTrigger asChild let:builder>
@@ -145,9 +145,7 @@
 					</div>
 				</SheetContent>
 			</Sheet>
-			<div class="w-full flex-1">
-				<!-- Search functionality could be added here -->
-			</div>
+			<div class="w-full flex-1" />
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild let:builder>
 					<Button builders={[builder]} variant="secondary" size="icon" class="rounded-full">
@@ -172,7 +170,7 @@
 				</DropdownMenuContent>
 			</DropdownMenu>
 		</header>
-		<main class="flex-1 p-8">
+		<main class="flex-1 p-8" style="height: calc(100vh - 60px)">
 			<slot />
 		</main>
 	</div>
