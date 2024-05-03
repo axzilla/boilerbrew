@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { ScrollArea } from '$lib/components/ui/scroll-area';
 	import type { List } from '$lib/schemas';
 	import { lists } from '$lib/stores';
 	import { ListCard, ListFormDelete } from './components';
@@ -17,14 +16,12 @@
 	}
 </script>
 
-<ScrollArea class="h-full" orientation="horizontal">
-	<div class="flex gap-2 items-start">
-		{#each $lists as list}
-			<ListCard bind:openDelete {list} {setCurrentList} />
-		{/each}
-		<ListCardAdd {data} />
-	</div>
-</ScrollArea>
+<div class="overflow-auto h-full flex gap-4 items-start">
+	{#each $lists as list}
+		<ListCard bind:openDelete {list} {setCurrentList} />
+	{/each}
+	<ListCardAdd {data} />
+</div>
 
 {#if openDelete}
 	<ListFormDelete bind:openDelete list={currentList} />

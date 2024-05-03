@@ -40,7 +40,7 @@
 		<FormControl let:attrs>
 			<Textarea
 				autofocus
-				class="font-bold"
+				class="border-0 hover:border-0 p-2 font-bold"
 				on:keydown={(event) => {
 					if (event.key === 'Enter') {
 						event.preventDefault();
@@ -50,7 +50,7 @@
 					}
 				}}
 				rows={1}
-				placeholder="Enter list title..."
+				placeholder="Enter List Title..."
 				{...attrs}
 				bind:value={$formData.name}
 			/>
