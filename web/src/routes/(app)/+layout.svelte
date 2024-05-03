@@ -2,7 +2,6 @@
 	import CircleUser from 'lucide-svelte/icons/circle-user';
 	import Menu from 'lucide-svelte/icons/menu';
 	import Beer from 'lucide-svelte/icons/beer';
-	import AlarmClockCheck from 'lucide-svelte/icons/alarm-clock-check';
 	import { Button } from '$lib/components/ui/button';
 	import {
 		DropdownMenu,
@@ -17,7 +16,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Home from 'lucide-svelte/icons/home';
-	import { Bolt } from 'lucide-svelte';
+	import { Bolt, Moon, Sun } from 'lucide-svelte';
 	import config from '$lib/config';
 	import {
 		Card,
@@ -27,6 +26,7 @@
 		CardContent
 	} from '$lib/components/ui/card';
 	import { Separator } from '$lib/components/ui/separator';
+	import { resetMode, setMode } from 'mode-watcher';
 
 	export let data;
 
@@ -152,6 +152,24 @@
 					</DropdownMenuGroup>
 					<DropdownMenuSeparator />
 					<DropdownMenuItem on:click={logout}>Log out</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
+			<DropdownMenu>
+				<DropdownMenuTrigger asChild let:builder>
+					<Button builders={[builder]} variant="outline" size="icon">
+						<Sun
+							class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+						/>
+						<Moon
+							class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+						/>
+						<span class="sr-only">Toggle theme</span>
+					</Button>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent align="end">
+					<DropdownMenuItem on:click={() => setMode('light')}>Light</DropdownMenuItem>
+					<DropdownMenuItem on:click={() => setMode('dark')}>Dark</DropdownMenuItem>
+					<DropdownMenuItem on:click={() => resetMode()}>System</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
 		</header>
