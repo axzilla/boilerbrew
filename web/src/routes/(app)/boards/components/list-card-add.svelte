@@ -9,7 +9,7 @@
 	let isFormOpen = false;
 </script>
 
-<Card class="min-w-72 h-16 items-center flex justify-between gap-2 p-2">
+<Card class="bg-muted min-w-72 h-16 items-center flex justify-between gap-2 p-2">
 	{#if isFormOpen}
 		<div class="w-full" use:clickOutside={() => (isFormOpen = false)}>
 			<ListForm bind:isFormOpen {data} list={null} />
