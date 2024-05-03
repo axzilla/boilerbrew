@@ -58,13 +58,15 @@
 
 	<div class="overflow-auto h-full flex flex-col gap-2 items-start">
 		{#each tasks as task}
-			<div class="w-full bg-muted gap-2 p-2 cursor-pointer rounded-lg">
+			<div class="text-sm w-full bg-muted gap-2 p-2 cursor-pointer rounded-lg">
 				{task}
 			</div>
 		{/each}
 	</div>
 
-	<div class="flex items-center hover:bg-muted gap-2 p-2 cursor-pointer rounded-lg">
+	<div
+		class="font-bold text-sm flex items-center hover:bg-muted gap-2 p-2 cursor-pointer rounded-lg"
+	>
 		<CirclePlus class="h-5 w-5" />Add Task
 	</div>
 </Card>

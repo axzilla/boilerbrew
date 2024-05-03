@@ -173,7 +173,7 @@
 				</DropdownMenuContent>
 			</DropdownMenu>
 		</header>
-		<main class="flex-1 p-8" style="height: calc(100vh - 60px)">
+		<main class="p-8" style="height: calc(100vh - 60px)">
 			<slot />
 		</main>
 	</div>
