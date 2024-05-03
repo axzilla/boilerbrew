@@ -22,7 +22,7 @@
 		<div class="flex w-full justify-between items-center">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
-			<div on:click={() => (isFormOpen = true)}>
+			<div class="w-full cursor-pointer" on:click={() => (isFormOpen = true)}>
 				<CardTitle class="text-sm font-bold p-2">{list.name}</CardTitle>
 			</div>
 			<Button

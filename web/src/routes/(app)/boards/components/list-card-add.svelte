@@ -15,12 +15,10 @@
 			<ListForm bind:isFormOpen {data} list={null} />
 		</div>
 	{:else}
-		<div class="flex justify-between">
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<!-- svelte-ignore a11y-no-static-element-interactions -->
-			<div class="w-full" on:click={() => (isFormOpen = true)}>
-				<CardTitle class="text-sm font-bold p-2">Add new list</CardTitle>
-			</div>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<div class="w-full cursor-pointer" on:click={() => (isFormOpen = true)}>
+			<CardTitle class="text-sm font-bold p-2">Add new list</CardTitle>
 		</div>
 	{/if}
 </Card>
