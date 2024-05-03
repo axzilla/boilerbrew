@@ -2,8 +2,8 @@
 	import { ScrollArea } from '$lib/components/ui/scroll-area';
 	import type { List } from '$lib/schemas';
 	import { lists } from '$lib/stores';
-	import { ListCard, ListFormDelete, ListForm } from './components';
-	import { Card } from '$lib/components/ui/card';
+	import { ListCard, ListFormDelete } from './components';
+	import ListCardAdd from './components/list-card-add.svelte';
 
 	export let data;
 
@@ -22,9 +22,7 @@
 		{#each $lists as list}
 			<ListCard bind:openDelete {list} {setCurrentList} />
 		{/each}
-		<Card class="min-w-72 p-2">
-			<ListForm list={null} {data} />
-		</Card>
+		<ListCardAdd {data} />
 	</div>
 </ScrollArea>
 

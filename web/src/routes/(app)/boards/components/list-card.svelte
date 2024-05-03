@@ -13,16 +13,16 @@
 	let isFormOpen = false;
 </script>
 
-<Card class="min-w-72 flex-col items-start justify-between gap-2 p-2">
+<Card class="min-w-72 h-16 items-center flex justify-between gap-2 p-2">
 	{#if isFormOpen}
-		<div use:clickOutside={() => (isFormOpen = false)}>
+		<div class="w-full" use:clickOutside={() => (isFormOpen = false)}>
 			<ListForm bind:isFormOpen {list} data={null} />
 		</div>
 	{:else}
-		<div class="flex justify-between">
+		<div class="flex w-full justify-between items-center">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
-			<div class="w-full" on:click={() => (isFormOpen = true)}>
+			<div on:click={() => (isFormOpen = true)}>
 				<CardTitle class="text-sm font-bold p-2">{list.name}</CardTitle>
 			</div>
 			<Button

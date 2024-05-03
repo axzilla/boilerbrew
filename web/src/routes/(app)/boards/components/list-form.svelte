@@ -39,12 +39,13 @@
 	<FormField {form} name="name" class="flex-1">
 		<FormControl let:attrs>
 			<Textarea
+				autofocus
 				class="font-bold"
 				on:keydown={(event) => {
 					if (event.key === 'Enter') {
 						event.preventDefault();
 						if ($formData.name) {
-							form.submit(); // Absenden des Formulars
+							form.submit();
 						}
 					}
 				}}
