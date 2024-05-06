@@ -96,3 +96,14 @@ export const ListSchema = z.object({
 	user_id: z.string()
 });
 export type List = z.infer<typeof ListSchema>;
+
+export const TaskSchema = z.object({
+	id: z.string(),
+	title: z.string(),
+	description: z.string(),
+	status: z.string(),
+	images: z.array(z.string()),
+	due_date: z.string(),
+	user_id: z.string()
+});
+export type Task = z.infer<typeof TaskSchema>;

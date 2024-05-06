@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { Card, CardTitle } from '$lib/components/ui/card';
-	import { type List } from '$lib/schemas';
+	import { type List, type Task } from '$lib/schemas';
 	import { CirclePlus, Trash } from 'lucide-svelte/icons';
-	import { ListForm } from '.';
+	import { ListForm, TaskForm } from '.';
 	import { clickOutside } from '$lib/utils';
 	import TaskCard from './task-card.svelte';
 
@@ -12,23 +12,59 @@
 	export let setCurrentList: (list: List) => void;
 
 	let isListFormOpen = false;
+	let isTaskFormOpen = false;
+	let currentTask: Task;
 
-	const tasks = [
-		'ransoms',
-		'kidnappings',
-		'assassinations',
-		'theft',
-		'espionage',
-		'ransoms',
-		'kidnappings',
-		'assassinations',
-		'theft',
-		'espionage',
-		'ransoms',
-		'kidnappings',
-		'assassinations',
-		'theft',
-		'espionage'
+	function setCurrentTask(task: Task) {
+		currentTask = task;
+	}
+
+	const tasks: Task[] = [
+		{
+			id: '1',
+			title: 'Ransoms',
+			description: 'Handle the ransom negotiations.',
+			status: 'open',
+			images: [],
+			due_date: '2023-05-01',
+			user_id: 'user123'
+		},
+		{
+			id: '2',
+			title: 'Kidnappings',
+			description: 'Plan and execute the kidnapping.',
+			status: 'in progress',
+			images: [],
+			due_date: '2023-05-02',
+			user_id: 'user456'
+		},
+		{
+			id: '3',
+			title: 'Assassinations',
+			description: 'Organize the target assassination.',
+			status: 'completed',
+			images: [],
+			due_date: '2023-05-03',
+			user_id: 'user789'
+		},
+		{
+			id: '4',
+			title: 'Theft',
+			description: 'Steal the designated items.',
+			status: 'open',
+			images: [],
+			due_date: '2023-05-04',
+			user_id: 'user012'
+		},
+		{
+			id: '5',
+			title: 'Espionage',
+			description: 'Gather intelligence information.',
+			status: 'in progress',
+			images: [],
+			due_date: '2023-05-05',
+			user_id: 'user345'
+		}
 	];
 </script>
 
@@ -59,7 +95,7 @@
 
 	<div class="overflow-auto h-full flex flex-col gap-2 items-start">
 		{#each tasks as task}
-			<TaskCard {task} />
+			<TaskCard {task} bind:isTaskFormOpen {setCurrentTask} />
 		{/each}
 	</div>
 
@@ -69,3 +105,7 @@
 		<CirclePlus class="h-5 w-5" />Add Task
 	</div>
 </Card>
+
+{#if isTaskFormOpen}
+	<TaskForm bind:isTaskFormOpen task={currentTask} />
+{/if}

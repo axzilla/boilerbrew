@@ -1,27 +1,24 @@
 <script lang="ts">
-	import { Textarea } from '$lib/components/ui/textarea';
-	import { clickOutside } from '$lib/utils';
-	export let task: string;
+	import { Button } from '$lib/components/ui/button';
+	import type { Task } from '$lib/schemas';
 
-	let isTaskFormOpen = false;
+	export let task: Task;
+	export let isTaskFormOpen = false;
+	export let setCurrentTask: (task: Task) => void;
 </script>
 
-{#if !isTaskFormOpen}
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div
-		on:click={() => (isTaskFormOpen = true)}
-		class="hover:bg-muted-foreground text-sm w-full bg-muted gap-2 p-2 cursor-pointer rounded-lg"
-	>
-		{task}
-	</div>
-{:else}
-	<div use:clickOutside={() => (isTaskFormOpen = false)}>
-		<Textarea
-			autofocus
-			rows={1}
-			class="focus-visible:ring-0 focus-visible:ring-offset-0"
-			value={task}
-		/>
-	</div>
-{/if}
+<Button
+	on:click={() => {
+		isTaskFormOpen = true;
+		setCurrentTask(task);
+	}}
+	on:keydown={(event) => {
+		if (event.key === 'Enter') {
+			isTaskFormOpen = true;
+		}
+	}}
+	variant="secondary"
+	class="w-full flex items-center justify-start"
+>
+	{task.title}
+</Button>

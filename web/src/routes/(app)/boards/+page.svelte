@@ -9,7 +9,7 @@
 	lists.set(data.lists);
 
 	let currentList: List;
-	let openDelete = false;
+	let openDeleteList = false;
 
 	function setCurrentList(list: List) {
 		currentList = list;
@@ -18,11 +18,11 @@
 
 <div class="overflow-auto h-full flex gap-4 items-start">
 	{#each $lists as list}
-		<ListCard bind:openDelete {list} {setCurrentList} />
+		<ListCard bind:openDelete={openDeleteList} {list} {setCurrentList} />
 	{/each}
 	<ListCardAdd {data} />
 </div>
 
-{#if openDelete}
-	<ListFormDelete bind:openDelete list={currentList} />
+{#if openDeleteList}
+	<ListFormDelete bind:openDeleteList list={currentList} />
 {/if}
