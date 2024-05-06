@@ -6,6 +6,7 @@
 	import { ListForm, TaskForm } from '.';
 	import { clickOutside } from '$lib/utils';
 	import TaskCard from './task-card.svelte';
+	import { tasks } from '$lib/stores';
 
 	export let list: List;
 	export let openDelete = false;
@@ -19,53 +20,7 @@
 		currentTask = task;
 	}
 
-	const tasks: Task[] = [
-		{
-			id: '1',
-			title: 'Ransoms',
-			description: 'Handle the ransom negotiations.',
-			priority: 'low',
-			images: [],
-			due_date: '2023-05-01',
-			user_id: 'user123'
-		},
-		{
-			id: '2',
-			title: 'Kidnappings',
-			description: 'Plan and execute the kidnapping.',
-			priority: 'low',
-			images: [],
-			due_date: '2023-05-02',
-			user_id: 'user456'
-		},
-		{
-			id: '3',
-			title: 'Assassinations',
-			description: 'Organize the target assassination.',
-			priority: 'high',
-			images: [],
-			due_date: '2023-05-03',
-			user_id: 'user789'
-		},
-		{
-			id: '4',
-			title: 'Theft',
-			description: 'Steal the designated items.',
-			priority: 'mid',
-			images: [],
-			due_date: '2023-05-04',
-			user_id: 'user012'
-		},
-		{
-			id: '5',
-			title: 'Espionage',
-			description: 'Gather intelligence information.',
-			priority: 'mid',
-			images: [],
-			due_date: '2023-05-05',
-			user_id: 'user345'
-		}
-	];
+	$: filteredTasks = $tasks.filter((task) => task.list_id === list.id);
 </script>
 
 <Card class="min-w-64 max-h-full min-h-16 flex flex-col gap-2 p-2">
@@ -94,7 +49,7 @@
 	{/if}
 
 	<div class="overflow-auto h-full flex flex-col gap-2 items-start">
-		{#each tasks as task}
+		{#each filteredTasks as task}
 			<TaskCard {task} bind:isTaskFormOpen {setCurrentTask} />
 		{/each}
 	</div>
@@ -112,5 +67,5 @@
 </Card>
 
 {#if isTaskFormOpen}
-	<TaskForm bind:isTaskFormOpen task={currentTask} />
+	<TaskForm bind:isTaskFormOpen task={currentTask} {list} />
 {/if}

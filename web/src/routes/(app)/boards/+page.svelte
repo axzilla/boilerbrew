@@ -1,12 +1,13 @@
 <script lang="ts">
 	import type { List } from '$lib/schemas';
-	import { lists } from '$lib/stores';
+	import { lists, tasks } from '$lib/stores';
 	import { ListCard, ListFormDelete } from './components';
 	import ListCardAdd from './components/list-card-add.svelte';
 
 	export let data;
 
 	lists.set(data.lists);
+	tasks.set(data.tasks);
 
 	let currentList: List;
 	let openDeleteList = false;

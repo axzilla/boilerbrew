@@ -7,17 +7,39 @@
 		DialogHeader,
 		DialogTitle
 	} from '$lib/components/ui/dialog';
-	import { TaskSchema, type Task } from '$lib/schemas';
+	import { FormControl, FormField, FormFieldErrors, FormLabel } from '$lib/components/ui/form';
+	import { Input } from '$lib/components/ui/input';
+	import { Textarea } from '$lib/components/ui/textarea';
+	import { TaskSchema, type List, type Task } from '$lib/schemas';
+	import { tasks } from '$lib/stores';
 	import SuperDebug, { defaultValues, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 
 	export let task: Task | null;
+	export let list: List | null;
 	export let isTaskFormOpen = false;
 
-	const form = superForm(task || defaultValues(zod(TaskSchema)), {
-		dataType: 'json',
-		validators: zod(TaskSchema)
-	});
+	const form = superForm(
+		task || { ...defaultValues(zod(TaskSchema)), list_id: list ? list.id : '' },
+		{
+			dataType: 'json',
+			validators: zod(TaskSchema),
+			onResult: ({ result }) => {
+				const { data } = result;
+
+				tasks.update((currentTasks) => {
+					if (data.form.data.id) {
+						const index = currentTasks.findIndex((task) => task.id === data.form.data.id);
+						currentTasks[index] = data.task;
+						return currentTasks;
+					}
+					return [...currentTasks, data.task];
+				});
+
+				isTaskFormOpen = false;
+			}
+		}
+	);
 
 	const { form: formData, enhance } = form;
 </script>
@@ -28,14 +50,31 @@
 		<DialogHeader>
 			<DialogTitle>{!task ? 'Create' : 'Edit'} Task</DialogTitle>
 		</DialogHeader>
-		<form action="?/example" method="POST" use:enhance>
+		<form action="?/createOrUpdateTask" method="POST" use:enhance>
+			<FormField {form} name="title">
+				<FormControl let:attrs>
+					<FormLabel>Title</FormLabel>
+					<Input autofocus {...attrs} bind:value={$formData.title} />
+				</FormControl>
+				<FormFieldErrors />
+			</FormField>
+			<FormField {form} name="description">
+				<FormControl let:attrs>
+					<FormLabel>Description</FormLabel>
+					<Textarea {...attrs} bind:value={$formData.description} />
+				</FormControl>
+				<FormFieldErrors />
+			</FormField>
 			<DialogFooter>
-				<Button type="submit" variant="outline" name="delete" class="danger">Save</Button>
 				<Button
+					variant="outline"
 					on:click={() => {
 						isTaskFormOpen = false;
-					}}>Cancel</Button
+					}}
 				>
+					Cancel
+				</Button>
+				<Button disabled={!$formData.title} type="submit" name="delete" class="danger">Save</Button>
 			</DialogFooter>
 		</form>
 	</DialogContent>
