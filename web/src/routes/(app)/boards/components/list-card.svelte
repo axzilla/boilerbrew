@@ -24,7 +24,7 @@
 			id: '1',
 			title: 'Ransoms',
 			description: 'Handle the ransom negotiations.',
-			status: 'open',
+			priority: 'low',
 			images: [],
 			due_date: '2023-05-01',
 			user_id: 'user123'
@@ -33,7 +33,7 @@
 			id: '2',
 			title: 'Kidnappings',
 			description: 'Plan and execute the kidnapping.',
-			status: 'in progress',
+			priority: 'low',
 			images: [],
 			due_date: '2023-05-02',
 			user_id: 'user456'
@@ -42,7 +42,7 @@
 			id: '3',
 			title: 'Assassinations',
 			description: 'Organize the target assassination.',
-			status: 'completed',
+			priority: 'high',
 			images: [],
 			due_date: '2023-05-03',
 			user_id: 'user789'
@@ -51,7 +51,7 @@
 			id: '4',
 			title: 'Theft',
 			description: 'Steal the designated items.',
-			status: 'open',
+			priority: 'mid',
 			images: [],
 			due_date: '2023-05-04',
 			user_id: 'user012'
@@ -60,7 +60,7 @@
 			id: '5',
 			title: 'Espionage',
 			description: 'Gather intelligence information.',
-			status: 'in progress',
+			priority: 'mid',
 			images: [],
 			due_date: '2023-05-05',
 			user_id: 'user345'

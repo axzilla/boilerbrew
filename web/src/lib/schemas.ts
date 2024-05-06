@@ -101,7 +101,7 @@ export const TaskSchema = z.object({
 	id: z.string(),
 	title: z.string(),
 	description: z.string(),
-	status: z.string(),
+	priority: z.string(),
 	images: z.array(z.string()),
 	due_date: z.string(),
 	user_id: z.string()
