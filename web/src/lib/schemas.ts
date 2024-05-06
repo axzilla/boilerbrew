@@ -104,6 +104,7 @@ export const TaskSchema = z.object({
 	priority: z.string(),
 	images: z.array(z.string()),
 	due_date: z.string(),
+	list_id: z.string(),
 	user_id: z.string()
 });
 export type Task = z.infer<typeof TaskSchema>;

@@ -13,7 +13,7 @@
 
 	let isListFormOpen = false;
 	let isTaskFormOpen = false;
-	let currentTask: Task;
+	let currentTask: Task | null;
 
 	function setCurrentTask(task: Task) {
 		currentTask = task;
@@ -99,11 +99,16 @@
 		{/each}
 	</div>
 
-	<div
-		class="font-bold text-sm flex items-center hover:bg-muted gap-2 p-2 cursor-pointer rounded-lg"
+	<Button
+		on:click={() => {
+			isTaskFormOpen = true;
+			currentTask = null;
+		}}
+		variant="ghost"
+		class="flex justify-start gap-2"
 	>
 		<CirclePlus class="h-5 w-5" />Add Task
-	</div>
+	</Button>
 </Card>
 
 {#if isTaskFormOpen}

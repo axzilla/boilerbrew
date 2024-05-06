@@ -11,7 +11,7 @@
 	import SuperDebug, { defaultValues, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 
-	export let task: Task;
+	export let task: Task | null;
 	export let isTaskFormOpen = false;
 
 	const form = superForm(task || defaultValues(zod(TaskSchema)), {
@@ -26,17 +26,17 @@
 	<DialogContent class="sm:max-w-[425px]">
 		<SuperDebug data={formData} />
 		<DialogHeader>
-			<DialogTitle>Create/Edit Task</DialogTitle>
+			<DialogTitle>{!task ? 'Create' : 'Edit'} Task</DialogTitle>
 		</DialogHeader>
-		<!-- <form action="?/example" method="POST" use:enhance> -->
-		<DialogFooter>
-			<Button type="submit" variant="outline" name="delete" class="danger">Save</Button>
-			<Button
-				on:click={() => {
-					isTaskFormOpen = false;
-				}}>Cancel</Button
-			>
-		</DialogFooter>
-		<!-- </form> -->
+		<form action="?/example" method="POST" use:enhance>
+			<DialogFooter>
+				<Button type="submit" variant="outline" name="delete" class="danger">Save</Button>
+				<Button
+					on:click={() => {
+						isTaskFormOpen = false;
+					}}>Cancel</Button
+				>
+			</DialogFooter>
+		</form>
 	</DialogContent>
 </Dialog>
