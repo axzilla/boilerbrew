@@ -62,16 +62,13 @@ export const actions: Actions = {
 			let task;
 
 			if (!form.data.id) {
-				// CREATE task
 				task = await locals.pb
 					.collection('tasks')
 					.create({ ...form.data, user_id: locals.user?.id });
 			} else {
 				if (formData.has('delete')) {
-					// DELETE task
 					task = await locals.pb.collection('tasks').delete(form.data.id);
 				} else {
-					// UPDATE task
 					task = await locals.pb.collection('tasks').update(form.data.id, form.data);
 				}
 			}

@@ -23,14 +23,21 @@
 				const { data } = result;
 
 				tasks.update((currentTasks) => {
-					if (data.form.data.id) {
-						const index = currentTasks.findIndex((task) => task.id === data.form.data.id);
-						currentTasks[index] = data.task;
+					const index = currentTasks.findIndex((task) => task.id === data.form.data.id);
+
+					if (data.delete === true) {
+						if (index !== -1) {
+							return currentTasks.filter((task) => task.id !== data.form.data.id);
+						}
 						return currentTasks;
 					}
+
+					if (index !== -1) {
+						return [...currentTasks.slice(0, index), data.task, ...currentTasks.slice(index + 1)];
+					}
+
 					return [...currentTasks, data.task];
 				});
-
 				isTaskFormOpen = false;
 			}
 		}
@@ -81,9 +88,7 @@
 					>
 						Cancel
 					</Button>
-					<Button disabled={!$formData.title} type="submit" name="delete" class="danger"
-						>Save</Button
-					>
+					<Button disabled={!$formData.title} type="submit" class="danger">Save</Button>
 				</div>
 			</div>
 		</form>
