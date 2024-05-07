@@ -1,17 +1,12 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import {
-		Dialog,
-		DialogContent,
-		DialogFooter,
-		DialogHeader,
-		DialogTitle
-	} from '$lib/components/ui/dialog';
+	import { Dialog, DialogContent, DialogHeader, DialogTitle } from '$lib/components/ui/dialog';
 	import { FormControl, FormField, FormFieldErrors, FormLabel } from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 	import { Textarea } from '$lib/components/ui/textarea';
 	import { TaskSchema, type List, type Task } from '$lib/schemas';
 	import { tasks } from '$lib/stores';
+	import { Trash } from 'lucide-svelte';
 	import SuperDebug, { defaultValues, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 
@@ -65,17 +60,32 @@
 				</FormControl>
 				<FormFieldErrors />
 			</FormField>
-			<DialogFooter>
-				<Button
-					variant="outline"
-					on:click={() => {
-						isTaskFormOpen = false;
-					}}
-				>
-					Cancel
-				</Button>
-				<Button disabled={!$formData.title} type="submit" name="delete" class="danger">Save</Button>
-			</DialogFooter>
+			<div class="flex justify-between">
+				{#if $formData.id}
+					<Button
+						type="submit"
+						on:click={(e) => !confirm('Are you sure?') && e.preventDefault()}
+						name="delete"
+						variant="destructive"
+						size="icon"
+					>
+						<Trash class="h-5 w-5" />
+					</Button>
+				{/if}
+				<div>
+					<Button
+						variant="outline"
+						on:click={() => {
+							isTaskFormOpen = false;
+						}}
+					>
+						Cancel
+					</Button>
+					<Button disabled={!$formData.title} type="submit" name="delete" class="danger"
+						>Save</Button
+					>
+				</div>
+			</div>
 		</form>
 	</DialogContent>
 </Dialog>

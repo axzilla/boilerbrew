@@ -19,12 +19,15 @@
 		dataType: 'json',
 		validators: zod(ListSchema),
 		onResult({ result }) {
-			openDeleteList = false;
-			if (result.data.list === true) {
+			const { data } = result;
+
+			if (data.list === true) {
 				lists.update((currentLists) => {
-					return currentLists.filter((l) => l.id !== result.data.form.data.id);
+					return currentLists.filter((l) => l.id !== data.form.data.id);
 				});
 			}
+
+			openDeleteList = false;
 		}
 	});
 
