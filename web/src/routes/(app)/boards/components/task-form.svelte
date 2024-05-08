@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { Dialog, DialogContent, DialogHeader, DialogTitle } from '$lib/components/ui/dialog';
+	import { Dialog, DialogContent } from '$lib/components/ui/dialog';
 	import { FormControl, FormField, FormFieldErrors, FormLabel } from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 	import {
@@ -16,18 +16,13 @@
 	import { Trash } from 'lucide-svelte';
 	import { defaultValues, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
+	import { priorities } from '../data';
 
 	export let task: Task | null;
 	export let list: List | null;
 	export let isTaskFormOpen = false;
 
-	const priorities = [
-		{ value: 'low', label: 'Low' },
-		{ value: 'medium', label: 'Medium' },
-		{ value: 'high', label: 'High' }
-	];
-	let selectedPriority =
-		priorities.find((p) => p.value === (task ? task.priority : 'low')) || priorities[0];
+	let selectedPriority = priorities.find((p) => p.value === (task ? task.priority : ''));
 
 	const form = superForm(
 		task || { ...defaultValues(zod(TaskSchema)), list_id: list ? list.id : '' },
@@ -63,22 +58,45 @@
 
 <Dialog bind:open={isTaskFormOpen}>
 	<DialogContent class="sm:max-w-[425px]">
-		<DialogHeader>
-			<DialogTitle>{!task ? 'Create' : 'Edit'} Task</DialogTitle>
-		</DialogHeader>
 		<form action="?/createOrUpdateTask" method="POST" use:enhance>
 			<div class="pb-4">
 				<FormField {form} name="title">
 					<FormControl let:attrs>
 						<FormLabel>Title</FormLabel>
-						<Input autofocus {...attrs} bind:value={$formData.title} />
+						<Input
+							class="text-muted-foreground"
+							on:keydown={(event) => {
+								if (event.key === 'Enter') {
+									event.preventDefault();
+									if ($formData.title) {
+										form.submit();
+									}
+								}
+							}}
+							autofocus
+							{...attrs}
+							bind:value={$formData.title}
+						/>
 					</FormControl>
 					<FormFieldErrors />
 				</FormField>
 				<FormField {form} name="description">
 					<FormControl let:attrs>
 						<FormLabel>Description</FormLabel>
-						<Textarea {...attrs} rows={4} bind:value={$formData.description} />
+						<Textarea
+							class="text-muted-foreground"
+							{...attrs}
+							on:keydown={(event) => {
+								if (event.key === 'Enter') {
+									event.preventDefault();
+									if ($formData.title) {
+										form.submit();
+									}
+								}
+							}}
+							rows={4}
+							bind:value={$formData.description}
+						/>
 					</FormControl>
 					<FormFieldErrors />
 				</FormField>
@@ -96,8 +114,9 @@
 							</SelectTrigger>
 							<SelectContent>
 								{#each priorities as { value, label }}
-									<SelectItem {value} {label} />
+									<SelectItem class="text-muted-foreground" {value} {label} />
 								{/each}
+								<SelectItem class="text-muted-foreground" label="None" value="" />
 							</SelectContent>
 						</Select>
 					</FormControl>
