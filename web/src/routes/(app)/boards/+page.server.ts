@@ -2,7 +2,7 @@ import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import { ListSchema, TaskSchema, type List, type Task } from '$lib/schemas.js';
 import { type Actions } from '@sveltejs/kit';
-import { fail, superValidate } from 'sveltekit-superforms';
+import { fail, superValidate, withFiles } from 'sveltekit-superforms';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const form = await superValidate(zod(ListSchema));
@@ -55,7 +55,7 @@ export const actions: Actions = {
 		const form = await superValidate(formData, zod(TaskSchema));
 
 		if (!form.valid) {
-			return fail(400, { form });
+			return fail(400, withFiles({ form }));
 		}
 
 		try {
@@ -73,7 +73,7 @@ export const actions: Actions = {
 				}
 			}
 
-			return { form, task };
+			return withFiles({ form, task });
 		} catch (err) {
 			console.log('Error: ', err);
 		}

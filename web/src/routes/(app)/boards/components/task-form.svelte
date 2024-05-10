@@ -14,7 +14,7 @@
 	import { TaskSchema, type List, type Task } from '$lib/schemas';
 	import { tasks } from '$lib/stores';
 	import { Trash } from 'lucide-svelte';
-	import { defaultValues, superForm } from 'sveltekit-superforms';
+	import { defaultValues, filesProxy, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { priorities } from '../data';
 
@@ -36,10 +36,7 @@
 					const index = currentTasks.findIndex((task) => task.id === data.form.data.id);
 
 					if (data.delete === true) {
-						if (index !== -1) {
-							return currentTasks.filter((task) => task.id !== data.form.data.id);
-						}
-						return currentTasks;
+						return currentTasks.filter((task) => task.id !== data.form.data.id);
 					}
 
 					if (index !== -1) {
@@ -48,18 +45,21 @@
 
 					return [...currentTasks, data.task];
 				});
+
 				isTaskFormOpen = false;
 			}
 		}
 	);
 
+	const files = filesProxy(form, 'attachments');
+
 	const { form: formData, enhance } = form;
 </script>
 
-<Dialog bind:open={isTaskFormOpen}>
-	<DialogContent class="sm:max-w-[425px]">
-		<form action="?/createOrUpdateTask" method="POST" use:enhance>
-			<div class="pb-4">
+<Dialog bind:open={isTaskFormOpen} preventScroll={false}>
+	<DialogContent class="max-w-lg overflow-auto">
+		<form action="?/createOrUpdateTask" method="POST" use:enhance enctype="multipart/form-data">
+			<div class="pb-1">
 				<FormField {form} name="title">
 					<FormControl let:attrs>
 						<FormLabel>Title</FormLabel>
@@ -122,6 +122,15 @@
 					</FormControl>
 					<FormFieldErrors />
 				</FormField>
+				<input
+					type="file"
+					multiple
+					name="images"
+					accept="image/png, image/jpeg"
+					bind:files={$files}
+				/>
+				<!-- {#if $errors.images}<span>{$errors.images}</span>{/if} -->
+				<button>Submit</button>
 			</div>
 			<div class="flex justify-between">
 				{#if $formData.id}

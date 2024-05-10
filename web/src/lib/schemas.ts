@@ -101,8 +101,15 @@ export const TaskSchema = z.object({
 	id: z.string(),
 	title: z.string(),
 	description: z.string(),
+	attachments: z.array(
+		z.union([
+			z
+				.instanceof(File)
+				.refine((f) => f.size < 5 * 1000 * 1000, { message: 'Max 5 MB upload size.' }),
+			z.string()
+		])
+	),
 	priority: z.string(),
-	images: z.array(z.string()),
 	list_id: z.string(),
 	user_id: z.string()
 });
