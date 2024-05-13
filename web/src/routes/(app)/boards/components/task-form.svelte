@@ -13,16 +13,21 @@
 	import { Textarea } from '$lib/components/ui/textarea';
 	import { TaskSchema, type List, type Task } from '$lib/schemas';
 	import { tasks } from '$lib/stores';
-	import { Trash } from 'lucide-svelte';
+	import { Paperclip, Trash } from 'lucide-svelte';
 	import { defaultValues, filesProxy, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { priorities } from '../data';
+	import PocketBase from 'pocketbase';
+	import Card from '$lib/components/ui/card/card.svelte';
+	import Badge from '$lib/components/ui/badge/badge.svelte';
 
 	export let task: Task | null;
 	export let list: List | null;
 	export let isTaskFormOpen = false;
 
 	let selectedPriority = priorities.find((p) => p.value === (task ? task.priority : ''));
+
+	const pb = new PocketBase('http://127.0.0.1:8090');
 
 	const form = superForm(
 		task || { ...defaultValues(zod(TaskSchema)), list_id: list ? list.id : '' },
@@ -52,12 +57,11 @@
 	);
 
 	const files = filesProxy(form, 'attachments');
-
 	const { form: formData, enhance } = form;
 </script>
 
-<Dialog bind:open={isTaskFormOpen} preventScroll={false}>
-	<DialogContent class="max-w-lg overflow-auto">
+<Dialog bind:open={isTaskFormOpen}>
+	<DialogContent class="max-w-2xl max-h-full overflow-auto">
 		<form action="?/createOrUpdateTask" method="POST" use:enhance enctype="multipart/form-data">
 			<div class="pb-1">
 				<FormField {form} name="title">
@@ -66,11 +70,9 @@
 						<Input
 							class="text-muted-foreground"
 							on:keydown={(event) => {
-								if (event.key === 'Enter') {
+								if (event.key === 'Enter' && $formData.title) {
 									event.preventDefault();
-									if ($formData.title) {
-										form.submit();
-									}
+									form.submit();
 								}
 							}}
 							autofocus
@@ -87,11 +89,9 @@
 							class="text-muted-foreground"
 							{...attrs}
 							on:keydown={(event) => {
-								if (event.key === 'Enter') {
+								if (event.key === 'Enter' && $formData.title) {
 									event.preventDefault();
-									if ($formData.title) {
-										form.submit();
-									}
+									form.submit();
 								}
 							}}
 							rows={4}
@@ -122,15 +122,58 @@
 					</FormControl>
 					<FormFieldErrors />
 				</FormField>
-				<input
-					type="file"
-					multiple
-					name="images"
-					accept="image/png, image/jpeg"
-					bind:files={$files}
-				/>
-				<!-- {#if $errors.images}<span>{$errors.images}</span>{/if} -->
-				<button>Submit</button>
+
+				<FormField {form} name="attachments">
+					<FormControl let:attrs>
+						<FormLabel>Attachments</FormLabel>
+						<!-- <Input type="file" multiple bind:files={$files} {...attrs} /> -->
+						<input type="file" multiple name="attachments" bind:files={$files} />
+					</FormControl>
+					<FormFieldErrors />
+				</FormField>
+
+				<div class="flex flex-col gap-4">
+					{#each $files as file}
+						{@const fileType = file.type.split('/')[file.type.split('/').length - 1]}
+						<div class="flex justify-between items-center gap-2">
+							<Card class="w-24 h-24 flex justify-center items-center">
+								{#if fileType === 'png' || fileType === 'jpg' || fileType === 'jpeg' || fileType === 'gif'}
+									<img
+										src={URL.createObjectURL(file)}
+										alt="attachment preview"
+										class="rounded-lg w-24 h-24 object-cover"
+									/>
+								{:else}
+									<Paperclip />
+								{/if}
+							</Card>
+							<Badge>NEW</Badge>
+							<p class="flex-1 break-all">{file.name}</p>
+							<Button variant="ghost" size="icon"><Trash class="h-5 w-5" /></Button>
+						</div>
+					{/each}
+
+					{#if task && task.attachments.length > 0}
+						{#each task.attachments as attachment}
+							{@const fileType = attachment.split('.')[attachment.split('.').length - 1]}
+							<div class="flex justify-between items-center gap-2">
+								<Card class="w-24 h-24 flex justify-center items-center">
+									{#if fileType === 'png' || fileType === 'jpg' || fileType === 'jpeg' || fileType === 'gif'}
+										<img
+											src={pb.files.getUrl(task, attachment, { thumb: '100x250' })}
+											alt="attachment preview"
+											class="w-24 h-24 object-cover rounded-lg"
+										/>
+									{:else}
+										<Paperclip />
+									{/if}
+								</Card>
+								<p class="flex-1 break-all">{attachment}</p>
+								<Button variant="ghost" size="icon"><Trash class="h-5 w-5" /></Button>
+							</div>
+						{/each}
+					{/if}
+				</div>
 			</div>
 			<div class="flex justify-between">
 				{#if $formData.id}
