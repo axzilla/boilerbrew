@@ -25,7 +25,7 @@
 </script>
 
 <div
-	class="p-8 mx-auto grid w-full items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]"
+	class="mx-auto grid w-full items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]"
 >
 	<nav class="grid items-start text-sm font-medium">
 		{#each navigation as { title, href, icon }}

@@ -2,7 +2,6 @@
 	import CircleUser from 'lucide-svelte/icons/circle-user';
 	import Menu from 'lucide-svelte/icons/menu';
 	import Beer from 'lucide-svelte/icons/beer';
-	import AlarmClockCheck from 'lucide-svelte/icons/alarm-clock-check';
 	import { Button } from '$lib/components/ui/button';
 	import {
 		DropdownMenu,
@@ -15,10 +14,9 @@
 	} from '$lib/components/ui/dropdown-menu';
 	import { Sheet, SheetTrigger, SheetContent } from '$lib/components/ui/sheet';
 	import { goto } from '$app/navigation';
-	import { tasks } from '$lib/stores';
 	import { page } from '$app/stores';
 	import Home from 'lucide-svelte/icons/home';
-	import { Bolt } from 'lucide-svelte';
+	import { Bolt, Moon, Sun } from 'lucide-svelte';
 	import config from '$lib/config';
 	import {
 		Card,
@@ -28,12 +26,9 @@
 		CardContent
 	} from '$lib/components/ui/card';
 	import { Separator } from '$lib/components/ui/separator';
+	import { resetMode, setMode } from 'mode-watcher';
 
 	export let data;
-
-	$: if (data && data.tasks) {
-		tasks.set(data.tasks);
-	}
 
 	async function logout() {
 		await fetch('/api/logout');
@@ -42,14 +37,9 @@
 
 	const navigation = [
 		{
-			title: 'Dashboard',
-			href: '/dashboard',
+			title: 'Boards',
+			href: '/boards',
 			icon: Home
-		},
-		{
-			title: 'Tasks',
-			href: '/tasks',
-			icon: AlarmClockCheck
 		},
 		{
 			title: 'Settings',
@@ -59,8 +49,8 @@
 	];
 </script>
 
-<div class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-	<div class="hidden border-r bg-muted/40 md:block">
+<div class="flex min-h-screen">
+	<div class="hidden flex-none md:block md:w-[280px] bg-muted/40 border-r">
 		<div class="flex h-full max-h-screen flex-col gap-2">
 			<div class="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
 				<a href="/" class="flex items-center gap-2 font-semibold">
@@ -98,7 +88,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="flex flex-col">
+	<div class="flex-1 overflow-x-auto">
 		<header class="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
 			<Sheet>
 				<SheetTrigger asChild let:builder>
@@ -108,7 +98,7 @@
 				</SheetTrigger>
 				<SheetContent side="left" class="flex flex-col">
 					<nav class="grid gap-2 text-lg font-medium">
-						<a href="/dashboard" class="flex items-center gap-2 text-lg font-semibold">
+						<a href="/" class="flex items-center gap-2 text-lg font-semibold">
 							<Beer class="h-6 w-6" />
 							{config.appName}
 						</a>
@@ -140,9 +130,7 @@
 					</div>
 				</SheetContent>
 			</Sheet>
-			<div class="w-full flex-1">
-				<!-- Search functionality could be added here -->
-			</div>
+			<div class="w-full flex-1" />
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild let:builder>
 					<Button builders={[builder]} variant="secondary" size="icon" class="rounded-full">
@@ -166,8 +154,26 @@
 					<DropdownMenuItem on:click={logout}>Log out</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
+			<DropdownMenu>
+				<DropdownMenuTrigger asChild let:builder>
+					<Button builders={[builder]} variant="outline" size="icon">
+						<Sun
+							class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+						/>
+						<Moon
+							class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+						/>
+						<span class="sr-only">Toggle theme</span>
+					</Button>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent align="end">
+					<DropdownMenuItem on:click={() => setMode('light')}>Light</DropdownMenuItem>
+					<DropdownMenuItem on:click={() => setMode('dark')}>Dark</DropdownMenuItem>
+					<DropdownMenuItem on:click={() => resetMode()}>System</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
 		</header>
-		<main class="w-full flex justify-center">
+		<main class="p-8" style="height: calc(100vh - 60px)">
 			<slot />
 		</main>
 	</div>

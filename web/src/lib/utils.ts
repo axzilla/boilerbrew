@@ -3,6 +3,24 @@ import { twMerge } from 'tailwind-merge';
 import { cubicOut } from 'svelte/easing';
 import type { TransitionConfig } from 'svelte/transition';
 
+import type { Action } from 'svelte/action';
+
+export const clickOutside: Action<HTMLElement, () => void> = (node, callback) => {
+	const handleClick = (event: MouseEvent) => {
+		if (node && !node.contains(event.target as Node) && !event.defaultPrevented) {
+			callback(); // Rufe die übergebene Funktion auf
+		}
+	};
+
+	document.addEventListener('click', handleClick, true);
+
+	return {
+		destroy() {
+			document.removeEventListener('click', handleClick, true);
+		}
+	};
+};
+
 export const generateUsername = (email: string): string => {
 	const localPart = email.split('@')[0];
 	const cleanLocalPart = localPart.replace(/[^a-zA-Z0-9]/g, '');

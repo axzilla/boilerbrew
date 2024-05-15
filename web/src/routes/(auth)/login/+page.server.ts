@@ -27,6 +27,6 @@ export const actions: Actions = {
 			console.log('Error: ', err);
 			return setError(form, '');
 		}
-		redirect(303, '/dashboard');
+		redirect(303, '/');
 	}
 };
