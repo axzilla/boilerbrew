@@ -109,7 +109,7 @@ export const TaskSchema = z.object({
 			z.string()
 		])
 	),
-	'attachments-': z.array(z.string()),
+	'attachments-': z.array(z.string()).optional(),
 	priority: z.string(),
 	list_id: z.string(),
 	user_id: z.string()
