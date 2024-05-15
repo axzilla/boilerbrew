@@ -20,6 +20,7 @@
 	import PocketBase from 'pocketbase';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import Badge from '$lib/components/ui/badge/badge.svelte';
+	import { toast } from 'svelte-sonner';
 
 	export let task: Task | null;
 	export let list: List | null;
@@ -40,7 +41,7 @@
 				tasks.update((currentTasks) => {
 					const index = currentTasks.findIndex((task) => task.id === data.form.data.id);
 
-					if (data.delete === true) {
+					if (data.task === true) {
 						return currentTasks.filter((task) => task.id !== data.form.data.id);
 					}
 
@@ -52,6 +53,7 @@
 				});
 
 				isTaskFormOpen = false;
+				toast.success(data.task === true ? 'Task deleted' : 'Task saved');
 			}
 		}
 	);
@@ -75,7 +77,6 @@
 									form.submit();
 								}
 							}}
-							autofocus
 							{...attrs}
 							bind:value={$formData.title}
 						/>
@@ -149,13 +150,27 @@
 							</Card>
 							<Badge>NEW</Badge>
 							<p class="flex-1 break-all">{file.name}</p>
-							<Button variant="ghost" size="icon"><Trash class="h-5 w-5" /></Button>
+							<Button
+								on:click={() => {
+									files.update((currentFiles) => {
+										const index = currentFiles.findIndex((f) => f.name === file.name);
+										return [...currentFiles.slice(0, index), ...currentFiles.slice(index + 1)];
+									});
+								}}
+								variant="ghost"
+								size="icon"
+							>
+								<Trash class="h-5 w-5" />
+							</Button>
 						</div>
 					{/each}
 
 					{#if task && task.attachments.length > 0}
 						{#each task.attachments as attachment}
 							{@const fileType = attachment.split('.')[attachment.split('.').length - 1]}
+							{@const isDeleted =
+								$formData['attachments-'] && $formData['attachments-'].includes(attachment)}
+
 							<div class="flex justify-between items-center gap-2">
 								<Card class="w-24 h-24 flex justify-center items-center">
 									{#if fileType === 'png' || fileType === 'jpg' || fileType === 'jpeg' || fileType === 'gif'}
@@ -169,7 +184,33 @@
 									{/if}
 								</Card>
 								<p class="flex-1 break-all">{attachment}</p>
-								<Button variant="ghost" size="icon"><Trash class="h-5 w-5" /></Button>
+								{#if isDeleted}
+									<Button
+										variant="destructive"
+										on:click={() => {
+											formData.update(($formData) => {
+												const attachments = $formData['attachments-'] || [];
+												const index = attachments.findIndex((a) => a === attachment);
+												attachments.splice(index, 1);
+												$formData['attachments-'] = attachments;
+												return $formData;
+											});
+										}}>Restore</Button
+									>
+								{:else}
+									<Button
+										on:click={() => {
+											formData.update(($formData) => {
+												const attachments = $formData['attachments-'] || [];
+												attachments.push(attachment);
+												$formData['attachments-'] = attachments;
+												return $formData;
+											});
+										}}
+										variant="ghost"
+										size="icon"><Trash class="h-5 w-5" /></Button
+									>
+								{/if}
 							</div>
 						{/each}
 					{/if}
