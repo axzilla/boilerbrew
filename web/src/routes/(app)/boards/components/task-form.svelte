@@ -184,18 +184,28 @@
 								$formData['attachments-'] && $formData['attachments-'].includes(attachment)}
 
 							<div class="flex justify-between items-center gap-2">
-								<Card class="w-16 h-16 flex justify-center items-center">
-									{#if fileType === 'png' || fileType === 'jpg' || fileType === 'jpeg' || fileType === 'gif'}
-										<img
-											src={pb.files.getUrl(task, attachment, { thumb: '100x250' })}
-											alt="attachment preview"
-											class="w-16 h-16 object-cover rounded-lg"
-										/>
-									{:else}
-										<Paperclip />
-									{/if}
-								</Card>
-								<p class="flex-1 break-all">{attachment}</p>
+								<div>
+									<a
+										class="flex gap-2 items-center"
+										href={pb.files.getUrl(task, attachment)}
+										target="_blank"
+									>
+										<Card class="w-16 h-16 flex justify-center items-center">
+											{#if fileType === 'png' || fileType === 'jpg' || fileType === 'jpeg' || fileType === 'gif'}
+												<img
+													src={pb.files.getUrl(task, attachment, { thumb: '100x250' })}
+													alt="attachment preview"
+													class="w-16 h-16 object-cover rounded-lg"
+												/>
+											{:else}
+												<a href={pb.files.getUrl(task, attachment)} target="_blank">
+													<Paperclip />
+												</a>
+											{/if}
+										</Card>
+										<p class="flex-1 break-all">{attachment}</p>
+									</a>
+								</div>
 								{#if isDeleted}
 									<Button
 										variant="destructive"
