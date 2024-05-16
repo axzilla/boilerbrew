@@ -145,12 +145,12 @@
 					{#each $files as file}
 						{@const fileType = file.type.split('/')[file.type.split('/').length - 1]}
 						<div class="flex justify-between items-center gap-2">
-							<Card class="w-24 h-24 flex justify-center items-center">
+							<Card class="w-16 h-16 flex justify-center items-center">
 								{#if fileType === 'png' || fileType === 'jpg' || fileType === 'jpeg' || fileType === 'gif'}
 									<img
 										src={URL.createObjectURL(file)}
 										alt="attachment preview"
-										class="rounded-lg w-24 h-24 object-cover"
+										class="rounded-lg w-16 h-16 object-cover"
 									/>
 								{:else}
 									<Paperclip />
@@ -181,12 +181,12 @@
 								$formData['attachments-'] && $formData['attachments-'].includes(attachment)}
 
 							<div class="flex justify-between items-center gap-2">
-								<Card class="w-24 h-24 flex justify-center items-center">
+								<Card class="w-16 h-16 flex justify-center items-center">
 									{#if fileType === 'png' || fileType === 'jpg' || fileType === 'jpeg' || fileType === 'gif'}
 										<img
 											src={pb.files.getUrl(task, attachment, { thumb: '100x250' })}
 											alt="attachment preview"
-											class="w-24 h-24 object-cover rounded-lg"
+											class="w-16 h-16 object-cover rounded-lg"
 										/>
 									{:else}
 										<Paperclip />
