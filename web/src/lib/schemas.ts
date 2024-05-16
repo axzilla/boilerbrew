@@ -90,6 +90,13 @@ export const UpdatePasswordSchema = z
 		}
 	});
 
+export const BoardSchema = z.object({
+	id: z.string(),
+	title: z.string(),
+	user_id: z.string()
+});
+export type Board = z.infer<typeof BoardSchema>;
+
 export const ListSchema = z.object({
 	id: z.string(),
 	name: z.string(),

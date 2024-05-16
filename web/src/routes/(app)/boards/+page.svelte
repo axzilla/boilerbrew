@@ -1,29 +1,13 @@
 <script lang="ts">
-	import type { List } from '$lib/schemas';
-	import { lists, tasks } from '$lib/stores';
-	import { ListCard, ListFormDelete } from './components';
-	import ListCardAdd from './components/list-card-add.svelte';
+	import { Button } from '$lib/components/ui/button';
+	import type { PageData } from './$types';
 
-	export let data;
-
-	lists.set(data.lists);
-	tasks.set(data.tasks);
-
-	let currentList: List;
-	let openDeleteList = false;
-
-	function setCurrentList(list: List) {
-		currentList = list;
-	}
+	export let data: PageData;
+	const { boards } = data;
 </script>
 
-<div class="overflow-auto h-full flex gap-4 items-start">
-	{#each $lists as list}
-		<ListCard bind:openDelete={openDeleteList} {list} {setCurrentList} />
-	{/each}
-	<ListCardAdd {data} />
-</div>
-
-{#if openDeleteList}
-	<ListFormDelete bind:openDeleteList list={currentList} />
-{/if}
+{#each boards as board}
+	<Button href={`/boards/${board.id}`} class="">
+		{board.title}
+	</Button>
+{/each}
