@@ -72,175 +72,194 @@
 </script>
 
 <Dialog bind:open={isTaskFormOpen}>
-	<DialogContent id="content-div" class="max-w-2xl max-h-full overflow-auto">
-		<form action="?/createOrUpdateTask" method="POST" use:enhance enctype="multipart/form-data">
-			<div class="pb-1">
-				<FormField {form} name="title">
-					<FormControl let:attrs>
-						<FormLabel>Title</FormLabel>
-						<Input
-							class="text-muted-foreground"
-							on:keydown={(event) => {
-								if (event.key === 'Enter' && $formData.title) {
-									event.preventDefault();
-									form.submit();
-								}
-							}}
-							{...attrs}
-							bind:value={$formData.title}
-						/>
-					</FormControl>
-					<FormFieldErrors />
-				</FormField>
-				<FormField {form} name="description">
-					<FormControl let:attrs>
-						<FormLabel>Description</FormLabel>
-						<Textarea
-							class="text-muted-foreground"
-							{...attrs}
-							on:keydown={(event) => {
-								if (event.key === 'Enter' && $formData.title) {
-									event.preventDefault();
-									form.submit();
-								}
-							}}
-							rows={4}
-							bind:value={$formData.description}
-						/>
-					</FormControl>
-					<FormFieldErrors />
-				</FormField>
-				<FormField {form} name="priority">
-					<FormControl let:attrs>
-						<FormLabel>Priority</FormLabel>
-						<Select
-							selected={selectedPriority}
-							onSelectedChange={(v) => {
-								v && ($formData.priority = v.value);
-							}}
-						>
-							<SelectTrigger {...attrs}>
-								<SelectValue placeholder="Select a priority for this task" />
-							</SelectTrigger>
-							<SelectContent>
-								{#each priorities as { value, label }}
-									<SelectItem class="text-muted-foreground" {value} {label} />
-								{/each}
-								<SelectItem class="text-muted-foreground" label="None" value="" />
-							</SelectContent>
-						</Select>
-					</FormControl>
-					<FormFieldErrors />
-				</FormField>
-
-				<FormField {form} name="attachments">
-					<FormControl>
-						<FormLabel>Attachments</FormLabel>
-						<Button class="w-full gap-2" on:click={() => document.getElementById('upload').click()}>
-							<CloudUpload /> Upload new file
-						</Button>
-						<input id="upload" hidden type="file" multiple name="attachments" bind:files={$files} />
-					</FormControl>
-					<FormFieldErrors />
-				</FormField>
-
-				<div class="flex flex-col gap-4 pb-4">
-					{#each $files as file}
-						{@const fileType = file.type.split('/')[file.type.split('/').length - 1]}
-						<div class="flex justify-between items-center gap-2">
-							<Card class="w-16 h-16 flex justify-center items-center">
-								{#if fileType === 'png' || fileType === 'jpg' || fileType === 'jpeg' || fileType === 'gif'}
-									<img
-										src={URL.createObjectURL(file)}
-										alt="attachment preview"
-										class="rounded-lg w-16 h-16 object-cover"
-									/>
-								{:else}
-									<Paperclip />
-								{/if}
-							</Card>
-							<Badge>NEW</Badge>
-							<p class="flex-1 break-all">{file.name}</p>
-							<Button
-								on:click={() => {
-									files.update((currentFiles) => {
-										const index = currentFiles.findIndex((f) => f.name === file.name);
-										return [...currentFiles.slice(0, index), ...currentFiles.slice(index + 1)];
-									});
-									setFocusOnElement('#content-div');
+	<DialogContent id="content-div" class="max-w-2xl h-[90%] flex flex-col">
+		<form
+			action="?/createOrUpdateTask"
+			method="POST"
+			use:enhance
+			enctype="multipart/form-data"
+			class="flex flex-col flex-1 overflow-hidden"
+		>
+			<div class="flex-1 overflow-auto p-2">
+				<div class="pb-4 space-y-4">
+					<FormField {form} name="title">
+						<FormControl let:attrs>
+							<FormLabel>Title</FormLabel>
+							<Input
+								class="text-muted-foreground"
+								on:keydown={(event) => {
+									if (event.key === 'Enter' && $formData.title) {
+										event.preventDefault();
+										form.submit();
+									}
 								}}
-								variant="ghost"
-								size="icon"
+								{...attrs}
+								bind:value={$formData.title}
+							/>
+						</FormControl>
+						<FormFieldErrors />
+					</FormField>
+					<FormField {form} name="description">
+						<FormControl let:attrs>
+							<FormLabel>Description</FormLabel>
+							<Textarea
+								class="text-muted-foreground"
+								{...attrs}
+								on:keydown={(event) => {
+									if (event.key === 'Enter' && $formData.title) {
+										event.preventDefault();
+										form.submit();
+									}
+								}}
+								rows={4}
+								bind:value={$formData.description}
+							/>
+						</FormControl>
+						<FormFieldErrors />
+					</FormField>
+					<FormField {form} name="priority">
+						<FormControl let:attrs>
+							<FormLabel>Priority</FormLabel>
+							<Select
+								selected={selectedPriority}
+								onSelectedChange={(v) => {
+									v && ($formData.priority = v.value);
+								}}
 							>
-								<Trash class="h-5 w-5" />
+								<SelectTrigger {...attrs}>
+									<SelectValue placeholder="Select a priority for this task" />
+								</SelectTrigger>
+								<SelectContent>
+									{#each priorities as { value, label }}
+										<SelectItem class="text-muted-foreground" {value} {label} />
+									{/each}
+									<SelectItem class="text-muted-foreground" label="None" value="" />
+								</SelectContent>
+							</Select>
+						</FormControl>
+						<FormFieldErrors />
+					</FormField>
+
+					<FormField {form} name="attachments">
+						<FormControl>
+							<FormLabel>Attachments</FormLabel>
+							<Button
+								class="w-full gap-2"
+								on:click={() => document.getElementById('upload').click()}
+							>
+								<CloudUpload /> Upload new file
 							</Button>
-						</div>
-					{/each}
+							<input
+								id="upload"
+								hidden
+								type="file"
+								multiple
+								name="attachments"
+								bind:files={$files}
+							/>
+						</FormControl>
+						<FormFieldErrors />
+					</FormField>
 
-					{#if task && task.attachments.length > 0}
-						{#each task.attachments as attachment}
-							{@const fileType = attachment.split('.')[attachment.split('.').length - 1]}
-							{@const isDeleted =
-								$formData['attachments-'] && $formData['attachments-'].includes(attachment)}
-
+					<div class="flex flex-col gap-4">
+						{#each $files as file}
+							{@const fileType = file.type.split('/')[file.type.split('/').length - 1]}
 							<div class="flex justify-between items-center gap-2">
-								<div>
-									<a
-										class="flex gap-2 items-center"
-										href={pb.files.getUrl(task, attachment)}
-										target="_blank"
-									>
-										<Card class="w-16 h-16 flex justify-center items-center">
-											{#if fileType === 'png' || fileType === 'jpg' || fileType === 'jpeg' || fileType === 'gif'}
-												<img
-													src={pb.files.getUrl(task, attachment, { thumb: '100x250' })}
-													alt="attachment preview"
-													class="w-16 h-16 object-cover rounded-lg"
-												/>
-											{:else}
-												<a href={pb.files.getUrl(task, attachment)} target="_blank">
-													<Paperclip />
-												</a>
-											{/if}
-										</Card>
-										<p class="flex-1 break-all">{attachment}</p>
-									</a>
-								</div>
-								{#if isDeleted}
-									<Button
-										variant="destructive"
-										on:click={() => {
-											formData.update(($formData) => {
-												const attachments = $formData['attachments-'] || [];
-												const index = attachments.findIndex((a) => a === attachment);
-												attachments.splice(index, 1);
-												$formData['attachments-'] = attachments;
-												return $formData;
-											});
-											setFocusOnElement('#content-div');
-										}}>Restore</Button
-									>
-								{:else}
-									<Button
-										on:click={() => {
-											formData.update(($formData) => {
-												const attachments = $formData['attachments-'] || [];
-												attachments.push(attachment);
-												$formData['attachments-'] = attachments;
-												return $formData;
-											});
-											setFocusOnElement('#content-div');
-										}}
-										variant="ghost"
-										size="icon"><Trash class="h-5 w-5" /></Button
-									>
-								{/if}
+								<Card class="w-16 h-16 flex justify-center items-center">
+									{#if fileType === 'png' || fileType === 'jpg' || fileType === 'jpeg' || fileType === 'gif'}
+										<img
+											src={URL.createObjectURL(file)}
+											alt="attachment preview"
+											class="rounded-lg w-16 h-16 object-cover"
+										/>
+									{:else}
+										<Paperclip />
+									{/if}
+								</Card>
+								<Badge>NEW</Badge>
+								<p class="flex-1 break-all">{file.name}</p>
+								<Button
+									on:click={() => {
+										files.update((currentFiles) => {
+											const index = currentFiles.findIndex((f) => f.name === file.name);
+											return [...currentFiles.slice(0, index), ...currentFiles.slice(index + 1)];
+										});
+										setFocusOnElement('#content-div');
+									}}
+									variant="ghost"
+									size="icon"
+								>
+									<Trash class="h-5 w-5" />
+								</Button>
 							</div>
 						{/each}
-					{/if}
+
+						{#if task && task.attachments.length > 0}
+							{#each task.attachments as attachment}
+								{@const fileType = attachment.split('.')[attachment.split('.').length - 1]}
+								{@const isDeleted =
+									$formData['attachments-'] && $formData['attachments-'].includes(attachment)}
+
+								<div class="flex justify-between items-center gap-2">
+									<div>
+										<a
+											class="flex gap-2 items-center"
+											href={pb.files.getUrl(task, attachment)}
+											target="_blank"
+										>
+											<Card class="w-16 h-16 flex justify-center items-center">
+												{#if fileType === 'png' || fileType === 'jpg' || fileType === 'jpeg' || fileType === 'gif'}
+													<img
+														src={pb.files.getUrl(task, attachment, { thumb: '100x250' })}
+														alt="attachment preview"
+														class="w-16 h-16 object-cover rounded-lg"
+													/>
+												{:else}
+													<a href={pb.files.getUrl(task, attachment)} target="_blank">
+														<Paperclip />
+													</a>
+												{/if}
+											</Card>
+											<p class="flex-1 break-all">{attachment}</p>
+										</a>
+									</div>
+									{#if isDeleted}
+										<Button
+											variant="destructive"
+											on:click={() => {
+												formData.update(($formData) => {
+													const attachments = $formData['attachments-'] || [];
+													const index = attachments.findIndex((a) => a === attachment);
+													attachments.splice(index, 1);
+													$formData['attachments-'] = attachments;
+													return $formData;
+												});
+												setFocusOnElement('#content-div');
+											}}>Restore</Button
+										>
+									{:else}
+										<Button
+											on:click={() => {
+												formData.update(($formData) => {
+													const attachments = $formData['attachments-'] || [];
+													attachments.push(attachment);
+													$formData['attachments-'] = attachments;
+													return $formData;
+												});
+												setFocusOnElement('#content-div');
+											}}
+											variant="ghost"
+											size="icon"><Trash class="h-5 w-5" /></Button
+										>
+									{/if}
+								</div>
+							{/each}
+						{/if}
+					</div>
 				</div>
 			</div>
-			<div class="flex justify-between">
+			<!-- Buttons Container -->
+			<div class="flex justify-between px-2 pt-2">
 				{#if $formData.id}
 					<Button
 						type="submit"
