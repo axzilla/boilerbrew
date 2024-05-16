@@ -60,10 +60,19 @@
 
 	const files = filesProxy(form, 'attachments');
 	const { form: formData, enhance } = form;
+
+	// HACK: This is a workaround to focus NOT on the first input element in the form. https://github.com/huntabyte/bits-ui/issues/427
+	function setFocusOnElement(selector: string) {
+		const element = document.querySelector(selector);
+		if (element) {
+			const inputElement = element as HTMLInputElement;
+			inputElement.focus();
+		}
+	}
 </script>
 
 <Dialog bind:open={isTaskFormOpen}>
-	<DialogContent class="max-w-2xl max-h-full overflow-auto">
+	<DialogContent id="content-div" class="max-w-2xl max-h-full overflow-auto">
 		<form action="?/createOrUpdateTask" method="POST" use:enhance enctype="multipart/form-data">
 			<div class="pb-1">
 				<FormField {form} name="title">
@@ -125,15 +134,14 @@
 				</FormField>
 
 				<FormField {form} name="attachments">
-					<FormControl let:attrs>
+					<FormControl>
 						<FormLabel>Attachments</FormLabel>
-						<!-- <Input type="file" multiple bind:files={$files} {...attrs} /> -->
 						<input type="file" multiple name="attachments" bind:files={$files} />
 					</FormControl>
 					<FormFieldErrors />
 				</FormField>
 
-				<div class="flex flex-col gap-4">
+				<div class="flex flex-col gap-4 pb-4">
 					{#each $files as file}
 						{@const fileType = file.type.split('/')[file.type.split('/').length - 1]}
 						<div class="flex justify-between items-center gap-2">
@@ -156,6 +164,7 @@
 										const index = currentFiles.findIndex((f) => f.name === file.name);
 										return [...currentFiles.slice(0, index), ...currentFiles.slice(index + 1)];
 									});
+									setFocusOnElement('#content-div');
 								}}
 								variant="ghost"
 								size="icon"
@@ -195,6 +204,7 @@
 												$formData['attachments-'] = attachments;
 												return $formData;
 											});
+											setFocusOnElement('#content-div');
 										}}>Restore</Button
 									>
 								{:else}
@@ -206,6 +216,7 @@
 												$formData['attachments-'] = attachments;
 												return $formData;
 											});
+											setFocusOnElement('#content-div');
 										}}
 										variant="ghost"
 										size="icon"><Trash class="h-5 w-5" /></Button
