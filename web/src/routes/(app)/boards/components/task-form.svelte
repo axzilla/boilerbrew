@@ -13,7 +13,7 @@
 	import { Textarea } from '$lib/components/ui/textarea';
 	import { TaskSchema, type List, type Task } from '$lib/schemas';
 	import { tasks } from '$lib/stores';
-	import { Paperclip, Trash } from 'lucide-svelte';
+	import { CloudUpload, Paperclip, Trash } from 'lucide-svelte';
 	import { defaultValues, filesProxy, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { priorities } from '../data';
@@ -136,7 +136,10 @@
 				<FormField {form} name="attachments">
 					<FormControl>
 						<FormLabel>Attachments</FormLabel>
-						<input type="file" multiple name="attachments" bind:files={$files} />
+						<Button class="w-full gap-2" on:click={() => document.getElementById('upload').click()}>
+							<CloudUpload /> Upload new file
+						</Button>
+						<input id="upload" hidden type="file" multiple name="attachments" bind:files={$files} />
 					</FormControl>
 					<FormFieldErrors />
 				</FormField>
