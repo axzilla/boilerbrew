@@ -14,14 +14,16 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 	const tasks: Task[] = await locals.pb
 		.collection('tasks')
 		.getFullList({ filter: `board_id = "${id}"` });
+	const board = await locals.pb.collection('boards').getOne(id);
 
-	return { form, lists, tasks };
+	return { form, lists, tasks, board };
 };
 
 export const actions: Actions = {
 	createOrUpdateList: async ({ request, locals }) => {
 		const formData = await request.formData();
 		const form = await superValidate(formData, zod(ListSchema));
+
 		if (!form.valid) {
 			return fail(400, { form });
 		}

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { CirclePlus } from 'lucide-svelte';
-	import { ListSchema, type List } from '$lib/schemas';
-	import { superForm } from 'sveltekit-superforms';
+	import { BoardSchema, ListSchema, type List } from '$lib/schemas';
+	import { defaultValues, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import FormField from '$lib/components/ui/form/form-field.svelte';
 	import { FormControl } from '$lib/components/ui/form';
@@ -14,7 +14,7 @@
 	export let list: List | null;
 	export let isFormOpen = false;
 
-	const form = superForm(list || data.form, {
+	const form = superForm(list || { ...defaultValues(zod(ListSchema)), board_id: data?.board.id }, {
 		dataType: 'json',
 		validators: zod(ListSchema),
 		onResult({ result }) {

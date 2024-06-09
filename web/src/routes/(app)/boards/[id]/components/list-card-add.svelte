@@ -7,7 +7,6 @@
 	import { CirclePlus } from 'lucide-svelte';
 
 	export let data: PageData;
-
 	let isFormOpen = false;
 </script>
 
