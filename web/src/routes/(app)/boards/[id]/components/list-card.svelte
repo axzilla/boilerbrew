@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { Card, CardTitle } from '$lib/components/ui/card';
-	import { type List, type Task } from '$lib/schemas';
+	import { type Board, type List, type Task } from '$lib/schemas';
 	import { CirclePlus, Trash } from 'lucide-svelte/icons';
 	import { ListForm, TaskForm } from '.';
 	import { clickOutside } from '$lib/utils';
@@ -9,6 +9,7 @@
 	import { tasks } from '$lib/stores';
 
 	export let list: List;
+	export let board: Board;
 	export let openDelete = false;
 	export let setCurrentList: (list: List) => void;
 
@@ -67,5 +68,5 @@
 </Card>
 
 {#if isTaskFormOpen}
-	<TaskForm bind:isTaskFormOpen task={currentTask} {list} />
+	<TaskForm bind:isTaskFormOpen task={currentTask} {list} {board} />
 {/if}

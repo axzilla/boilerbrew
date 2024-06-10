@@ -120,6 +120,7 @@ export const TaskSchema = z.object({
 	'attachments-': z.array(z.string()).optional(),
 	priority: z.string(),
 	list_id: z.string(),
+	board_id: z.string(),
 	user_id: z.string()
 });
 export type Task = z.infer<typeof TaskSchema>;

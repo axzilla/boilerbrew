@@ -35,7 +35,7 @@
 </div>
 <div class="overflow-auto h-full flex gap-4 items-start">
 	{#each $lists as list}
-		<ListCard bind:openDelete={openDeleteList} {list} {setCurrentList} />
+		<ListCard bind:openDelete={openDeleteList} {list} board={data.board} {setCurrentList} />
 	{/each}
 	<ListCardAdd {data} />
 </div>

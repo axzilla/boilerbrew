@@ -11,7 +11,7 @@
 		SelectValue
 	} from '$lib/components/ui/select';
 	import { Textarea } from '$lib/components/ui/textarea';
-	import { TaskSchema, type List, type Task } from '$lib/schemas';
+	import { TaskSchema, type Board, type List, type Task } from '$lib/schemas';
 	import { tasks } from '$lib/stores';
 	import { CloudUpload, Paperclip, Trash } from 'lucide-svelte';
 	import { defaultValues, filesProxy, superForm } from 'sveltekit-superforms';
@@ -24,6 +24,7 @@
 
 	export let task: Task | null;
 	export let list: List | null;
+	export let board: Board | null;
 	export let isTaskFormOpen = false;
 
 	let selectedPriority = priorities.find((p) => p.value === (task ? task.priority : ''));
@@ -31,7 +32,11 @@
 	const pb = new PocketBase('http://127.0.0.1:8090');
 
 	const form = superForm(
-		task || { ...defaultValues(zod(TaskSchema)), list_id: list ? list.id : '' },
+		task || {
+			...defaultValues(zod(TaskSchema)),
+			list_id: list ? list.id : '',
+			board_id: board ? board.id : ''
+		},
 		{
 			dataType: 'json',
 			validators: zod(TaskSchema),
