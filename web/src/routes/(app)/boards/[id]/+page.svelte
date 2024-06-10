@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { List } from '$lib/schemas';
 	import { lists, tasks } from '$lib/stores';
-	import { Bold, Bolt, Edit, Trash } from 'lucide-svelte';
-	import { ListCard, ListFormDelete } from './components';
+	import { Bolt, Trash } from 'lucide-svelte';
+	import { ListCard, ListFormDelete, BoardFormDelete } from './components';
 	import ListCardAdd from './components/list-card-add.svelte';
 	import { Button } from '$lib/components/ui/button';
 
@@ -13,6 +13,7 @@
 
 	let currentList: List;
 	let openDeleteList = false;
+	let openDeleteBoard = false;
 
 	function setCurrentList(list: List) {
 		currentList = list;
@@ -27,8 +28,8 @@
 		<Button variant="ghost">
 			<Bolt class="cursor-pointer" />
 		</Button>
-		<Button variant="ghost">
-			<Trash class="cursor-pointer" onClick={() => (openDeleteList = true)} />
+		<Button variant="ghost" on:click={() => (openDeleteBoard = true)}>
+			<Trash class="cursor-pointer" />
 		</Button>
 	</div>
 </div>
@@ -41,4 +42,8 @@
 
 {#if openDeleteList}
 	<ListFormDelete bind:openDeleteList list={currentList} />
+{/if}
+
+{#if openDeleteBoard}
+	<BoardFormDelete bind:openDeleteBoard board={data.board} />
 {/if}

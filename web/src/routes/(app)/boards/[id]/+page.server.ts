@@ -1,7 +1,14 @@
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
-import { ListSchema, TaskSchema, type List, type Task } from '$lib/schemas.js';
-import { type Actions } from '@sveltejs/kit';
+import {
+	BoardSchema,
+	ListSchema,
+	TaskSchema,
+	type Board,
+	type List,
+	type Task
+} from '$lib/schemas.js';
+import { redirect, type Actions } from '@sveltejs/kit';
 import { fail, superValidate, withFiles } from 'sveltekit-superforms';
 
 export const load: PageServerLoad = async ({ locals, params }) => {
@@ -11,10 +18,12 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 	const lists: List[] = await locals.pb
 		.collection('lists')
 		.getFullList({ filter: `board_id = "${id}"` });
+
 	const tasks: Task[] = await locals.pb
 		.collection('tasks')
 		.getFullList({ filter: `board_id = "${id}"` });
-	const board = await locals.pb.collection('boards').getOne(id);
+
+	const board: Board = await locals.pb.collection('boards').getOne(id);
 
 	return { form, lists, tasks, board };
 };
@@ -86,5 +95,21 @@ export const actions: Actions = {
 		} catch (err) {
 			console.log('Error: ', err);
 		}
+	},
+	deleteBoard: async ({ request, locals }) => {
+		const formData = await request.formData();
+		const form = await superValidate(formData, zod(BoardSchema));
+
+		if (!form.valid) {
+			return fail(400, { form });
+		}
+
+		try {
+			await locals.pb.collection('boards').delete(form.data.id);
+		} catch (err) {
+			console.log('Error: ', err);
+		}
+
+		redirect(303, '/boards');
 	}
 };
