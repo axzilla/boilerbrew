@@ -124,3 +124,8 @@ export const TaskSchema = z.object({
 	user_id: z.string()
 });
 export type Task = z.infer<typeof TaskSchema>;
+
+export const DeleteUserSchema = z.object({
+	word: z.string()
+});
+export type DeleteUser = z.infer<typeof DeleteUserSchema>;

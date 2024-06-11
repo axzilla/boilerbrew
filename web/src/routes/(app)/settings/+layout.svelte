@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { cn } from '$lib/utils';
-	import Mail from 'lucide-svelte/icons/mail';
-	import User from 'lucide-svelte/icons/user';
-	import Lock from 'lucide-svelte/icons/lock';
+	import { Trash, Lock, User, Mail } from 'lucide-svelte';
 
 	const navigation = [
 		{
@@ -20,6 +18,11 @@
 			title: 'Password',
 			href: '/settings/password',
 			icon: Lock
+		},
+		{
+			title: 'Delete Account',
+			href: '/settings/delete-account',
+			icon: Trash
 		}
 	];
 </script>
