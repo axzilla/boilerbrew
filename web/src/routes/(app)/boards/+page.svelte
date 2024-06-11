@@ -1,29 +1,26 @@
 <script lang="ts">
-	import type { List } from '$lib/schemas';
-	import { lists, tasks } from '$lib/stores';
-	import { ListCard, ListFormDelete } from './components';
-	import ListCardAdd from './components/list-card-add.svelte';
+	import { Button } from '$lib/components/ui/button';
+	import { boards } from '$lib/stores';
+	import type { PageData } from './$types';
+	import BoardForm from './components/board-form.svelte';
 
-	export let data;
+	export let data: PageData;
 
-	lists.set(data.lists);
-	tasks.set(data.tasks);
+	let openCreateBoardForm = false;
 
-	let currentList: List;
-	let openDeleteList = false;
-
-	function setCurrentList(list: List) {
-		currentList = list;
-	}
+	boards.set(data.boards);
 </script>
 
-<div class="overflow-auto h-full flex gap-4 items-start">
-	{#each $lists as list}
-		<ListCard bind:openDelete={openDeleteList} {list} {setCurrentList} />
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+	<Button on:click={() => (openCreateBoardForm = true)} class="h-32">Create Board</Button>
+
+	{#each $boards as board}
+		<Button variant="secondary" href={`/boards/${board.id}`} class="h-32 basis-1/4">
+			{board.title}
+		</Button>
 	{/each}
-	<ListCardAdd {data} />
 </div>
 
-{#if openDeleteList}
-	<ListFormDelete bind:openDeleteList list={currentList} />
+{#if openCreateBoardForm}
+	<BoardForm bind:open={openCreateBoardForm} />
 {/if}
