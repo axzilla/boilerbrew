@@ -22,5 +22,5 @@
 </div>
 
 {#if openCreateBoardForm}
-	<BoardForm bind:openCreateBoardForm />
+	<BoardForm bind:open={openCreateBoardForm} />
 {/if}

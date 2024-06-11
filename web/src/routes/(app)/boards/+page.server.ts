@@ -20,8 +20,9 @@ export const actions: Actions = {
 		try {
 			let board: Board;
 
+			console.log(formData);
 			if (form.data.id) {
-				// board = await locals.pb.collection('boards').update(form.data.id, form.data);
+				board = await locals.pb.collection('boards').update(form.data.id, form.data);
 			} else {
 				board = await locals.pb
 					.collection('boards')

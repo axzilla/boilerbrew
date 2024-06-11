@@ -9,15 +9,17 @@
 	} from '$lib/components/ui/dialog';
 	import { defaultValues, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
-	import { BoardSchema } from '$lib/schemas';
+	import { BoardSchema, type Board } from '$lib/schemas';
 	import { Input } from '$lib/components/ui/input';
 	import { FormControl, FormField, FormFieldErrors, FormLabel } from '$lib/components/ui/form';
 	import { toast } from 'svelte-sonner';
 	import { boards } from '$lib/stores';
 
-	export let openCreateBoardForm = false;
+	export let open = false;
+	export let board: Board | null = null;
 
-	const form = superForm(defaultValues(zod(BoardSchema)), {
+	const form = superForm(board || defaultValues(zod(BoardSchema)), {
+		dataType: 'json',
 		validators: zod(BoardSchema),
 		onUpdated: ({ form: f }) => {
 			if (f.errors.title) {
@@ -28,27 +30,28 @@
 			const { data } = result;
 
 			boards.update((currentBoards) => {
-				openCreateBoardForm = false;
-				// if (data.form.data.id) {
-				// 	const index = currentBoards.findIndex((l) => l.id === data.form.data.id);
-				// 	currentBoards[index] = data.board;
-				// 	return currentBoards;
-				// }
+				if (data.form.data.id) {
+					const index = currentBoards.findIndex((l) => l.id === data.form.data.id);
+					currentBoards[index] = data.board;
+					return currentBoards;
+				}
 				return [...currentBoards, data.board];
 			});
+
+			open = false;
 		}
 	});
 
 	const { form: formData, enhance } = form;
 </script>
 
-{#if openCreateBoardForm}
-	<Dialog bind:open={openCreateBoardForm}>
+{#if open}
+	<Dialog bind:open>
 		<DialogContent class="sm:max-w-[426px]">
 			<DialogHeader>
-				<DialogTitle>Create Board</DialogTitle>
+				<DialogTitle>{board ? 'Edit' : 'Create'} Board</DialogTitle>
 			</DialogHeader>
-			<form action="?/createOrUpdateBoard" method="POST" use:enhance>
+			<form action="/boards?/createOrUpdateBoard" method="POST" use:enhance>
 				<FormField {form} name="title">
 					<FormControl let:attrs>
 						<FormLabel>Title</FormLabel>

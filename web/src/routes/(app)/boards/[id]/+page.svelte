@@ -3,6 +3,7 @@
 	import { lists, tasks } from '$lib/stores';
 	import { Bolt, Trash } from 'lucide-svelte';
 	import { ListCard, ListFormDelete, BoardFormDelete } from './components';
+	import { BoardForm } from '../components';
 	import ListCardAdd from './components/list-card-add.svelte';
 	import { Button } from '$lib/components/ui/button';
 
@@ -14,6 +15,7 @@
 	let currentList: List;
 	let openDeleteList = false;
 	let openDeleteBoard = false;
+	let openBoardForm = false;
 
 	function setCurrentList(list: List) {
 		currentList = list;
@@ -25,7 +27,7 @@
 		{data.board.title}
 	</p>
 	<div class="flex items-center">
-		<Button variant="ghost">
+		<Button variant="ghost" on:click={() => (openBoardForm = true)}>
 			<Bolt class="cursor-pointer" />
 		</Button>
 		<Button variant="ghost" on:click={() => (openDeleteBoard = true)}>
@@ -46,4 +48,8 @@
 
 {#if openDeleteBoard}
 	<BoardFormDelete bind:openDeleteBoard board={data.board} />
+{/if}
+
+{#if openBoardForm}
+	<BoardForm bind:open={openBoardForm} board={data.board} />
 {/if}
