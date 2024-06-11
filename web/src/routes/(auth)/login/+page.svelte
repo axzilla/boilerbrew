@@ -18,8 +18,8 @@
 	const form = superForm(data.form, {
 		validators: zod(LoginUserSchema),
 		onUpdated: ({ form: f }) => {
-			if (f.errors) {
-				toast.error('Failed to authenticate!');
+			if (f.message) {
+				toast.error(f.message);
 			}
 		}
 	});
