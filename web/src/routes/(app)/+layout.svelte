@@ -13,11 +13,11 @@
 		DropdownMenuItem
 	} from '$lib/components/ui/dropdown-menu';
 	import { Sheet, SheetTrigger, SheetContent } from '$lib/components/ui/sheet';
+	import logo from '$lib/assets/logo.png';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Home from 'lucide-svelte/icons/home';
 	import { Bolt, Moon, Sun } from 'lucide-svelte';
-	import config from '$lib/config';
 	import {
 		Card,
 		CardHeader,
@@ -47,7 +47,8 @@
 			icon: Bolt
 		}
 	];
-	let menuOpen = true;
+
+	let menuOpen = false;
 </script>
 
 <div class="flex min-h-screen">
@@ -55,8 +56,7 @@
 		<div class="flex h-full max-h-screen flex-col gap-2">
 			<div class="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
 				<a href="/" class="flex items-center gap-2 font-semibold">
-					<Beer class="h-6 w-6" />
-					<span>{config.appName}</span>
+					<img width="200px" alt="The project logo" src={logo} />
 				</a>
 			</div>
 			<div class="flex-1">
@@ -104,8 +104,7 @@
 							href="/"
 							class="flex items-center gap-2 text-lg font-semibold"
 						>
-							<Beer class="h-6 w-6" />
-							{config.appName}
+							<img width="200px" alt="The project logo" src={logo} />
 						</a>
 						<Separator />
 						{#each navigation as { title, href, icon }}
