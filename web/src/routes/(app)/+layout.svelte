@@ -47,6 +47,7 @@
 			icon: Bolt
 		}
 	];
+	let menuOpen = true;
 </script>
 
 <div class="flex min-h-screen">
@@ -90,7 +91,7 @@
 	</div>
 	<div class="flex-1 overflow-x-auto">
 		<header class="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
-			<Sheet>
+			<Sheet bind:open={menuOpen}>
 				<SheetTrigger asChild let:builder>
 					<Button variant="outline" size="icon" class="shrink-0 md:hidden" builders={[builder]}>
 						<Menu class="h-5 w-5" />
@@ -98,13 +99,18 @@
 				</SheetTrigger>
 				<SheetContent side="left" class="flex flex-col">
 					<nav class="grid gap-2 text-lg font-medium">
-						<a href="/" class="flex items-center gap-2 text-lg font-semibold">
+						<a
+							on:click={() => (menuOpen = false)}
+							href="/"
+							class="flex items-center gap-2 text-lg font-semibold"
+						>
 							<Beer class="h-6 w-6" />
 							{config.appName}
 						</a>
 						<Separator />
 						{#each navigation as { title, href, icon }}
 							<a
+								on:click={() => (menuOpen = false)}
 								{href}
 								class={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground ${$page.url.pathname.includes(href) ? 'bg-muted' : 'hover:text-foreground'}`}
 							>
