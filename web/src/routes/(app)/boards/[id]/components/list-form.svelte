@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { CirclePlus } from 'lucide-svelte';
-	import { BoardSchema, ListSchema, type List } from '$lib/schemas';
+	import { ListSchema, type List } from '$lib/schemas';
 	import { defaultValues, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import FormField from '$lib/components/ui/form/form-field.svelte';
@@ -14,23 +14,36 @@
 	export let list: List | null;
 	export let isFormOpen = false;
 
-	const form = superForm(list || { ...defaultValues(zod(ListSchema)), board_id: data?.board.id }, {
-		dataType: 'json',
-		validators: zod(ListSchema),
-		onResult({ result }) {
-			const { data } = result;
+	const form = superForm(
+		list || {
+			...defaultValues(zod(ListSchema)),
+			board_id: data?.board.id
+		},
+		{
+			dataType: 'json',
+			validators: zod(ListSchema),
+			onSubmit: ({ jsonData }) => {
+				const updatedValues = {
+					...$formData,
+					index: $lists.length
+				};
+				jsonData(updatedValues);
+			},
+			onResult({ result }) {
+				const { data } = result;
 
-			lists.update((currentLists) => {
-				if (data.form.data.id) {
-					isFormOpen = false;
-					const index = currentLists.findIndex((l) => l.id === data.form.data.id);
-					currentLists[index] = data.list;
-					return currentLists;
-				}
-				return [...currentLists, data.list];
-			});
+				lists.update((currentLists) => {
+					if (data.form.data.id) {
+						isFormOpen = false;
+						const index = currentLists.findIndex((l) => l.id === data.form.data.id);
+						currentLists[index] = data.list;
+						return currentLists;
+					}
+					return [...currentLists, data.list];
+				});
+			}
 		}
-	});
+	);
 
 	const { form: formData, enhance } = form;
 </script>

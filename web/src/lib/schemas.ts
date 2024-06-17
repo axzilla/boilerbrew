@@ -99,6 +99,7 @@ export type Board = z.infer<typeof BoardSchema>;
 
 export const ListSchema = z.object({
 	id: z.string(),
+	index: z.number(),
 	name: z.string(),
 	user_id: z.string(),
 	board_id: z.string()
