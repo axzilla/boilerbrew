@@ -7,11 +7,14 @@
 	import { clickOutside } from '$lib/utils';
 	import TaskCard from './task-card.svelte';
 	import { tasks } from '$lib/stores';
+	import { dndzone, type DndEvent } from 'svelte-dnd-action';
 
 	export let list: List;
 	export let board: Board;
 	export let openDelete = false;
 	export let setCurrentList: (list: List) => void;
+	export let handleDndConsiderTasks;
+	export let handleDndFinalizeTasks;
 
 	let isListFormOpen = false;
 	let isTaskFormOpen = false;
@@ -49,8 +52,21 @@
 		</div>
 	{/if}
 
-	<div class="overflow-auto h-full flex flex-col gap-2 items-start">
-		{#each filteredTasks as task}
+	<div
+		use:dndzone={{
+			items: filteredTasks,
+			flipDurationMs: 200,
+			type: 'tasks',
+			dropFromOthersDisabled: false
+		}}
+		on:consider={(e) => handleDndConsiderTasks(e, list.id)}
+		on:finalize={(e) => handleDndFinalizeTasks(e, list.id)}
+		class="overflow-auto h-full flex flex-col gap-2 items-start"
+	>
+		{#if filteredTasks.length === 0}
+			<div class="empty-placeholder">Drop tasks here</div>
+		{/if}
+		{#each filteredTasks as task (task.id)}
 			<TaskCard {task} bind:isTaskFormOpen {setCurrentTask} />
 		{/each}
 	</div>

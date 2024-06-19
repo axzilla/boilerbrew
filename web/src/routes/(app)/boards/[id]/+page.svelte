@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { List } from '$lib/schemas';
+	import type { List, Task } from '$lib/schemas';
 	import { lists, tasks } from '$lib/stores';
 	import { page } from '$app/stores';
 	import { Bolt, Trash } from 'lucide-svelte';
@@ -44,6 +44,41 @@
 			lists.set(updatedLists.sort((a, b) => a.index - b.index));
 		}
 	}
+
+	function handleDndConsiderTasks(e: CustomEvent<DndEvent<Task>>, listId: number) {
+		const updatedTasks = e.detail.items.map((task, index) => ({
+			...task,
+			list_id: listId,
+			index
+		}));
+		tasks.update((tsks) => {
+			const taskMap = new Map(updatedTasks.map((task) => [task.id, task]));
+			return tsks.map((task) => taskMap.get(task.id) || task);
+		});
+	}
+
+	async function handleDndFinalizeTasks(e: CustomEvent<DndEvent<Task>>, listId: number) {
+		const updatedTasks = e.detail.items.map((task, index) => ({
+			...task,
+			list_id: listId,
+			index
+		}));
+
+		const updatedTasksResponse = await fetch('/api/updateTaskIndex', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ tasks: updatedTasks, boardId: $page.params.id })
+		});
+
+		if (!updatedTasksResponse.ok) {
+			console.error('Error:', updatedTasksResponse.statusText);
+		} else {
+			const updatedTasks = await updatedTasksResponse.json();
+			tasks.set(updatedTasks);
+		}
+	}
 </script>
 
 <div class="flex justify-between items-center w-full mb-4">
@@ -66,7 +101,14 @@
 	class="overflow-auto h-full flex gap-4 items-start"
 >
 	{#each $lists as list (list.id)}
-		<ListCard bind:openDelete={openDeleteList} {list} board={data.board} {setCurrentList} />
+		<ListCard
+			bind:openDelete={openDeleteList}
+			{list}
+			board={data.board}
+			{setCurrentList}
+			{handleDndConsiderTasks}
+			{handleDndFinalizeTasks}
+		/>
 	{/each}
 	<ListCardAdd {data} />
 </div>
