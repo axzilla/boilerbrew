@@ -104,6 +104,7 @@ export const GoalSchema = z.object({
 		.min(1, { message: 'Username or email is required' }),
 	description: z.string(),
 	progress: z.number(),
+	index: z.number(),
 	user_id: z.string().optional(),
 	created: z.date().optional(),
 	updated: z.date().optional()
