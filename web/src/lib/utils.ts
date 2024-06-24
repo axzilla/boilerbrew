@@ -5,6 +5,27 @@ import type { TransitionConfig } from 'svelte/transition';
 
 import type { Action } from 'svelte/action';
 
+export function formatDate(dateString: string | Date): string {
+	const date = new Date(dateString);
+
+	const day = String(date.getDate()).padStart(2, '0');
+	const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+	const year = date.getFullYear();
+
+	return `${day}/${month}/${year}`;
+}
+
+export function daysSince(dateString: string | Date): number {
+	const date = new Date(dateString);
+	const currentDate = new Date();
+
+	const diffInMs = currentDate.getTime() - date.getTime();
+
+	const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+	return diffInDays;
+}
+
 export const clickOutside: Action<HTMLElement, () => void> = (node, callback) => {
 	const handleClick = (event: MouseEvent) => {
 		if (node && !node.contains(event.target as Node) && !event.defaultPrevented) {

@@ -42,6 +42,11 @@
 			icon: Home
 		},
 		{
+			title: 'Goals',
+			href: '/goals',
+			icon: Home
+		},
+		{
 			title: 'Settings',
 			href: '/settings',
 			icon: Bolt

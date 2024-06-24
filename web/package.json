@@ -48,7 +48,7 @@
 	"type": "module",
 	"dependencies": {
 		"@internationalized/date": "^3.5.2",
-		"bits-ui": "^0.21.7",
+		"bits-ui": "^0.21.10",
 		"clsx": "^2.1.0",
 		"cmdk-sv": "^0.0.17",
 		"embla-carousel-svelte": "^8.0.0",
@@ -57,7 +57,6 @@
 		"mode-watcher": "^0.3.0",
 		"paneforge": "^0.0.2",
 		"pocketbase": "^0.21.1",
-		"svelte-autosize": "^1.1.0",
 		"svelte-headless-table": "^0.18.2",
 		"svelte-sonner": "^0.3.21",
 		"sveltekit-superforms": "^2.12.2",

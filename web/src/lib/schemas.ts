@@ -97,6 +97,19 @@ export const BoardSchema = z.object({
 });
 export type Board = z.infer<typeof BoardSchema>;
 
+export const GoalSchema = z.object({
+	id: z.string(),
+	name: z
+		.string({ required_error: 'Username or email is required' })
+		.min(1, { message: 'Username or email is required' }),
+	description: z.string(),
+	progress: z.number(),
+	user_id: z.string().optional(),
+	created: z.date().optional(),
+	updated: z.date().optional()
+});
+export type Goal = z.infer<typeof GoalSchema>;
+
 export const ListSchema = z.object({
 	id: z.string(),
 	index: z.number(),
@@ -110,6 +123,7 @@ export const TaskSchema = z.object({
 	id: z.string(),
 	title: z.string(),
 	description: z.string(),
+	index: z.number(),
 	attachments: z.array(
 		z.union([
 			z
