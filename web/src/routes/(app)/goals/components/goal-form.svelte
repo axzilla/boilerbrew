@@ -7,7 +7,7 @@
 		DialogHeader,
 		DialogTitle
 	} from '$lib/components/ui/dialog';
-	import SuperDebug, { defaultValues, superForm } from 'sveltekit-superforms';
+	import { defaultValues, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { GoalSchema, type Goal } from '$lib/schemas';
 	import { Input } from '$lib/components/ui/input';
@@ -51,7 +51,6 @@
 {#if open}
 	<Dialog bind:open>
 		<DialogContent class="sm:max-w-[426px]">
-			<SuperDebug data={formData} />
 			<DialogHeader>
 				<DialogTitle>{goal ? 'Update' : 'Create'} Goal</DialogTitle>
 			</DialogHeader>
