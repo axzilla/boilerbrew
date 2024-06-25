@@ -106,10 +106,20 @@ export const GoalSchema = z.object({
 	progress: z.number(),
 	index: z.number(),
 	user_id: z.string().optional(),
+	created: z.union([z.date().optional(), z.string().optional()]),
+	updated: z.union([z.date().optional(), z.string().optional()])
+});
+export type Goal = z.infer<typeof GoalSchema>;
+
+export const MilestoneSchema = z.object({
+	id: z.string(),
+	notes: z.string(),
+	goal_id: z.string().optional(),
+	user_id: z.string().optional(),
 	created: z.date().optional(),
 	updated: z.date().optional()
 });
-export type Goal = z.infer<typeof GoalSchema>;
+export type Milestone = z.infer<typeof MilestoneSchema>;
 
 export const ListSchema = z.object({
 	id: z.string(),
