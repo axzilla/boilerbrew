@@ -66,6 +66,10 @@
 					<p class="text-lg font-semibold">Goal</p>
 					<p class="text-lg text-muted-foreground">{data.goal.name}</p>
 				</div>
+				<div class="mb-4">
+					<p class="text-lg font-semibold">Description</p>
+					<p class="text-lg text-muted-foreground">{data.goal.description || '-'}</p>
+				</div>
 				<div class="flex justify-between">
 					<div>
 						<p class="text-lg font-semibold">Progress</p>
@@ -100,10 +104,6 @@
 				</div>
 			</div>
 		</form>
-		<div class="max-w-xl mx-auto">
-			<p class="text-lg font-semibold">Description</p>
-			<p class="text-lg text-muted-foreground">{data.goal.description || '-'}</p>
-		</div>
 	</div>
 </div>
 
