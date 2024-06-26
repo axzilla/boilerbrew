@@ -64,20 +64,20 @@
 			<div class="min-w-xl max-w-xl mx-auto">
 				<div class="mb-4">
 					<p class="text-lg font-semibold">Goal</p>
-					<p class="text-lg text-muted-foreground">{data.goal.name}</p>
+					<p class="text-sm text-muted-foreground">{data.goal.name}</p>
 				</div>
 				<div class="mb-4">
 					<p class="text-lg font-semibold">Description</p>
-					<p class="text-lg text-muted-foreground">{data.goal.description || '-'}</p>
+					<p class="text-sm text-muted-foreground">{data.goal.description || '-'}</p>
 				</div>
 				<div class="flex justify-between">
 					<div>
 						<p class="text-lg font-semibold">Progress</p>
-						<p class="text-lg text-muted-foreground">4%</p>
+						<p class="text-sm text-muted-foreground">4%</p>
 					</div>
 					<div>
 						<p class="text-lg font-semibold">Last Progress</p>
-						<p class="text-lg text-muted-foreground">2024/05/22</p>
+						<p class="text-sm text-muted-foreground">2024/05/22</p>
 					</div>
 				</div>
 			</div>
