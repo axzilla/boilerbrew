@@ -46,18 +46,15 @@
 </script>
 
 <div class="flex justify-center">
-	<div class="pb-8 w-full px-4">
+	<div class="pb-8 w-full">
 		<div class="mb-8">
 			<div class="flex justify-between mb-8">
 				<Button size="icon" variant="ghost" on:click={() => window.history.back()}>
-					<CircleArrowLeft class="h-8 w-8" />
+					<CircleArrowLeft class="h-5 w-5" />
 				</Button>
 				<div class="flex space-x-2">
 					<Button size="icon" variant="ghost" on:click={() => (goalFormOpen = true)}>
-						<Bolt class="h-8 w-8" />
-					</Button>
-					<Button size="icon" variant="ghost" on:click={() => window.history.back()}>
-						<Trash class="h-8 w-8" />
+						<Bolt class="h-5 w-5" />
 					</Button>
 				</div>
 			</div>

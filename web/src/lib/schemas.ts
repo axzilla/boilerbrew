@@ -97,20 +97,6 @@ export const BoardSchema = z.object({
 });
 export type Board = z.infer<typeof BoardSchema>;
 
-export const GoalSchema = z.object({
-	id: z.string(),
-	name: z
-		.string({ required_error: 'Username or email is required' })
-		.min(1, { message: 'Username or email is required' }),
-	description: z.string(),
-	progress: z.number(),
-	index: z.number(),
-	user_id: z.string().optional(),
-	created: z.union([z.date().optional(), z.string().optional()]),
-	updated: z.union([z.date().optional(), z.string().optional()])
-});
-export type Goal = z.infer<typeof GoalSchema>;
-
 export const MilestoneSchema = z.object({
 	id: z.string(),
 	notes: z.string(),
@@ -120,6 +106,21 @@ export const MilestoneSchema = z.object({
 	updated: z.date().optional()
 });
 export type Milestone = z.infer<typeof MilestoneSchema>;
+
+export const GoalSchema = z.object({
+	id: z.string(),
+	name: z
+		.string({ required_error: 'Username or email is required' })
+		.min(1, { message: 'Username or email is required' }),
+	description: z.string(),
+	progress: z.number(),
+	index: z.number(),
+	milestone: z.array(MilestoneSchema).optional(),
+	user_id: z.string().optional(),
+	created: z.union([z.date().optional(), z.string().optional()]),
+	updated: z.union([z.date().optional(), z.string().optional()])
+});
+export type Goal = z.infer<typeof GoalSchema>;
 
 export const ListSchema = z.object({
 	id: z.string(),

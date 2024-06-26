@@ -18,7 +18,7 @@
 	import type { Goal } from '$lib/schemas';
 
 	export let data: PageData;
-
+	console.log(data);
 	function handleDndConsiderLists(e: CustomEvent<DndEvent<Goal>>) {
 		goals.set(e.detail.items);
 	}
@@ -68,10 +68,10 @@
 				</CardHeader>
 				<CardContent class="flex justify-between">
 					<div class="flex flex-col">
-						<p class="text-xl">
+						<p class="text-lg font-semibold">
 							{daysSince(goal.created) > 0 ? `${daysSince(goal.created)} days ago` : '-'}
 						</p>
-						<p class="text-muted-foreground">Last Progress</p>
+						<p class="text-sm text-muted-foreground">Last Progress</p>
 					</div>
 				</CardContent>
 				<CardFooter>

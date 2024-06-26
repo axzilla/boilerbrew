@@ -1,29 +1,18 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import {
-		Dialog,
-		DialogContent,
-		DialogFooter,
-		DialogHeader,
-		DialogTitle
-	} from '$lib/components/ui/dialog';
-	import SuperDebug, { defaultValues, filesProxy, superForm } from 'sveltekit-superforms';
+	import { Dialog, DialogContent, DialogHeader, DialogTitle } from '$lib/components/ui/dialog';
+	import { defaultValues, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { GoalSchema, type Goal } from '$lib/schemas';
 	import { Input } from '$lib/components/ui/input';
 	import { FormControl, FormField, FormFieldErrors, FormLabel } from '$lib/components/ui/form';
 	import { toast } from 'svelte-sonner';
-	import { goals } from '$lib/stores';
 	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
-	import { CloudUpload, Paperclip, Trash } from 'lucide-svelte';
-	import Card from '$lib/components/ui/card/card.svelte';
-	import PocketBase from 'pocketbase';
-	import Badge from '$lib/components/ui/badge/badge.svelte';
+	import { Trash } from 'lucide-svelte';
+	import { goto } from '$app/navigation';
 
 	export let open = false;
 	export let goal: Goal | null = null;
-
-	const pb = new PocketBase('http://127.0.0.1:8090');
 
 	const form = superForm(goal || defaultValues(zod(GoalSchema)), {
 		dataType: 'json',
@@ -33,20 +22,24 @@
 				toast.error('Failed to create Goal');
 			}
 		},
-		onResult({ result }) {
+		async onResult({ result }) {
 			if (result.type === 'success') {
 				const { data } = result;
 
-				goals.update((currentGoals) => {
-					if (data?.form.data.id) {
-						const index = currentGoals.findIndex((l) => l.id === data.form.data.id);
-						currentGoals[index] = data.goal;
-						return currentGoals;
-					}
-					return [...currentGoals, data?.goal];
-				});
+				if (!goal) {
+					await goto(`/goals/${data.goal.id}`);
+					toast.success('Goal created');
+					return;
+				}
 
-				toast.success(`Goal ${goal ? 'updated' : 'created'} successfully`);
+				// INFO: PocketBase returns a boolean if db entry was deleted
+				if (data.goal === true) {
+					await goto('/goals');
+					toast.success('Goal deleted');
+					return;
+				}
+
+				toast.success('Goal updated');
 				open = false;
 			}
 		}
@@ -58,16 +51,10 @@
 {#if open}
 	<Dialog bind:open>
 		<DialogContent class="sm:max-w-[426px]">
-			<!-- <SuperDebug data={$formData} /> -->
 			<DialogHeader>
 				<DialogTitle>{goal ? 'Update' : 'Create'} Goal</DialogTitle>
 			</DialogHeader>
-			<form
-				enctype="multipart/form-data"
-				action="/goals?/createOrUpdateGoal"
-				method="POST"
-				use:enhance
-			>
+			<form enctype="multipart/form-data" action="/goals?/handleGoal" method="POST" use:enhance>
 				<FormField {form} name="name">
 					<FormControl let:attrs>
 						<FormLabel>Name</FormLabel>
@@ -82,10 +69,23 @@
 					</FormControl>
 					<FormFieldErrors />
 				</FormField>
-				<DialogFooter>
-					<Button variant="outline" on:click={() => (open = false)}>Cancel</Button>
-					<Button type="submit">{goal ? 'Update' : 'Create'}</Button>
-				</DialogFooter>
+				<div class="flex justify-between items-center">
+					{#if goal}
+						<Button
+							type="submit"
+							on:click={(e) => !confirm('Are you sure?') && e.preventDefault()}
+							name="delete"
+							variant="destructive"
+							size="icon"
+						>
+							<Trash class="h-5 w-5" />
+						</Button>
+					{/if}
+					<div>
+						<Button variant="outline" on:click={() => (open = false)}>Cancel</Button>
+						<Button type="submit">{goal ? 'Update' : 'Create'}</Button>
+					</div>
+				</div>
 			</form>
 		</DialogContent>
 	</Dialog>
