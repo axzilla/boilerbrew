@@ -104,15 +104,6 @@ export const GoalSchema = z.object({
 		.min(1, { message: 'Username or email is required' }),
 	description: z.string(),
 	progress: z.number(),
-	attachments: z.array(
-		z.union([
-			z
-				.instanceof(File)
-				.refine((f) => f.size < 5 * 1000 * 1000, { message: 'Max 5 MB upload size.' }),
-			z.string()
-		])
-	),
-	'attachments-': z.array(z.string()).optional(),
 	index: z.number(),
 	user_id: z.string().optional(),
 	created: z.union([z.date().optional(), z.string().optional()]),
