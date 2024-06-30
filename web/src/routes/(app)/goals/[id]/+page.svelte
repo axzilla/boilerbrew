@@ -7,13 +7,15 @@
 	// import { toast } from 'svelte-sonner';
 	import { goals } from '$lib/stores';
 	import { Bolt, CircleArrowLeft, DeleteIcon, Trash } from 'lucide-svelte';
-	import { GoalForm } from '../components';
+	import { GoalForm, MilestoneForm } from '../components';
 
 	export let data: PageData;
 	export let open = false;
 	export let milestone: Milestone | null = null;
 
+	let choosenMilestone: Milestone | null = null;
 	let goalFormOpen = false;
+	let milestoneFormOpen = false;
 
 	const form = superForm(
 		milestone || { ...defaultValues(zod(MilestoneSchema)), goal_id: data.goal.id },
@@ -43,6 +45,7 @@
 	);
 
 	const { form: formData, enhance } = form;
+	$: !milestoneFormOpen && (choosenMilestone = null);
 </script>
 
 <div class="flex justify-center">
@@ -87,11 +90,16 @@
 						<!-- svelte-ignore a11y-no-static-element-interactions -->
 						<div
 							on:click={() => {
-								if (!data.milestones[i - 1]) {
-									form.submit();
-								} else {
-									alert('Milestone already exists');
+								const previousExists = i === 1 || data.milestones[i - 2];
+								const currentExists = data.milestones[i - 1];
+
+								if (!previousExists) return;
+
+								if (currentExists) {
+									choosenMilestone = data.milestones[i - 1];
 								}
+
+								milestoneFormOpen = true;
 							}}
 							class={`cursor-pointer flex justify-center items-center border rounded-md size-8 sm:size-12  ${data.milestones[i - 1] ? 'bg-primary text-primary-foreground' : ''}`}
 						>
@@ -106,4 +114,8 @@
 
 {#if goalFormOpen}
 	<GoalForm goal={data.goal} bind:open={goalFormOpen} />
+{/if}
+
+{#if milestoneFormOpen}
+	<MilestoneForm milestone={choosenMilestone} bind:open={milestoneFormOpen} />
 {/if}

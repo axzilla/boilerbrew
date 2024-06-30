@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { page } from '$app/stores';
 	import {
 		CardContent,
 		CardDescription,
@@ -18,7 +17,7 @@
 	import type { Goal } from '$lib/schemas';
 
 	export let data: PageData;
-	console.log(data);
+
 	function handleDndConsiderLists(e: CustomEvent<DndEvent<Goal>>) {
 		goals.set(e.detail.items);
 	}
@@ -40,14 +39,14 @@
 		}
 	}
 
-	let openCreateGoalForm = false;
+	let openGoalForm = false;
 
 	goals.set(data.goals.sort((a, b) => a.index - b.index));
 </script>
 
 <div class="flex justify-between mb-8">
 	<p class="text-2xl font-semibold">Goals</p>
-	<Button on:click={() => (openCreateGoalForm = true)}>Create Goal</Button>
+	<Button on:click={() => (openGoalForm = true)}>Create Goal</Button>
 </div>
 <div
 	use:dndzone={{ items: $goals, flipDurationMs: 200, type: 'columns' }}
@@ -82,6 +81,6 @@
 	{/each}
 </div>
 
-{#if openCreateGoalForm}
-	<GoalForm bind:open={openCreateGoalForm} />
+{#if openGoalForm}
+	<GoalForm bind:open={openGoalForm} />
 {/if}
