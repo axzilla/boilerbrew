@@ -90,40 +90,30 @@ export const UpdatePasswordSchema = z
 		}
 	});
 
-export const BoardSchema = z.object({
+export const MilestoneSchema = z.object({
 	id: z.string(),
-	title: z.string(),
-	user_id: z.string()
+	notes: z.string(),
+	goal_id: z.string().optional(),
+	user_id: z.string().optional(),
+	created: z.date().optional(),
+	updated: z.date().optional()
 });
-export type Board = z.infer<typeof BoardSchema>;
+export type Milestone = z.infer<typeof MilestoneSchema>;
 
-export const ListSchema = z.object({
+export const GoalSchema = z.object({
 	id: z.string(),
-	name: z.string(),
-	user_id: z.string(),
-	board_id: z.string()
-});
-export type List = z.infer<typeof ListSchema>;
-
-export const TaskSchema = z.object({
-	id: z.string(),
-	title: z.string(),
+	name: z
+		.string({ required_error: 'Username or email is required' })
+		.min(1, { message: 'Username or email is required' }),
 	description: z.string(),
-	attachments: z.array(
-		z.union([
-			z
-				.instanceof(File)
-				.refine((f) => f.size < 5 * 1000 * 1000, { message: 'Max 5 MB upload size.' }),
-			z.string()
-		])
-	),
-	'attachments-': z.array(z.string()).optional(),
-	priority: z.string(),
-	list_id: z.string(),
-	board_id: z.string(),
-	user_id: z.string()
+	progress: z.number(),
+	index: z.number(),
+	milestone: z.array(MilestoneSchema).optional(),
+	user_id: z.string().optional(),
+	created: z.union([z.date().optional(), z.string().optional()]),
+	updated: z.union([z.date().optional(), z.string().optional()])
 });
-export type Task = z.infer<typeof TaskSchema>;
+export type Goal = z.infer<typeof GoalSchema>;
 
 export const DeleteUserSchema = z.object({
 	word: z.string()

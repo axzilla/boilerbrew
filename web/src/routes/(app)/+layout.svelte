@@ -37,8 +37,8 @@
 
 	const navigation = [
 		{
-			title: 'Boards',
-			href: '/boards',
+			title: 'Goals',
+			href: '/goals',
 			icon: Home
 		},
 		{
