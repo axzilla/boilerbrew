@@ -18,11 +18,11 @@
 
 	export let data: PageData;
 
-	function handleDndConsiderLists(e: CustomEvent<DndEvent<Goal>>) {
+	function handleDndConsiderGoals(e: CustomEvent<DndEvent<Goal>>) {
 		goals.set(e.detail.items);
 	}
 
-	async function handleDndFinalizeLists(e: CustomEvent<DndEvent<Goal>>) {
+	async function handleDndFinalizeGoals(e: CustomEvent<DndEvent<Goal>>) {
 		const updatedGoalsResponse = await fetch('/api/updateGoalIndex', {
 			method: 'POST',
 			headers: {
@@ -50,8 +50,8 @@
 </div>
 <div
 	use:dndzone={{ items: $goals, flipDurationMs: 200, type: 'columns' }}
-	on:consider={handleDndConsiderLists}
-	on:finalize={handleDndFinalizeLists}
+	on:consider={handleDndConsiderGoals}
+	on:finalize={handleDndFinalizeGoals}
 	class="grid grid-cols-1 md:grid-cols-4 gap-4"
 >
 	{#each $goals as goal (goal.id)}

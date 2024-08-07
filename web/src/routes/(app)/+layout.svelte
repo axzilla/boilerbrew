@@ -37,11 +37,6 @@
 
 	const navigation = [
 		{
-			title: 'Boards',
-			href: '/boards',
-			icon: Home
-		},
-		{
 			title: 'Goals',
 			href: '/goals',
 			icon: Home

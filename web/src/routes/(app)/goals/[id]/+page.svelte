@@ -24,7 +24,7 @@
 			validators: zod(MilestoneSchema),
 			onUpdated: ({ form: f }) => {
 				// if (f.errors) {
-				// 	toast.error('Failed to create Board');
+				// 	toast.error('Failed to create Goal');
 				// }
 			},
 			onResult({ result }) {
