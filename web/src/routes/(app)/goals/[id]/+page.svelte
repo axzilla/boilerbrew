@@ -5,6 +5,7 @@
 	import { Bolt, CircleArrowLeft } from 'lucide-svelte';
 	import { GoalForm } from '../components';
 	import { MilestoneForm } from './components';
+	import { formatDate } from '$lib/utils';
 
 	export let data: PageData;
 
@@ -40,11 +41,18 @@
 				<div class="flex justify-between">
 					<div>
 						<p class="text-lg font-semibold">Progress</p>
-						<p class="text-sm text-muted-foreground">4%</p>
+						<p class="text-sm text-muted-foreground">{data.milestones.length}%</p>
 					</div>
 					<div>
 						<p class="text-lg font-semibold">Last Progress</p>
-						<p class="text-sm text-muted-foreground">2024/05/22</p>
+						{#if data.milestones.length > 0}
+							{@const lastProgress = data.milestones[data.milestones.length - 1]?.updated}
+							<p class="text-sm text-muted-foreground">
+								{formatDate(lastProgress || '')}
+							</p>
+						{:else}
+							<p class="text-sm text-muted-foreground">No progress yet</p>
+						{/if}
 					</div>
 				</div>
 			</div>
