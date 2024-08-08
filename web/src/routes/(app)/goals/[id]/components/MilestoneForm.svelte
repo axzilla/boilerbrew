@@ -25,6 +25,15 @@
 			async onResult({ result }) {
 				if (result.type === 'success') {
 					const { data } = result;
+
+					// Milestone created
+					if (!milestone) {
+						toast.success('Milestone created');
+						open = false;
+						return;
+					}
+
+					// Milestone deleted
 					// INFO: PocketBase returns a boolean if db entry was deleted
 					if (data?.milestone === true) {
 						toast.success('Milestone deleted');
@@ -32,6 +41,7 @@
 						return;
 					}
 
+					// Milestone updated
 					toast.success('Milestone updated');
 					open = false;
 				}
