@@ -12,6 +12,7 @@
 	export let open = false;
 	export let milestone: Milestone | null = null;
 	export let goalId: string;
+	export let isLastMilestone = false;
 
 	const form = superForm(
 		milestone || {
@@ -56,7 +57,7 @@
 					<FormFieldErrors />
 				</FormField>
 				<div class="flex justify-between items-center">
-					{#if milestone}
+					{#if milestone && isLastMilestone}
 						<Button
 							type="submit"
 							on:click={(e) => !confirm('Are you sure?') && e.preventDefault()}

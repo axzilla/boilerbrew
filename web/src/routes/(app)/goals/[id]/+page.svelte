@@ -84,5 +84,10 @@
 {/if}
 
 {#if milestoneFormOpen}
-	<MilestoneForm goalId={data.goal.id} milestone={choosenMilestone} bind:open={milestoneFormOpen} />
+	<MilestoneForm
+		isLastMilestone={data.milestones[data.milestones.length - 1]?.id === choosenMilestone?.id}
+		goalId={data.goal.id}
+		milestone={choosenMilestone}
+		bind:open={milestoneFormOpen}
+	/>
 {/if}
