@@ -13,7 +13,7 @@
 	import { daysSince } from '$lib/utils';
 	import type { PageData } from './$types';
 	import { dndzone, type DndEvent } from 'svelte-dnd-action';
-	import GoalForm from './components/goal-form.svelte';
+	import { GoalForm } from './components';
 	import type { Goal } from '$lib/schemas';
 
 	export let data: PageData;
@@ -39,14 +39,14 @@
 		}
 	}
 
-	let openGoalForm = false;
+	let goalFormOpen = false;
 
 	goals.set(data.goals.sort((a, b) => a.index - b.index));
 </script>
 
 <div class="flex justify-between mb-8">
 	<p class="text-2xl font-semibold">Goals</p>
-	<Button on:click={() => (openGoalForm = true)}>Create Goal</Button>
+	<Button on:click={() => (goalFormOpen = true)}>Create Goal</Button>
 </div>
 <div
 	use:dndzone={{ items: $goals, flipDurationMs: 200, type: 'columns' }}
@@ -81,6 +81,6 @@
 	{/each}
 </div>
 
-{#if openGoalForm}
-	<GoalForm bind:open={openGoalForm} />
+{#if goalFormOpen}
+	<GoalForm bind:open={goalFormOpen} />
 {/if}

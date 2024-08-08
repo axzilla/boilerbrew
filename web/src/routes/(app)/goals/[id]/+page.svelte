@@ -1,13 +1,10 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { defaultValues, superForm } from 'sveltekit-superforms';
 	import type { PageData } from './$types';
-	import { zod } from 'sveltekit-superforms/adapters';
-	import { MilestoneSchema, type Milestone } from '$lib/schemas';
-	// import { toast } from 'svelte-sonner';
-	import { goals } from '$lib/stores';
+	import { type Milestone } from '$lib/schemas';
 	import { Bolt, CircleArrowLeft, DeleteIcon, Trash } from 'lucide-svelte';
-	import { GoalForm, MilestoneForm } from '../components';
+	import { GoalForm } from '../components';
+	import { MilestoneForm } from './components';
 
 	export let data: PageData;
 	export let open = false;
@@ -17,34 +14,6 @@
 	let goalFormOpen = false;
 	let milestoneFormOpen = false;
 
-	const form = superForm(
-		milestone || { ...defaultValues(zod(MilestoneSchema)), goal_id: data.goal.id },
-		{
-			dataType: 'json',
-			validators: zod(MilestoneSchema),
-			onUpdated: ({ form: f }) => {
-				// if (f.errors) {
-				// 	toast.error('Failed to create Goal');
-				// }
-			},
-			onResult({ result }) {
-				const { data } = result;
-
-				goals.update((currentMilestones) => {
-					if (data.form.data.id) {
-						const index = currentMilestones.findIndex((l) => l.id === data.form.data.id);
-						currentMilestones[index] = data.milestone;
-						return currentMilestones;
-					}
-					return [...currentMilestones, data.milestone];
-				});
-
-				open = false;
-			}
-		}
-	);
-
-	const { form: formData, enhance } = form;
 	$: !milestoneFormOpen && (choosenMilestone = null);
 </script>
 
@@ -82,7 +51,7 @@
 				</div>
 			</div>
 		</div>
-		<form action="?/createOrUpdateMilestone" method="POST" use:enhance class="mb-8">
+		<div class="mb-8">
 			<div class="mx-auto flex flex-col items-center w-full max-w-xl">
 				<div class="grid grid-cols-10 gap-1 sm:gap-4 justify-evenly w-full">
 					{#each Array.from({ length: 100 }, (_, i) => i + 1) as i}
@@ -108,7 +77,7 @@
 					{/each}
 				</div>
 			</div>
-		</form>
+		</div>
 	</div>
 </div>
 
