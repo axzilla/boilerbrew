@@ -1,49 +1,42 @@
 <script lang="ts">
- j
 	import { Button } from '$lib/components/ui/button';
 	import { Dialog, DialogContent, DialogHeader, DialogTitle } from '$lib/components/ui/dialog';
 	import { defaultValues, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { MilestoneSchema, type Milestone } from '$lib/schemas';
 	import { FormControl, FormField, FormFieldErrors, FormLabel } from '$lib/components/ui/form';
-	// import { toast } from 'svelte-sonner';
 	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
 	import { Trash } from 'lucide-svelte';
-	// import { goto } from '$app/navigation';
+	import { toast } from 'svelte-sonner';
 
 	export let open = false;
 	export let milestone: Milestone | null = null;
+	export let goalId: string;
 
-	const form = superForm(milestone || defaultValues(zod(MilestoneSchema)), {
-		dataType: 'json',
-		validators: zod(MilestoneSchema),
-		onUpdated: ({ form: f }) => {
-			// if (f.errors.name) {
-			// 	toast.error('Failed to create Goal');
-			// }
+	const form = superForm(
+		milestone || {
+			...defaultValues(zod(MilestoneSchema)),
+			goal_id: goalId
 		},
-		async onResult({ result }) {
-			if (result.type === 'success') {
-				const { data } = result;
+		{
+			dataType: 'json',
+			validators: zod(MilestoneSchema),
+			async onResult({ result }) {
+				if (result.type === 'success') {
+					const { data } = result;
+					// INFO: PocketBase returns a boolean if db entry was deleted
+					if (data?.milestone === true) {
+						toast.success('Milestone deleted');
+						open = false;
+						return;
+					}
 
-				// if (!goal) {
-				// 	await goto(`/goals/${data.goal.id}`);
-				// 	toast.success('Goal created');
-				// 	return;
-				// }
-				//
-				// // INFO: PocketBase returns a boolean if db entry was deleted
-				// if (data.goal === true) {
-				// 	await goto('/goals');
-				// 	toast.success('Goal deleted');
-				// 	return;
-				// }
-				//
-				// toast.success('Goal updated');
-				// open = false;
+					toast.success('Milestone updated');
+					open = false;
+				}
 			}
 		}
-	});
+	);
 
 	const { form: formData, enhance } = form;
 </script>
@@ -54,12 +47,7 @@
 			<DialogHeader>
 				<DialogTitle>{milestone ? 'Update' : 'Create'} Milestone</DialogTitle>
 			</DialogHeader>
-			<form
-				enctype="multipart/form-data"
-				action="/goals?/handleMilestone"
-				method="POST"
-				use:enhance
-			>
+			<form action="/goals?/handleMilestone" method="POST" use:enhance>
 				<FormField {form} name="notes">
 					<FormControl let:attrs>
 						<FormLabel>Notes (Optional)</FormLabel>

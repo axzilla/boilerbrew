@@ -2,13 +2,11 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import type { PageData } from './$types';
 	import { type Milestone } from '$lib/schemas';
-	import { Bolt, CircleArrowLeft, DeleteIcon, Trash } from 'lucide-svelte';
+	import { Bolt, CircleArrowLeft } from 'lucide-svelte';
 	import { GoalForm } from '../components';
 	import { MilestoneForm } from './components';
 
 	export let data: PageData;
-	export let open = false;
-	export let milestone: Milestone | null = null;
 
 	let choosenMilestone: Milestone | null = null;
 	let goalFormOpen = false;
@@ -86,5 +84,5 @@
 {/if}
 
 {#if milestoneFormOpen}
-	<MilestoneForm milestone={choosenMilestone} bind:open={milestoneFormOpen} />
+	<MilestoneForm goalId={data.goal.id} milestone={choosenMilestone} bind:open={milestoneFormOpen} />
 {/if}

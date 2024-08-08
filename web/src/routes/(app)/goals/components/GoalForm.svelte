@@ -18,7 +18,7 @@
 		dataType: 'json',
 		validators: zod(GoalSchema),
 		onUpdated: ({ form: f }) => {
-			if (f.errors.name) {
+			if (f.errors.title) {
 				toast.error('Failed to create Goal');
 			}
 		},

@@ -95,8 +95,8 @@ export const MilestoneSchema = z.object({
 	notes: z.string(),
 	goal_id: z.string().optional(),
 	user_id: z.string().optional(),
-	created: z.date().optional(),
-	updated: z.date().optional()
+	created: z.union([z.date().optional(), z.string().optional()]),
+	updated: z.union([z.date().optional(), z.string().optional()])
 });
 export type Milestone = z.infer<typeof MilestoneSchema>;
 

@@ -1,5 +1,5 @@
 import { GoalSchema, MilestoneSchema, type Goal, type Milestone } from '$lib/schemas';
-import { redirect, type Actions } from '@sveltejs/kit';
+import { type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { zod } from 'sveltekit-superforms/adapters';
 import { fail, superValidate } from 'sveltekit-superforms';
