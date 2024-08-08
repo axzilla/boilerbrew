@@ -33,7 +33,7 @@
 			<div class="min-w-xl max-w-xl mx-auto">
 				<div class="mb-4">
 					<p class="text-lg font-semibold">Goal</p>
-					<p class="text-sm text-muted-foreground">{data.goal.name}</p>
+					<p class="text-sm text-muted-foreground">{data.goal.title}</p>
 				</div>
 				<div class="mb-4">
 					<p class="text-lg font-semibold">Description</p>

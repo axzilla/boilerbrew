@@ -1,4 +1,4 @@
-import { GoalSchema, type Goal } from '$lib/schemas';
+import { GoalSchema, MilestoneSchema, type Goal, type Milestone } from '$lib/schemas';
 import { redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { zod } from 'sveltekit-superforms/adapters';
@@ -37,5 +37,33 @@ export const actions: Actions = {
 		} catch (err) {
 			console.log('Error: ', err);
 		}
-	}
+	}, 
+  handleMilestone: async ({ request, locals }) => {
+    const formData = await request.formData();
+    const form = await superValidate(formData, zod(MilestoneSchema));
+
+    if (!form.valid) {
+      return fail(400, { form });
+    }
+
+    try {
+      let milestone: Milestone | boolean;
+
+      if (!form.data.id) {
+        milestone = await locals.pb
+          .collection('milestones')
+          .create({ ...form.data, user_id: locals.user?.id });
+      } else {
+        if (formData.has('delete')) {
+          milestone = await locals.pb.collection('milestones').delete(form.data.id);
+        } else {
+          milestone = await locals.pb.collection('milestones').update(form.data.id, form.data);
+        }
+      }
+
+      return { form, milestone };
+    } catch (err) {
+      console.log('Error: ', err);
+    } 
+  }
 };

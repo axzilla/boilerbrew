@@ -59,7 +59,7 @@
 			<Card class="h-52 flex flex-col justify-evenly">
 				<CardHeader>
 					<CardTitle class="truncate">
-						{goal.name}
+						{goal.title}
 					</CardTitle>
 					<CardDescription class="truncate">
 						{goal.description}

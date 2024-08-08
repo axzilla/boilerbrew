@@ -55,10 +55,10 @@
 				<DialogTitle>{goal ? 'Update' : 'Create'} Goal</DialogTitle>
 			</DialogHeader>
 			<form enctype="multipart/form-data" action="/goals?/handleGoal" method="POST" use:enhance>
-				<FormField {form} name="name">
+				<FormField {form} name="title">
 					<FormControl let:attrs>
-						<FormLabel>Name</FormLabel>
-						<Input {...attrs} bind:value={$formData.name} />
+						<FormLabel>Title</FormLabel>
+						<Input {...attrs} bind:value={$formData.title} />
 					</FormControl>
 					<FormFieldErrors />
 				</FormField>
