@@ -4,7 +4,7 @@
 	import { type Milestone } from '$lib/schemas';
 	import { Bolt, CircleArrowLeft } from 'lucide-svelte';
 	import { GoalForm } from '../components';
-	import { MilestoneForm } from './components';
+	import { MilestoneForm, MilestoneGrid } from './components';
 	import { formatDate } from '$lib/utils';
 
 	export let data: PageData;
@@ -14,6 +14,11 @@
 	let milestoneFormOpen = false;
 
 	$: !milestoneFormOpen && (choosenMilestone = null);
+
+	function handleMilestoneClick(milestone: Milestone | null) {
+		choosenMilestone = milestone;
+		milestoneFormOpen = true;
+	}
 </script>
 
 <div class="flex justify-center">
@@ -58,41 +63,7 @@
 			</div>
 		</div>
 		<div class="mb-8">
-			<div class="mx-auto flex flex-col items-center w-full max-w-xl">
-				<div class="grid grid-cols-10 gap-1 sm:gap-4 justify-evenly w-full">
-					{#each Array.from({ length: 100 }, (_, i) => i + 1) as i}
-						<!-- Accessibility warnings ignored for brevity -->
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<!-- svelte-ignore a11y-no-static-element-interactions -->
-						<div
-							on:click={() => {
-								// Check if this milestone can be interacted with
-								const previousExists = i === 1 || data.milestones[i - 2];
-								const currentExists = data.milestones[i - 1];
-
-								if (previousExists) {
-									if (currentExists) {
-										// Select existing milestone for editing
-										choosenMilestone = data.milestones[i - 1];
-									} else {
-										// Prepare to create a new milestone
-										choosenMilestone = null;
-									}
-									milestoneFormOpen = true;
-								}
-							}}
-							class={`
-								flex justify-center items-center border rounded-md size-8 sm:size-12 
-								${data.milestones[i - 1] ? 'bg-primary text-primary-foreground' : ''}
-								${(i === 1 || data.milestones[i - 2]) && !data.milestones[i - 1] ? 'bg-secondary cursor-pointer' : ''}
-								${i !== 1 && !data.milestones[i - 2] ? 'opacity-50' : 'cursor-pointer'}
-							`}
-						>
-							{i}
-						</div>
-					{/each}
-				</div>
-			</div>
+			<MilestoneGrid milestones={data.milestones} onMilestoneClick={handleMilestoneClick} />
 		</div>
 	</div>
 </div>
