@@ -10,11 +10,11 @@
 	import { Progress } from '$lib/components/ui/progress';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import { goals } from '$lib/stores';
-	import { daysSince } from '$lib/utils';
 	import type { PageData } from './$types';
 	import { dndzone, type DndEvent } from 'svelte-dnd-action';
 	import { GoalForm } from './components';
 	import type { Goal } from '$lib/schemas';
+	import { formatDate } from '$lib/utils';
 
 	export let data: PageData;
 
@@ -42,6 +42,7 @@
 	let goalFormOpen = false;
 
 	goals.set(data.goals.sort((a, b) => a.index - b.index));
+	console.log($goals);
 </script>
 
 <div class="flex justify-between mb-8">
@@ -68,13 +69,17 @@
 				<CardContent class="flex justify-between">
 					<div class="flex flex-col">
 						<p class="text-lg font-semibold">
-							{daysSince(goal.created) > 0 ? `${daysSince(goal.created)} days ago` : '-'}
+							{#if goal.milestones && goal.milestones.length > 0}
+								{formatDate(goal.milestones[goal.milestones.length - 1].created)}
+							{:else}
+								No Progress
+							{/if}
 						</p>
 						<p class="text-sm text-muted-foreground">Last Progress</p>
 					</div>
 				</CardContent>
 				<CardFooter>
-					<Progress value={goal.progress} max={100} />
+					<Progress value={goal.milestones?.length} max={100} />
 				</CardFooter>
 			</Card>
 		</a>

@@ -102,13 +102,11 @@ export type Milestone = z.infer<typeof MilestoneSchema>;
 
 export const GoalSchema = z.object({
 	id: z.string(),
-	title: z
-		.string({ required_error: 'Title is required' })
-		.min(1, { message: 'Title is required' }),
+	title: z.string({ required_error: 'Title is required' }).min(1, { message: 'Title is required' }),
 	description: z.string(),
 	progress: z.number(),
 	index: z.number(),
-	milestone: z.array(MilestoneSchema).optional(),
+	milestones: z.array(MilestoneSchema).optional(),
 	user_id: z.string().optional(),
 	created: z.union([z.date().optional(), z.string().optional()]),
 	updated: z.union([z.date().optional(), z.string().optional()])

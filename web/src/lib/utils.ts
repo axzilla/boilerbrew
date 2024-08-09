@@ -3,44 +3,19 @@ import { twMerge } from 'tailwind-merge';
 import { cubicOut } from 'svelte/easing';
 import type { TransitionConfig } from 'svelte/transition';
 
-import type { Action } from 'svelte/action';
-
-export function formatDate(dateString: string | Date): string {
+export function formatDate(dateString: string | Date | undefined): string {
+	if (!dateString) {
+		return 'Invalid Date';
+	}
 	const date = new Date(dateString);
-
+	if (isNaN(date.getTime())) {
+		return 'Invalid Date';
+	}
 	const day = String(date.getDate()).padStart(2, '0');
-	const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+	const month = String(date.getMonth() + 1).padStart(2, '0');
 	const year = date.getFullYear();
-
 	return `${day}/${month}/${year}`;
 }
-
-export function daysSince(dateString: string | Date): number {
-	const date = new Date(dateString);
-	const currentDate = new Date();
-
-	const diffInMs = currentDate.getTime() - date.getTime();
-
-	const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-
-	return diffInDays;
-}
-
-export const clickOutside: Action<HTMLElement, () => void> = (node, callback) => {
-	const handleClick = (event: MouseEvent) => {
-		if (node && !node.contains(event.target as Node) && !event.defaultPrevented) {
-			callback(); // Rufe die übergebene Funktion auf
-		}
-	};
-
-	document.addEventListener('click', handleClick, true);
-
-	return {
-		destroy() {
-			document.removeEventListener('click', handleClick, true);
-		}
-	};
-};
 
 export const generateUsername = (email: string): string => {
 	const localPart = email.split('@')[0];
