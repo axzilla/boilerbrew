@@ -6,6 +6,7 @@
 	import { GoalForm } from '../components';
 	import { MilestoneForm, MilestoneGrid } from './components';
 	import { formatDate } from '$lib/utils';
+	import MilestoneNotes from './components/MilestoneNotes.svelte';
 
 	export let data: PageData;
 
@@ -43,7 +44,7 @@
 					<p class="text-lg font-semibold">Description</p>
 					<p class="text-sm text-muted-foreground">{data.goal.description || '-'}</p>
 				</div>
-				<div class="flex justify-between">
+				<div class="flex justify-between mb-8">
 					<div>
 						<p class="text-lg font-semibold">Progress</p>
 						<p class="text-sm text-muted-foreground">{data.milestones.length}%</p>
@@ -60,10 +61,17 @@
 						{/if}
 					</div>
 				</div>
+				<div class="mb-8">
+					<MilestoneGrid milestones={data.milestones} onMilestoneClick={handleMilestoneClick} />
+				</div>
+				<div class="mb-8">
+					<MilestoneNotes
+						milestones={data.milestones}
+						bind:choosenMilestone
+						bind:milestoneFormOpen
+					/>
+				</div>
 			</div>
-		</div>
-		<div class="mb-8">
-			<MilestoneGrid milestones={data.milestones} onMilestoneClick={handleMilestoneClick} />
 		</div>
 	</div>
 </div>
