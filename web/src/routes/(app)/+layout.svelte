@@ -26,6 +26,7 @@
 	} from '$lib/components/ui/card';
 	import { Separator } from '$lib/components/ui/separator';
 	import { resetMode, setMode } from 'mode-watcher';
+	import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
 
 	export let data;
 
@@ -50,7 +51,7 @@
 	let menuOpen = false;
 
 	$: currentAvatarUrl = data.user?.avatar
-		? `http://127.0.0.1:8090/api/files/${data.user.collectionId}/${data.user.id}/${data.user.avatar}`
+		? `${PUBLIC_POCKETBASE_URL}/api/files/${data.user.collectionId}/${data.user.id}/${data.user.avatar}`
 		: null;
 </script>
 
