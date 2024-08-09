@@ -21,8 +21,8 @@
 								milestoneFormOpen = true;
 							}}
 						>
-							{index + 1}</Button
-						>
+							{index + 1}
+						</Button>
 					</Table.Cell>
 					<Table.Cell>{milestone.notes}</Table.Cell>
 				</Table.Row>

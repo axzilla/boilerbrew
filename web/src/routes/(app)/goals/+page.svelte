@@ -42,7 +42,6 @@
 	let goalFormOpen = false;
 
 	goals.set(data.goals.sort((a, b) => a.index - b.index));
-	console.log($goals);
 </script>
 
 <div class="flex justify-between mb-8">

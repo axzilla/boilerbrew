@@ -1,9 +1,14 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { cn } from '$lib/utils';
-	import { Trash, Lock, User, Mail } from 'lucide-svelte';
+	import { Trash, Lock, User, Mail, Images } from 'lucide-svelte';
 
 	const navigation = [
+		{
+			title: 'Avatar',
+			href: '/settings/avatar',
+			icon: Images
+		},
 		{
 			title: 'Email',
 			href: '/settings/email',
