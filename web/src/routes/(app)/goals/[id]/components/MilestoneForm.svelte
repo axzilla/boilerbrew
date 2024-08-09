@@ -8,6 +8,7 @@
 	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
 	import { Trash } from 'lucide-svelte';
 	import { toast } from 'svelte-sonner';
+	import { formatDate } from '$lib/utils';
 
 	export let open = false;
 	export let milestone: Milestone | null = null;
@@ -56,7 +57,9 @@
 	<Dialog bind:open>
 		<DialogContent class="sm:max-w-[426px]">
 			<DialogHeader>
-				<DialogTitle>{milestone ? 'Update' : 'Create'} Milestone</DialogTitle>
+				<DialogTitle class="mb-2">{milestone ? 'Update' : 'Create'} Milestone</DialogTitle>
+				<p class="font-bold text-sm">Created:</p>
+				<p class="font-light text-sm">{formatDate(milestone?.created)}</p>
 			</DialogHeader>
 			<form action="/goals?/handleMilestone" method="POST" use:enhance>
 				<FormField {form} name="notes">
