@@ -61,7 +61,7 @@
 				<p class="font-bold text-sm">Created:</p>
 				<p class="font-light text-sm">{formatDate(milestone?.created)}</p>
 			</DialogHeader>
-			<form action="/goals?/handleMilestone" method="POST" use:enhance>
+			<form action="?/handleMilestone" method="POST" use:enhance>
 				<FormField {form} name="notes">
 					<FormControl let:attrs>
 						<FormLabel>Notes (Optional)</FormLabel>
