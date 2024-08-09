@@ -41,7 +41,7 @@ export const RegisterUserSchema = z
   });
 
 export const UpdateAvatarSchema = z.object({
-  avatar: z.instanceof(File).optional()
+  avatar: z.union([z.instanceof(File), z.string(), z.null()]).optional()
 });
 
 export const UpdateEmailSchema = z.object({

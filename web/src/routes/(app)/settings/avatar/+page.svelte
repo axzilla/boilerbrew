@@ -17,6 +17,7 @@
 
 	let isLoading = false;
 	let avatarPreview: string | null = null;
+	let isDeleting = false;
 
 	const form = superForm(data.form, {
 		dataType: 'json',
@@ -33,7 +34,7 @@
 	});
 
 	const file = fileProxy(form, 'avatar');
-	const { enhance } = form;
+	const { form: formData, enhance } = form;
 
 	$: currentAvatarUrl = data.user?.avatar
 		? `http://127.0.0.1:8090/api/files/${data.user.collectionId}/${data.user.id}/${data.user.avatar}`
@@ -59,6 +60,10 @@
 	function deleteAvatar() {
 		avatarPreview = null;
 		currentAvatarUrl = null;
+		formData.update(($formData) => {
+			$formData['avatar'] = null;
+			return $formData;
+		});
 	}
 </script>
 
