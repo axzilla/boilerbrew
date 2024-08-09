@@ -1,4 +1,4 @@
-import { GoalSchema, MilestoneSchema, type Goal, type Milestone } from '$lib/schemas';
+import { GoalSchema, type Goal } from '$lib/schemas';
 import { type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { zod } from 'sveltekit-superforms/adapters';

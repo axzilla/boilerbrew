@@ -17,7 +17,6 @@
 
 	let isLoading = false;
 	let avatarPreview: string | null = null;
-	let isDeleting = false;
 
 	const form = superForm(data.form, {
 		dataType: 'json',

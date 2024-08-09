@@ -1,7 +1,6 @@
 <script lang="ts">
 	import CircleUser from 'lucide-svelte/icons/circle-user';
 	import Menu from 'lucide-svelte/icons/menu';
-	import Beer from 'lucide-svelte/icons/beer';
 	import { Button } from '$lib/components/ui/button';
 	import {
 		DropdownMenu,
@@ -49,6 +48,10 @@
 	];
 
 	let menuOpen = false;
+
+	$: currentAvatarUrl = data.user?.avatar
+		? `http://127.0.0.1:8090/api/files/${data.user.collectionId}/${data.user.id}/${data.user.avatar}`
+		: null;
 </script>
 
 <div class="flex min-h-screen">
@@ -139,7 +142,15 @@
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild let:builder>
 					<Button builders={[builder]} variant="secondary" size="icon" class="rounded-full">
-						<CircleUser class="h-5 w-5" />
+						{#if currentAvatarUrl}
+							<img
+								src={currentAvatarUrl}
+								alt="Avatar"
+								class="w-full h-full object-cover rounded-full"
+							/>
+						{:else}
+							<CircleUser class="h-full w-full" />
+						{/if}
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent class="w-56" align="end">
