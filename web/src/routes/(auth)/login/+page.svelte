@@ -46,18 +46,19 @@
 						<FormControl let:attrs>
 							<FormLabel>Password</FormLabel>
 							<Input {...attrs} bind:value={$formData.password} type="password" />
-							<a href="/forgot-password" class="ml-auto inline-block text-sm underline">
-								Forgot your password?
-							</a>
 						</FormControl>
 						<FormFieldErrors />
+						<div class="flex flex-col">
+							<a href="/forgot-password" class="text-sm"> Forgot your password? </a>
+							<a href="/request-verification" class="text-sm"> Request verification?</a>
+						</div>
 					</FormField>
 				</div>
 				<Button type="submit" class="w-full">Login</Button>
 			</div>
 			<div class="mt-4 text-sm">Don&apos;t have an account?</div>
 			<div>
-				<a href="/register" class="underline">Sign up</a>
+				<a href="/register" class="underline">Register</a>
 			</div>
 		</form>
 	</CardContent>

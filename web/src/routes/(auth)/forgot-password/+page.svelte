@@ -19,10 +19,12 @@
 		validators: zod(UpdateEmailSchema),
 		onUpdated: ({ form: f }) => {
 			if (f.errors.email) {
-				toast.error('Failed to authenticate!');
+				toast.error('An error occurred.');
 			}
 			if (f.valid) {
-				toast.success('Check your email to reset your password!');
+				toast.success(
+					'If an account exists for the provided email, password reset instructions have been sent. Please check your inbox and spam folder.'
+				);
 			}
 		}
 	});

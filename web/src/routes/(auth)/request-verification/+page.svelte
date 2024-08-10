@@ -5,19 +5,24 @@
 	import { FormControl, FormField } from '$lib/components/ui/form';
 	import { toast } from 'svelte-sonner';
 	import { defaultValues, superForm } from 'sveltekit-superforms';
-	import { RegisterUserSchema } from '$lib/schemas.js';
 	import { zod } from 'sveltekit-superforms/adapters';
+	import { RequestVerificationSchema } from '$lib/schemas.js';
 	import CardHeader from '$lib/components/ui/card/card-header.svelte';
 	import CardTitle from '$lib/components/ui/card/card-title.svelte';
 	import CardContent from '$lib/components/ui/card/card-content.svelte';
 	import FormLabel from '$lib/components/ui/form/form-label.svelte';
 	import FormFieldErrors from '$lib/components/ui/form/form-field-errors.svelte';
 
-	const form = superForm(defaultValues(zod(RegisterUserSchema)), {
-		validators: zod(RegisterUserSchema),
+	const form = superForm(defaultValues(zod(RequestVerificationSchema)), {
+		validators: zod(RequestVerificationSchema),
 		onUpdated: ({ form: f }) => {
-			if (f.errors.email || f.errors.password || f.errors.passwordConfirm) {
-				toast.error('Failed to register.');
+			if (f.errors.email) {
+				toast.error('An error occurred.');
+			}
+			if (f.valid) {
+				toast.success(
+					'If an account exists for the provided email and is not yet verified, a verification email has been sent. Please check your inbox and spam folder.'
+				);
 			}
 		}
 	});
@@ -27,10 +32,10 @@
 
 <Card class="mx-auto max-w-sm w-full">
 	<CardHeader>
-		<CardTitle class="text-2xl">Register</CardTitle>
+		<CardTitle class="text-2xl">Request Verification</CardTitle>
 	</CardHeader>
 	<CardContent>
-		<form action="?/register" method="POST" use:enhance>
+		<form action="?/verifyEmail" method="POST" use:enhance>
 			<div class="grid gap-4">
 				<div class="grid gap-2">
 					<FormField {form} name="email">
@@ -41,27 +46,9 @@
 						<FormFieldErrors />
 					</FormField>
 				</div>
-				<div class="grid gap-2">
-					<FormField {form} name="password">
-						<FormControl let:attrs>
-							<FormLabel>Password</FormLabel>
-							<Input {...attrs} bind:value={$formData.password} type="password" />
-						</FormControl>
-						<FormFieldErrors />
-					</FormField>
-				</div>
-				<div class="grid gap-2">
-					<FormField {form} name="passwordConfirm">
-						<FormControl let:attrs>
-							<FormLabel>Confirm Password</FormLabel>
-							<Input {...attrs} bind:value={$formData.passwordConfirm} type="password" />
-						</FormControl>
-						<FormFieldErrors />
-					</FormField>
-				</div>
-				<Button type="submit" class="w-full">Create an account</Button>
+				<Button type="submit" class="w-full">Send Email</Button>
 			</div>
-			<div class="mt-4 text-sm">Already have an account?</div>
+			<div class="mt-4 text-sm">Go back to:</div>
 			<div>
 				<a href="/login" class="underline">Login</a>
 			</div>
