@@ -23,7 +23,7 @@
 	}
 
 	async function handleDndFinalizeGoals(e: CustomEvent<DndEvent<Goal>>) {
-		const updatedGoalsResponse = await fetch('/api/updateGoalIndex', {
+		const updatedGoalsResponse = await fetch('/api/goal/update-index', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
