@@ -20,12 +20,13 @@ export const actions: Actions = {
 			if (err instanceof ClientResponseError) {
 				console.error('PB error: ', err);
 				if (err.response.data.email) {
-					console.log(err.response.data.email.message);
-					return setError(form, 'email', err.response.data.email.message);
+					setError(form, 'email', err.response.data.email.message);
 				}
 			} else {
 				console.error('Unexpected error:', err);
 			}
+
+			return fail(400, { form });
 		}
 
 		redirect(303, '/login');

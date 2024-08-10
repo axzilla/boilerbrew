@@ -16,8 +16,8 @@
 	const form = superForm(defaultValues(zod(RegisterUserSchema)), {
 		validators: zod(RegisterUserSchema),
 		onUpdated: ({ form: f }) => {
-			if (f.errors) {
-				toast.error('Failed to register!');
+			if (f.errors.email || f.errors.password || f.errors.passwordConfirm) {
+				toast.error('Failed to register.');
 			}
 		}
 	});
