@@ -30,6 +30,12 @@ export const RequestVerificationSchema = z.object({
 		.email({ message: 'Email must be a valid email' })
 });
 
+export const ForgotPasswordSchema = z.object({
+	email: z
+		.string({ required_error: 'Email is required' })
+		.email({ message: 'Email must be a valid email' })
+});
+
 export const UpdateAvatarSchema = z.object({
 	avatar: z.union([z.instanceof(File), z.string(), z.null()]).optional()
 });

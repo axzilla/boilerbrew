@@ -4,19 +4,17 @@
 	import { Input } from '$lib/components/ui/input';
 	import { FormControl, FormField } from '$lib/components/ui/form';
 	import { toast } from 'svelte-sonner';
-	import { superForm } from 'sveltekit-superforms';
+	import { defaultValues, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
-	import { UpdateEmailSchema } from '$lib/schemas.js';
+	import { ForgotPasswordSchema } from '$lib/schemas.js';
 	import CardHeader from '$lib/components/ui/card/card-header.svelte';
 	import CardTitle from '$lib/components/ui/card/card-title.svelte';
 	import CardContent from '$lib/components/ui/card/card-content.svelte';
 	import FormLabel from '$lib/components/ui/form/form-label.svelte';
 	import FormFieldErrors from '$lib/components/ui/form/form-field-errors.svelte';
 
-	export let data;
-
-	const form = superForm(data.form, {
-		validators: zod(UpdateEmailSchema),
+	const form = superForm(defaultValues(zod(ForgotPasswordSchema)), {
+		validators: zod(ForgotPasswordSchema),
 		onUpdated: ({ form: f }) => {
 			if (f.errors.email) {
 				toast.error('An error occurred.');
