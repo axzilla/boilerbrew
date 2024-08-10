@@ -4,7 +4,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { FormControl, FormField } from '$lib/components/ui/form';
 	import { toast } from 'svelte-sonner';
-	import { superForm } from 'sveltekit-superforms';
+	import { defaultValues, superForm } from 'sveltekit-superforms';
 	import { RegisterUserSchema } from '$lib/schemas.js';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import CardHeader from '$lib/components/ui/card/card-header.svelte';
@@ -13,9 +13,7 @@
 	import FormLabel from '$lib/components/ui/form/form-label.svelte';
 	import FormFieldErrors from '$lib/components/ui/form/form-field-errors.svelte';
 
-	export let data;
-
-	const form = superForm(data.form, {
+	const form = superForm(defaultValues(zod(RegisterUserSchema)), {
 		validators: zod(RegisterUserSchema),
 		onUpdated: ({ form: f }) => {
 			if (f.errors) {

@@ -12,7 +12,7 @@
 	import FormFieldErrors from '$lib/components/ui/form/form-field-errors.svelte';
 	import CardFooter from '$lib/components/ui/card/card-footer.svelte';
 	import { UpdateAvatarSchema } from '$lib/schemas.js';
-	import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
+	import { config } from '$lib/config-client.js';
 
 	export let data;
 
@@ -37,7 +37,7 @@
 	const { form: formData, enhance } = form;
 
 	$: currentAvatarUrl = data.user?.avatar
-		? `${PUBLIC_POCKETBASE_URL}/api/files/${data.user.collectionId}/${data.user.id}/${data.user.avatar}`
+		? `${config.pbUrl}/api/files/${data.user.collectionId}/${data.user.id}/${data.user.avatar}`
 		: null;
 
 	function handleFileChange(event: Event) {

@@ -17,14 +17,6 @@ export function formatDate(dateString: string | Date | undefined): string {
 	return `${day}/${month}/${year}`;
 }
 
-export const generateUsername = (email: string): string => {
-	const localPart = email.split('@')[0];
-	const cleanLocalPart = localPart.replace(/[^a-zA-Z0-9]/g, '');
-	const randomNum = Math.floor(Math.random() * 65536); // 65536 = 2^16
-	const id = randomNum.toString(16);
-	return `${cleanLocalPart.slice(0, 5)}${id}`;
-};
-
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
