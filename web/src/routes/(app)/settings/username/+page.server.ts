@@ -15,13 +15,15 @@ export const load = async ({ locals }: { locals: App.Locals }) => {
 
 export const actions: Actions = {
 	updateUsername: async ({ request, locals }) => {
-		const form = await superValidate(request, zod(UpdateUsernameSchema));
+		const formData = await request.formData();
+		const form = await superValidate(formData, zod(UpdateUsernameSchema));
+
 		if (!form.valid) {
 			return fail(400, { form });
 		}
-		const formData = form.data;
+
 		try {
-			await locals.pb.collection('users').update(locals.user?.id, { username: formData.username });
+			await locals.pb.collection('users').update(locals.user?.id, { username: form.data.username });
 			return message(form, 'Username updated.');
 		} catch (err) {
 			console.log('Error: ', err);

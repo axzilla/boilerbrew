@@ -12,13 +12,15 @@ export const load: PageServerLoad = async () => {
 
 export const actions: Actions = {
 	forgotPassword: async ({ request, locals }) => {
-		const form = await superValidate(request, zod(UpdateEmailSchema));
+		const formData = await request.formData();
+		const form = await superValidate(formData, zod(UpdateEmailSchema));
+
 		if (!form.valid) {
 			return fail(400, { form });
 		}
-		const formData = form.data;
+
 		try {
-			await locals.pb.collection('users').requestPasswordReset(formData.email);
+			await locals.pb.collection('users').requestPasswordReset(form.data.email);
 			return { form };
 		} catch (err) {
 			console.log('Error: ', err);

@@ -13,13 +13,15 @@ export const load: PageServerLoad = async () => {
 
 export const actions: Actions = {
 	login: async ({ request, locals }) => {
-		const form = await superValidate(request, zod(LoginUserSchema));
+		const formData = await request.formData();
+		const form = await superValidate(formData, zod(LoginUserSchema));
+
 		if (!form.valid) {
 			return fail(400, { form });
 		}
-		const formData = form.data;
+
 		try {
-			await locals.pb.collection('users').authWithPassword(formData.login, formData.password);
+			await locals.pb.collection('users').authWithPassword(form.data.login, form.data.password);
 
 			if (!locals.pb?.authStore?.model?.verified) {
 				locals.pb.authStore.clear();

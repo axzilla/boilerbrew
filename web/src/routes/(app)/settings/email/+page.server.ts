@@ -16,13 +16,15 @@ export const load = async ({ locals }: { locals: App.Locals }) => {
 
 export const actions: Actions = {
 	updateEmail: async ({ request, locals }) => {
-		const form = await superValidate(request, zod(UpdateEmailSchema));
+		const formData = await request.formData();
+		const form = await superValidate(formData, zod(UpdateEmailSchema));
+
 		if (!form.valid) {
 			return fail(400, { form });
 		}
-		const formData = form.data;
+
 		try {
-			await locals.pb.collection('users').requestEmailChange(formData.email);
+			await locals.pb.collection('users').requestEmailChange(form.data.email);
 			return message(form, 'Please confirm via your email.');
 		} catch (err) {
 			if (err instanceof ClientResponseError) {

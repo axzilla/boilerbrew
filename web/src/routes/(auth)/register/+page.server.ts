@@ -13,15 +13,17 @@ export const load: PageServerLoad = async () => {
 
 export const actions: Actions = {
 	register: async ({ locals, request }) => {
-		const form = await superValidate(request, zod(RegisterUserSchema));
+		const formData = await request.formData();
+		const form = await superValidate(formData, zod(RegisterUserSchema));
+
 		if (!form.valid) {
 			return fail(400, { form });
 		}
-		const formData = form.data;
-		const username = generateUsername(formData.email.split('@').join('')).toLowerCase();
+
+		const username = generateUsername(form.data.email.split('@').join('')).toLowerCase();
 		try {
 			await locals.pb.collection('users').create({ username, ...formData });
-			await locals.pb.collection('users').requestVerification(formData.email);
+			await locals.pb.collection('users').requestVerification(form.data.email);
 		} catch (err) {
 			console.log('Error: ', err);
 			if (err.response?.data?.email) {

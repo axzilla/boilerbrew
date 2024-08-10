@@ -15,11 +15,13 @@ export const load = async ({ locals }: { locals: App.Locals }) => {
 
 export const actions: Actions = {
 	updatePassword: async ({ request, locals }) => {
-		const form = await superValidate(request, zod(UpdatePasswordSchema));
+		const formData = await request.formData();
+		const form = await superValidate(formData, zod(UpdatePasswordSchema));
+
 		if (!form.valid) {
 			return fail(400, { form });
 		}
-		const formData = form.data;
+
 		try {
 			await locals.pb.collection('users').update(locals.user?.id, formData);
 			locals.pb.authStore.clear();
