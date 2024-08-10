@@ -90,6 +90,11 @@ export const UpdatePasswordSchema = z
 		}
 	});
 
+export const DeleteUserSchema = z.object({
+	word: z.string()
+});
+export type DeleteUser = z.infer<typeof DeleteUserSchema>;
+
 export const MilestoneSchema = z.object({
 	id: z.string(),
 	notes: z.string(),
@@ -112,8 +117,3 @@ export const GoalSchema = z.object({
 	updated: z.union([z.date().optional(), z.string().optional()])
 });
 export type Goal = z.infer<typeof GoalSchema>;
-
-export const DeleteUserSchema = z.object({
-	word: z.string()
-});
-export type DeleteUser = z.infer<typeof DeleteUserSchema>;
