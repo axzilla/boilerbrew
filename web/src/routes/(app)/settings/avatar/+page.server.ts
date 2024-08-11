@@ -1,8 +1,14 @@
 import { zod } from 'sveltekit-superforms/adapters';
 import { UpdateAvatarSchema } from '$lib/schemas.js';
-import type { Actions } from '@sveltejs/kit';
+import { redirect, type Actions } from '@sveltejs/kit';
 import { fail, setError, superValidate, withFiles } from 'sveltekit-superforms';
 import { ClientResponseError } from 'pocketbase';
+
+export const load = async ({ locals }: { locals: App.Locals }) => {
+	if (!locals.pb.authStore.isValid) {
+		redirect(303, '/login');
+	}
+};
 
 export const actions: Actions = {
 	updateAvatar: async ({ request, locals }) => {
