@@ -2,7 +2,7 @@
 	import { Card } from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import { FormControl, FormField } from '$lib/components/ui/form';
-	import { fileProxy, superForm } from 'sveltekit-superforms';
+	import { defaultValues, fileProxy, superForm } from 'sveltekit-superforms';
 	import { toast } from 'svelte-sonner';
 	import { Camera, CircleUser, LoaderCircle, Trash } from 'lucide-svelte';
 	import { zod } from 'sveltekit-superforms/adapters';
@@ -19,17 +19,19 @@
 	let isLoading = false;
 	let avatarPreview: string | null = null;
 
-	const form = superForm(data.form, {
+	const form = superForm(defaultValues(zod(UpdateAvatarSchema)), {
 		dataType: 'json',
 		validators: zod(UpdateAvatarSchema),
 		onSubmit: () => {
 			isLoading = true;
 		},
-		async onResult({ result }) {
+		onResult({ result }) {
 			if (result.type === 'success') {
 				toast.success('Avatar updated');
-				isLoading = false;
+			} else {
+				toast.error('Failed to update avatar');
 			}
+			isLoading = false;
 		}
 	});
 

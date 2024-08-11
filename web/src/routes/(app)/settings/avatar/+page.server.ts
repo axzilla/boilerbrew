@@ -1,13 +1,8 @@
 import { zod } from 'sveltekit-superforms/adapters';
-import type { PageServerLoad } from './$types';
 import { UpdateAvatarSchema } from '$lib/schemas.js';
 import type { Actions } from '@sveltejs/kit';
-import { fail, message, setError, superValidate, withFiles } from 'sveltekit-superforms';
-
-export const load: PageServerLoad = async () => {
-	const form = await superValidate(zod(UpdateAvatarSchema));
-	return { form };
-};
+import { fail, setError, superValidate, withFiles } from 'sveltekit-superforms';
+import { ClientResponseError } from 'pocketbase';
 
 export const actions: Actions = {
 	updateAvatar: async ({ request, locals }) => {
@@ -20,13 +15,16 @@ export const actions: Actions = {
 
 		try {
 			await locals.pb.collection('users').update(locals.user?.id, form.data);
-			return message(form, 'Avatar updated.');
+			return { form };
 		} catch (err) {
-			console.log('Error: ', err);
-			if (err.response?.data?.username) {
-				return setError(form, 'username', err.response?.data?.username.message);
+			if (err instanceof ClientResponseError) {
+				console.log('PB error: ', err);
+				setError(form, 'avatar', 'Error updating avatar.');
+			} else {
+				console.error('Unexpected error:', err);
 			}
+
+			return fail(400, withFiles({ form }));
 		}
-		return withFiles({ form });
 	}
 };
