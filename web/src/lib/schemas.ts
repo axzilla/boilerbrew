@@ -91,7 +91,7 @@ export const UpdatePasswordSchema = z
 	});
 
 export const DeleteUserSchema = z.object({
-	word: z.string()
+	word: z.string().refine((data) => data === 'DELETE', { message: 'Word must be "DELETE"' })
 });
 export type DeleteUser = z.infer<typeof DeleteUserSchema>;
 
