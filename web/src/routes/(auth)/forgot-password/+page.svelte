@@ -13,16 +13,21 @@
 	import FormLabel from '$lib/components/ui/form/form-label.svelte';
 	import FormFieldErrors from '$lib/components/ui/form/form-field-errors.svelte';
 
+	let loading = false;
+
 	const form = superForm(defaultValues(zod(ForgotPasswordSchema)), {
 		validators: zod(ForgotPasswordSchema),
-		onUpdated: ({ form: f }) => {
-			if (f.errors.email) {
-				toast.error('An error occurred.');
-			}
-			if (f.valid) {
+		onSubmit: () => {
+			loading = true;
+		},
+		onResult: ({ result }) => {
+			loading = false;
+			if (result.type === 'success') {
 				toast.success(
 					'If an account exists for the provided email, password reset instructions have been sent. Please check your inbox and spam folder.'
 				);
+			} else {
+				toast.error('Failed to send password reset instructions.');
 			}
 		}
 	});
@@ -46,7 +51,7 @@
 						<FormFieldErrors />
 					</FormField>
 				</div>
-				<Button type="submit" class="w-full">Send Email</Button>
+				<Button disabled={loading} type="submit" class="w-full">Send Email</Button>
 			</div>
 			<div class="mt-4 text-sm">Go back to:</div>
 			<div>
