@@ -15,6 +15,7 @@ export const actions: Actions = {
 
 		try {
 			await locals.pb.collection('users').authWithPassword(form.data.login, form.data.password);
+
 			if (!locals.pb?.authStore?.model?.verified) {
 				locals.pb.authStore.clear();
 				setError(form, 'login', 'Please verify your email address.');

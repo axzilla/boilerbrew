@@ -13,10 +13,18 @@
 	import FormLabel from '$lib/components/ui/form/form-label.svelte';
 	import FormFieldErrors from '$lib/components/ui/form/form-field-errors.svelte';
 
+	let loading = false;
+
 	const form = superForm(defaultValues(zod(LoginUserSchema)), {
 		validators: zod(LoginUserSchema),
-		onUpdated: ({ form: f }) => {
-			if (f.errors.login || f.errors.password) {
+		onSubmit: () => {
+			loading = true;
+		},
+		onResult: ({ result }) => {
+			loading = false;
+			if (result.type === 'success') {
+				toast.success('Logged in successfully.');
+			} else {
 				toast.error('Failed to login.');
 			}
 		}
@@ -54,7 +62,7 @@
 						</div>
 					</FormField>
 				</div>
-				<Button type="submit" class="w-full">Login</Button>
+				<Button disabled={loading} type="submit" class="w-full">Login</Button>
 			</div>
 			<div class="mt-4 text-sm">Don&apos;t have an account?</div>
 			<div>
