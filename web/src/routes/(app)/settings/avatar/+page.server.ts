@@ -8,6 +8,10 @@ export const load = async ({ locals }: { locals: App.Locals }) => {
 	if (!locals.pb.authStore.isValid) {
 		redirect(303, '/login');
 	}
+
+	return {
+		form: await superValidate(locals.user, zod(UpdateAvatarSchema))
+	};
 };
 
 export const actions: Actions = {
@@ -20,8 +24,9 @@ export const actions: Actions = {
 		}
 
 		try {
+			console.log(form.data);
 			await locals.pb.collection('users').update(locals.user?.id, form.data);
-			return { form };
+			return withFiles({ form });
 		} catch (err) {
 			if (err instanceof ClientResponseError) {
 				console.log('PB error: ', err);
@@ -30,7 +35,7 @@ export const actions: Actions = {
 				console.error('Unexpected error:', err);
 			}
 
-			return fail(400, withFiles({ form }));
+			// return fail(400, withFiles({ form }));
 		}
 	}
 };

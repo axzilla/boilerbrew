@@ -19,7 +19,7 @@
 	let loading = false;
 	let avatarPreview: string | null = null;
 
-	const form = superForm(defaultValues(zod(UpdateAvatarSchema)), {
+	const form = superForm(data.form, {
 		dataType: 'json',
 		validators: zod(UpdateAvatarSchema),
 		onSubmit: () => {
