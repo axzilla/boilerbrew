@@ -15,8 +15,7 @@
 	import logo from '$lib/assets/logo.png';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import Home from 'lucide-svelte/icons/home';
-	import { Bolt, Moon, Sun } from 'lucide-svelte';
+	import { Home, Bolt, Moon, Sun } from 'lucide-svelte';
 	import {
 		Card,
 		CardHeader,
