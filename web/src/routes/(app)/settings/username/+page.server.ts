@@ -2,6 +2,7 @@ import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { UpdateUsernameSchema } from '$lib/schemas';
 import { zod } from 'sveltekit-superforms/adapters';
 import { message, setError, superValidate } from 'sveltekit-superforms';
+import { ClientResponseError } from 'pocketbase';
 
 export const load = async ({ locals }: { locals: App.Locals }) => {
 	if (!locals.pb.authStore.isValid) {
@@ -26,11 +27,16 @@ export const actions: Actions = {
 			await locals.pb.collection('users').update(locals.user?.id, { username: form.data.username });
 			return message(form, 'Username updated.');
 		} catch (err) {
-			console.log('Error: ', err);
-			if (err.response?.data?.username) {
-				return setError(form, 'username', err.response?.data?.username.message);
+			if (err instanceof ClientResponseError) {
+				console.error('PB error: ', err);
+				if (err.response.data.username) {
+					return setError(form, 'username', err.response.dat.username.message);
+				}
+			} else {
+				console.error('Unexpected error:', err);
 			}
+
+			return fail(400, { form });
 		}
-		return { form };
 	}
 };

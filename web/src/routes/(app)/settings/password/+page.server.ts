@@ -2,6 +2,7 @@ import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { UpdatePasswordSchema } from '$lib/schemas';
 import { zod } from 'sveltekit-superforms/adapters';
 import { setError, superValidate } from 'sveltekit-superforms';
+import { ClientResponseError } from 'pocketbase';
 
 export const load = async ({ locals }: { locals: App.Locals }) => {
 	if (!locals.pb.authStore.isValid) {
@@ -26,11 +27,18 @@ export const actions: Actions = {
 			await locals.pb.collection('users').update(locals.user?.id, formData);
 			locals.pb.authStore.clear();
 		} catch (err) {
-			console.log('Error: ', err);
-			if (err.response?.data?.oldPassword) {
-				return setError(form, 'oldPassword', err.response?.data?.oldPassword.message);
+			if (err instanceof ClientResponseError) {
+				console.error('PB error: ', err);
+				if (err.response.data.password) {
+					setError(form, 'password', err.response.data.password.message);
+				}
+			} else {
+				console.error('Unexpected error:', err);
 			}
+
+			return fail(400, { form });
 		}
-		redirect(303, '/login');
+
+		// FIXME: Do we need a logout here?
 	}
 };

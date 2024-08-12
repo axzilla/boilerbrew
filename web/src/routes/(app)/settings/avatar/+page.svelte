@@ -16,22 +16,22 @@
 
 	export let data;
 
-	let isLoading = false;
+	let loading = false;
 	let avatarPreview: string | null = null;
 
 	const form = superForm(defaultValues(zod(UpdateAvatarSchema)), {
 		dataType: 'json',
 		validators: zod(UpdateAvatarSchema),
 		onSubmit: () => {
-			isLoading = true;
+			loading = true;
 		},
 		onResult({ result }) {
+			loading = false;
 			if (result.type === 'success') {
 				toast.success('Avatar updated');
 			} else {
 				toast.error('Failed to update avatar');
 			}
-			isLoading = false;
 		}
 	});
 
@@ -120,8 +120,8 @@
 			</div>
 		</CardContent>
 		<CardFooter class="border-t px-6 py-4">
-			<Button type="submit" disabled={isLoading}>
-				{#if isLoading}
+			<Button type="submit" disabled={loading}>
+				{#if loading}
 					<LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
 				{/if}
 				Save

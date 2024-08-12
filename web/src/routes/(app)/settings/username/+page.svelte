@@ -17,22 +17,20 @@
 
 	export let data;
 
-	let isLoading = false;
+	let loading = false;
 
 	const form = superForm(data.form, {
 		validators: zod(UpdateUsernameSchema),
 		onSubmit: () => {
-			isLoading = true;
+			loading = true;
 		},
-		onUpdated: ({ form: f }) => {
-			if (f.errors.username) {
-				toast.error('Failed to update username!');
+		onResult: ({ result }) => {
+			loading = false;
+			if (result.type === 'success') {
+				toast.success('Username updated');
+			} else {
+				toast.error('Failed to update username');
 			}
-			if (f.valid) {
-				toast.success(f.message);
-				$formData.username = data.user?.username;
-			}
-			isLoading = false;
 		}
 	});
 
@@ -54,8 +52,8 @@
 			</FormField>
 		</CardContent>
 		<CardFooter class="border-t px-6 py-4">
-			<Button type="submit" disabled={isLoading}>
-				{#if isLoading}
+			<Button type="submit" disabled={loading}>
+				{#if loading}
 					<LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
 				{/if}
 				Save

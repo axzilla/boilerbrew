@@ -17,21 +17,20 @@
 
 	export let data;
 
-	let isLoading = false;
+	let loading = false;
 
 	const form = superForm(data.form, {
 		validators: zod(UpdateEmailSchema),
 		onSubmit: () => {
-			isLoading = true;
+			loading = true;
 		},
-		onUpdated: ({ form: f }) => {
-			if (f.errors.email) {
-				toast.error('Failed to update email!');
+		onResult: ({ result }) => {
+			loading = false;
+			if (result.type === 'success') {
+				toast.success('Email updated');
+			} else {
+				toast.error('Failed to update email');
 			}
-			if (f.valid) {
-				toast.success(f.message);
-			}
-			isLoading = false;
 		}
 	});
 
@@ -52,15 +51,15 @@
 						autofocus
 						bind:value={$formData.email}
 						type="email"
-						disabled={isLoading}
+						disabled={loading}
 					/>
 				</FormControl>
 				<FormFieldErrors />
 			</FormField>
 		</CardContent>
 		<CardFooter class="border-t px-6 py-4">
-			<Button type="submit" disabled={isLoading}>
-				{#if isLoading}
+			<Button type="submit" disabled={loading}>
+				{#if loading}
 					<LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
 				{/if}
 				Save
