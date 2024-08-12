@@ -13,10 +13,20 @@
 	import FormLabel from '$lib/components/ui/form/form-label.svelte';
 	import FormFieldErrors from '$lib/components/ui/form/form-field-errors.svelte';
 
+	let loading = false;
+
 	const form = superForm(defaultValues(zod(RegisterUserSchema)), {
 		validators: zod(RegisterUserSchema),
-		onUpdated: ({ form: f }) => {
-			if (f.errors.email || f.errors.password || f.errors.passwordConfirm) {
+		onSubmit: () => {
+			loading = true;
+		},
+		onResult: ({ result }) => {
+			loading = false;
+			if (result.type === 'redirect') {
+				toast.success(
+					'Account created successfully. Please check your email for a verification link.'
+				);
+			} else {
 				toast.error('Failed to register.');
 			}
 		}
@@ -59,7 +69,7 @@
 						<FormFieldErrors />
 					</FormField>
 				</div>
-				<Button type="submit" class="w-full">Create an account</Button>
+				<Button disabled={loading} type="submit" class="w-full">Create an account</Button>
 			</div>
 			<div class="mt-4 text-sm">Already have an account?</div>
 			<div>
