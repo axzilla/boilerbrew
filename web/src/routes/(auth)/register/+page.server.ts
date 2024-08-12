@@ -25,6 +25,7 @@ export const actions: Actions = {
 			} else {
 				console.error('Unexpected error:', err);
 			}
+
 			return fail(400, { form });
 		}
 
