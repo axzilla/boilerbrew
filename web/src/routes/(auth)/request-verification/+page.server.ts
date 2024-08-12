@@ -1,11 +1,11 @@
 import { UpdateEmailSchema } from '$lib/schemas';
 import { type Actions } from '@sveltejs/kit';
-import { ClientResponseError } from 'pocketbase';
 import { fail, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
+import { ClientResponseError } from 'pocketbase';
 
 export const actions: Actions = {
-	forgotPassword: async ({ request, locals }) => {
+	verifyEmail: async ({ request, locals }) => {
 		const formData = await request.formData();
 		const form = await superValidate(formData, zod(UpdateEmailSchema));
 
@@ -14,7 +14,7 @@ export const actions: Actions = {
 		}
 
 		try {
-			await locals.pb.collection('users').requestPasswordReset(form.data.email);
+			await locals.pb.collection('users').requestVerification(form.data.email);
 			return { form };
 		} catch (err) {
 			if (err instanceof ClientResponseError) {

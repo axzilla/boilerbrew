@@ -28,11 +28,15 @@ export const actions: Actions = {
 			return message(form, 'Please confirm via your email.');
 		} catch (err) {
 			if (err instanceof ClientResponseError) {
-				console.log(err.response?.data);
+				console.error('PB error: ', err);
 				if (err.response?.data?.newEmail) {
 					return setError(form, 'email', err.response?.data?.newEmail.message);
 				}
+			} else {
+				console.error('Unexpected error:', err);
 			}
+
+			return fail(400, { form });
 		}
 	}
 };

@@ -15,6 +15,8 @@
 	export let goalId: string;
 	export let isLastMilestone = false;
 
+	let loading = false;
+
 	const form = superForm(
 		milestone || {
 			...defaultValues(zod(MilestoneSchema)),
@@ -23,7 +25,11 @@
 		{
 			dataType: 'json',
 			validators: zod(MilestoneSchema),
-			async onResult({ result }) {
+			onSubmit: () => {
+				loading = true;
+			},
+			onResult({ result }) {
+				loading = false;
 				if (result.type === 'success') {
 					const { data } = result;
 
@@ -83,7 +89,7 @@
 					{/if}
 					<div>
 						<Button variant="outline" on:click={() => (open = false)}>Cancel</Button>
-						<Button type="submit">{milestone ? 'Update' : 'Create'}</Button>
+						<Button disabled={loading} type="submit">{milestone ? 'Update' : 'Create'}</Button>
 					</div>
 				</div>
 			</form>

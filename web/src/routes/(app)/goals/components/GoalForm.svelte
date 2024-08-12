@@ -14,26 +14,27 @@
 	export let open = false;
 	export let goal: Goal | null = null;
 
+	let loading = false;
+
 	const form = superForm(goal || defaultValues(zod(GoalSchema)), {
 		dataType: 'json',
 		validators: zod(GoalSchema),
-		onUpdated: ({ form: f }) => {
-			if (f.errors.title) {
-				toast.error('Failed to create Goal');
-			}
+		onSubmit: () => {
+			loading = true;
 		},
 		async onResult({ result }) {
+			loading = false;
 			if (result.type === 'success') {
 				const { data } = result;
 
 				if (!goal) {
-					await goto(`/goals/${data.goal.id}`);
+					await goto(`/goals/${data?.goal.id}`);
 					toast.success('Goal created');
 					return;
 				}
 
 				// INFO: PocketBase returns a boolean if db entry was deleted
-				if (data.goal === true) {
+				if (data?.goal === true) {
 					await goto('/goals');
 					toast.success('Goal deleted');
 					return;
@@ -41,6 +42,8 @@
 
 				toast.success('Goal updated');
 				open = false;
+			} else {
+				toast.error('Failed to create Goal');
 			}
 		}
 	});
@@ -72,6 +75,7 @@
 				<div class="flex justify-between items-center">
 					{#if goal}
 						<Button
+							disabled={loading}
 							type="submit"
 							on:click={(e) => !confirm('Are you sure?') && e.preventDefault()}
 							name="delete"

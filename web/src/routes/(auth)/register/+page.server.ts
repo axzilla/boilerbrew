@@ -1,15 +1,8 @@
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { RegisterUserSchema } from '$lib/schemas';
-import { generateUsername } from '$lib/utils';
-import type { PageServerLoad } from './$types';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-
-export const load: PageServerLoad = async () => {
-	return {
-		form: await superValidate(zod(RegisterUserSchema))
-	};
-};
+import { ClientResponseError } from 'pocketbase';
 
 export const actions: Actions = {
 	register: async ({ locals, request }) => {
@@ -20,16 +13,22 @@ export const actions: Actions = {
 			return fail(400, { form });
 		}
 
-		const username = generateUsername(form.data.email.split('@').join('')).toLowerCase();
 		try {
-			await locals.pb.collection('users').create({ username, ...formData });
+			await locals.pb.collection('users').create(formData);
 			await locals.pb.collection('users').requestVerification(form.data.email);
 		} catch (err) {
-			console.log('Error: ', err);
-			if (err.response?.data?.email) {
-				return setError(form, 'email', err.response?.data?.email.message);
+			if (err instanceof ClientResponseError) {
+				console.error('PB error: ', err);
+				if (err.response.data.email) {
+					setError(form, 'email', err.response.data.email.message);
+				}
+			} else {
+				console.error('Unexpected error:', err);
 			}
+
+			return fail(400, { form });
 		}
+
 		redirect(303, '/login');
 	}
 };

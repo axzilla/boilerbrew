@@ -4,7 +4,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { FormControl, FormField } from '$lib/components/ui/form';
 	import { toast } from 'svelte-sonner';
-	import { superForm } from 'sveltekit-superforms';
+	import { defaultValues, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { LoginUserSchema } from '$lib/schemas.js';
 	import CardHeader from '$lib/components/ui/card/card-header.svelte';
@@ -13,13 +13,19 @@
 	import FormLabel from '$lib/components/ui/form/form-label.svelte';
 	import FormFieldErrors from '$lib/components/ui/form/form-field-errors.svelte';
 
-	export let data;
+	let loading = false;
 
-	const form = superForm(data.form, {
+	const form = superForm(defaultValues(zod(LoginUserSchema)), {
 		validators: zod(LoginUserSchema),
-		onUpdated: ({ form: f }) => {
-			if (f.message) {
-				toast.error(f.message);
+		onSubmit: () => {
+			loading = true;
+		},
+		onResult: ({ result }) => {
+			loading = false;
+			if (result.type === 'success') {
+				toast.success('Logged in successfully.');
+			} else {
+				toast.error('Failed to login.');
 			}
 		}
 	});
@@ -48,18 +54,19 @@
 						<FormControl let:attrs>
 							<FormLabel>Password</FormLabel>
 							<Input {...attrs} bind:value={$formData.password} type="password" />
-							<a href="/forgot-password" class="ml-auto inline-block text-sm underline">
-								Forgot your password?
-							</a>
 						</FormControl>
 						<FormFieldErrors />
+						<div class="flex flex-col">
+							<a href="/forgot-password" class="text-sm"> Forgot your password? </a>
+							<a href="/request-verification" class="text-sm"> Request verification?</a>
+						</div>
 					</FormField>
 				</div>
-				<Button type="submit" class="w-full">Login</Button>
+				<Button disabled={loading} type="submit" class="w-full">Login</Button>
 			</div>
 			<div class="mt-4 text-sm">Don&apos;t have an account?</div>
 			<div>
-				<a href="/register" class="underline">Sign up</a>
+				<a href="/register" class="underline">Register</a>
 			</div>
 		</form>
 	</CardContent>

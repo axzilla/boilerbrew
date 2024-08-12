@@ -4,7 +4,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { FormControl, FormField } from '$lib/components/ui/form';
 	import { toast } from 'svelte-sonner';
-	import { superForm } from 'sveltekit-superforms';
+	import { defaultValues, superForm } from 'sveltekit-superforms';
 	import { RegisterUserSchema } from '$lib/schemas.js';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import CardHeader from '$lib/components/ui/card/card-header.svelte';
@@ -13,13 +13,21 @@
 	import FormLabel from '$lib/components/ui/form/form-label.svelte';
 	import FormFieldErrors from '$lib/components/ui/form/form-field-errors.svelte';
 
-	export let data;
+	let loading = false;
 
-	const form = superForm(data.form, {
+	const form = superForm(defaultValues(zod(RegisterUserSchema)), {
 		validators: zod(RegisterUserSchema),
-		onUpdated: ({ form: f }) => {
-			if (f.errors) {
-				toast.error('Failed to register!');
+		onSubmit: () => {
+			loading = true;
+		},
+		onResult: ({ result }) => {
+			loading = false;
+			if (result.type === 'redirect') {
+				toast.success(
+					'Account created successfully. Please check your email for a verification link.'
+				);
+			} else {
+				toast.error('Failed to register.');
 			}
 		}
 	});
@@ -29,7 +37,7 @@
 
 <Card class="mx-auto max-w-sm w-full">
 	<CardHeader>
-		<CardTitle class="text-2xl">Sign Up</CardTitle>
+		<CardTitle class="text-2xl">Register</CardTitle>
 	</CardHeader>
 	<CardContent>
 		<form action="?/register" method="POST" use:enhance>
@@ -61,11 +69,11 @@
 						<FormFieldErrors />
 					</FormField>
 				</div>
-				<Button type="submit" class="w-full">Create an account</Button>
+				<Button disabled={loading} type="submit" class="w-full">Create an account</Button>
 			</div>
 			<div class="mt-4 text-sm">Already have an account?</div>
 			<div>
-				<a href="/login" class="underline"> Sign in </a>
+				<a href="/login" class="underline">Login</a>
 			</div>
 		</form>
 	</CardContent>

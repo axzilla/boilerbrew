@@ -15,18 +15,20 @@
 	import FormLabel from '$lib/components/ui/form/form-label.svelte';
 	import FormFieldErrors from '$lib/components/ui/form/form-field-errors.svelte';
 
-	let isLoading = false;
+	let loading = false;
 
 	const form = superForm(defaultValues(zod(DeleteUserSchema)), {
 		validators: zod(DeleteUserSchema),
 		onSubmit: () => {
-			isLoading = true;
+			loading = true;
 		},
-		onUpdated: ({ form: f }) => {
-			if (f.errors.word) {
+		onResult: ({ result }) => {
+			loading = false;
+			if (result.type === 'redirect') {
+				toast.success('Account deleted');
+			} else {
 				toast.error('Failed to delete Account!');
 			}
-			isLoading = false;
 		}
 	});
 
@@ -42,7 +44,7 @@
 			<FormField {form} name="word">
 				<FormControl let:attrs>
 					<FormLabel>Type DELETE</FormLabel>
-					<Input {...attrs} autofocus bind:value={$formData.word} disabled={isLoading} />
+					<Input {...attrs} autofocus bind:value={$formData.word} disabled={loading} />
 				</FormControl>
 				<FormFieldErrors />
 			</FormField>
@@ -51,9 +53,9 @@
 			<Button
 				type="submit"
 				on:click={(e) => !confirm('Are you sure?') && e.preventDefault()}
-				disabled={isLoading || $formData.word !== 'DELETE'}
+				disabled={loading || $formData.word !== 'DELETE'}
 			>
-				{#if isLoading}
+				{#if loading}
 					<LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
 				{/if}
 				Delete Account

@@ -1,15 +1,8 @@
 import { fail, type Actions } from '@sveltejs/kit';
 import { LoginUserSchema } from '$lib/schemas';
-import type { PageServerLoad } from './$types.js';
 import { superValidate, setError } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { ClientResponseError } from 'pocketbase';
-
-export const load: PageServerLoad = async () => {
-	return {
-		form: await superValidate(zod(LoginUserSchema))
-	};
-};
 
 export const actions: Actions = {
 	login: async ({ request, locals }) => {
@@ -25,34 +18,21 @@ export const actions: Actions = {
 
 			if (!locals.pb?.authStore?.model?.verified) {
 				locals.pb.authStore.clear();
-				return setError(form, 'login', 'Please verify your email address.');
+				setError(form, 'login', 'Please verify your email address.');
+				return fail(400, { form });
 			}
 
 			return { form };
-		} catch (err: unknown) {
-			console.error('Login error:', err);
-
+		} catch (err) {
 			if (err instanceof ClientResponseError) {
-				// PocketBase specific error
-				if (err.status === 400) {
-					// Set error for both login and password fields
-					setError(form, 'login', 'Invalid email or password');
-					setError(form, 'password', 'Invalid email or password');
-					return fail(400, { form });
-				} else {
-					return setError(form, '', err.message);
-				}
-			} else if (err instanceof Error) {
-				// Generic Error object
-				return setError(
-					form,
-					'',
-					err.message || 'An unexpected error occurred. Please try again later.'
-				);
+				console.error('PB error: ', err);
+				setError(form, 'login', 'Invalid credentials');
+				setError(form, 'password', 'Invalid credentials');
 			} else {
-				// Unknown error type
-				return setError(form, '', 'An unexpected error occurred. Please try again later.');
+				console.error('Unexpected error:', err);
 			}
+
+			return fail(400, { form });
 		}
 	}
 };

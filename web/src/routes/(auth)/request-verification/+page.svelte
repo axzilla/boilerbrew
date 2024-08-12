@@ -6,7 +6,7 @@
 	import { toast } from 'svelte-sonner';
 	import { defaultValues, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
-	import { ForgotPasswordSchema } from '$lib/schemas.js';
+	import { RequestVerificationSchema } from '$lib/schemas.js';
 	import CardHeader from '$lib/components/ui/card/card-header.svelte';
 	import CardTitle from '$lib/components/ui/card/card-title.svelte';
 	import CardContent from '$lib/components/ui/card/card-content.svelte';
@@ -15,8 +15,8 @@
 
 	let loading = false;
 
-	const form = superForm(defaultValues(zod(ForgotPasswordSchema)), {
-		validators: zod(ForgotPasswordSchema),
+	const form = superForm(defaultValues(zod(RequestVerificationSchema)), {
+		validators: zod(RequestVerificationSchema),
 		onSubmit: () => {
 			loading = true;
 		},
@@ -24,10 +24,10 @@
 			loading = false;
 			if (result.type === 'success') {
 				toast.success(
-					'If an account exists for the provided email, password reset instructions have been sent. Please check your inbox and spam folder.'
+					'If an account exists for the provided email and is not yet verified, a verification email has been sent. Please check your inbox and spam folder.'
 				);
 			} else {
-				toast.error('Failed to send password reset instructions.');
+				toast.error('Failed to send verification email.');
 			}
 		}
 	});
@@ -37,10 +37,10 @@
 
 <Card class="mx-auto max-w-sm w-full">
 	<CardHeader>
-		<CardTitle class="text-2xl">Forgot Password</CardTitle>
+		<CardTitle class="text-2xl">Request Verification</CardTitle>
 	</CardHeader>
 	<CardContent>
-		<form action="?/forgotPassword" method="POST" use:enhance>
+		<form action="?/verifyEmail" method="POST" use:enhance>
 			<div class="grid gap-4">
 				<div class="grid gap-2">
 					<FormField {form} name="email">

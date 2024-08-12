@@ -15,8 +15,7 @@
 	import logo from '$lib/assets/logo.png';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import Home from 'lucide-svelte/icons/home';
-	import { Bolt, Moon, Sun } from 'lucide-svelte';
+	import { Home, Bolt, Moon, Sun } from 'lucide-svelte';
 	import {
 		Card,
 		CardHeader,
@@ -26,7 +25,7 @@
 	} from '$lib/components/ui/card';
 	import { Separator } from '$lib/components/ui/separator';
 	import { resetMode, setMode } from 'mode-watcher';
-	import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
+	import { config } from '$lib/config-client.js';
 
 	export let data;
 
@@ -51,7 +50,7 @@
 	let menuOpen = false;
 
 	$: currentAvatarUrl = data.user?.avatar
-		? `${PUBLIC_POCKETBASE_URL}/api/files/${data.user.collectionId}/${data.user.id}/${data.user.avatar}`
+		? `${config.pbUrl}/api/files/${data.user.collectionId}/${data.user.id}/${data.user.avatar}`
 		: null;
 </script>
 

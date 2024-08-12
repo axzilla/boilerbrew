@@ -2,7 +2,7 @@
 	import { Card } from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import { FormControl, FormField } from '$lib/components/ui/form';
-	import { fileProxy, superForm } from 'sveltekit-superforms';
+	import { defaultValues, fileProxy, superForm } from 'sveltekit-superforms';
 	import { toast } from 'svelte-sonner';
 	import { Camera, CircleUser, LoaderCircle, Trash } from 'lucide-svelte';
 	import { zod } from 'sveltekit-superforms/adapters';
@@ -12,23 +12,25 @@
 	import FormFieldErrors from '$lib/components/ui/form/form-field-errors.svelte';
 	import CardFooter from '$lib/components/ui/card/card-footer.svelte';
 	import { UpdateAvatarSchema } from '$lib/schemas.js';
-	import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
+	import { config } from '$lib/config-client.js';
 
 	export let data;
 
-	let isLoading = false;
+	let loading = false;
 	let avatarPreview: string | null = null;
 
-	const form = superForm(data.form, {
+	const form = superForm(defaultValues(zod(UpdateAvatarSchema)), {
 		dataType: 'json',
 		validators: zod(UpdateAvatarSchema),
 		onSubmit: () => {
-			isLoading = true;
+			loading = true;
 		},
-		async onResult({ result }) {
+		onResult({ result }) {
+			loading = false;
 			if (result.type === 'success') {
 				toast.success('Avatar updated');
-				isLoading = false;
+			} else {
+				toast.error('Failed to update avatar');
 			}
 		}
 	});
@@ -37,7 +39,7 @@
 	const { form: formData, enhance } = form;
 
 	$: currentAvatarUrl = data.user?.avatar
-		? `${PUBLIC_POCKETBASE_URL}/api/files/${data.user.collectionId}/${data.user.id}/${data.user.avatar}`
+		? `${config.pbUrl}/api/files/${data.user.collectionId}/${data.user.id}/${data.user.avatar}`
 		: null;
 
 	function handleFileChange(event: Event) {
@@ -118,8 +120,8 @@
 			</div>
 		</CardContent>
 		<CardFooter class="border-t px-6 py-4">
-			<Button type="submit" disabled={isLoading}>
-				{#if isLoading}
+			<Button type="submit" disabled={loading}>
+				{#if loading}
 					<LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
 				{/if}
 				Save
