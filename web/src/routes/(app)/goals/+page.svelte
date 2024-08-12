@@ -9,6 +9,7 @@
 	import { GoalForm, DashboardCards } from './components';
 	import type { Goal } from '$lib/schemas';
 	import { formatDate } from '$lib/utils';
+	import { GripVertical } from 'lucide-svelte';
 
 	export let data: PageData;
 
@@ -54,27 +55,32 @@
 	>
 		{#each $goals as goal (goal.id)}
 			<Card class="w-full">
-				<a href="/goals/{goal.id}" class="block">
-					<CardHeader>
-						<div class="flex justify-between items-center">
-							<CardTitle class="truncate">{goal.title}</CardTitle>
-							<div class="text-sm text-muted-foreground">
-								{#if goal.milestones && goal.milestones.length > 0}
-									Last Progress: {formatDate(goal.milestones[goal.milestones.length - 1].created)}
-								{:else}
-									No Progress
-								{/if}
+				<div class="flex items-center">
+					<div class="p-2 cursor-move">
+						<GripVertical class="text-muted-foreground" />
+					</div>
+					<a href="/goals/{goal.id}" class="block flex-grow">
+						<CardHeader>
+							<div class="flex justify-between items-center">
+								<CardTitle class="truncate">{goal.title}</CardTitle>
+								<div class="text-sm text-muted-foreground">
+									{#if goal.milestones && goal.milestones.length > 0}
+										Last Progress: {formatDate(goal.milestones[goal.milestones.length - 1].created)}
+									{:else}
+										No Progress
+									{/if}
+								</div>
 							</div>
-						</div>
-						<CardDescription class="truncate">{goal.description}</CardDescription>
-					</CardHeader>
-					<CardContent>
-						<div class="flex items-center space-x-4">
-							<Progress value={goal.milestones?.length} max={100} class="flex-grow" />
-							<span class="text-sm font-medium">{goal.milestones?.length ?? 0}%</span>
-						</div>
-					</CardContent>
-				</a>
+							<CardDescription class="truncate">{goal.description}</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<div class="flex items-center space-x-4">
+								<Progress value={goal.milestones?.length} max={100} class="flex-grow" />
+								<span class="text-sm font-medium">{goal.milestones?.length ?? 0}%</span>
+							</div>
+						</CardContent>
+					</a>
+				</div>
 			</Card>
 		{/each}
 	</div>

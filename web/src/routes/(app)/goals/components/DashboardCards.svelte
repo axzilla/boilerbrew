@@ -69,7 +69,7 @@
 </script>
 
 <div class="grid gap-4 grid-cols-2 lg:grid-cols-4">
-	<Card.Root>
+	<Card.Root class="border border-secondary">
 		<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
 			<Card.Title class="text-sm font-medium">Total Goals</Card.Title>
 			<Target class="text-muted-foreground h-4 w-4" />
@@ -80,7 +80,7 @@
 		</Card.Content>
 	</Card.Root>
 
-	<Card.Root>
+	<Card.Root class="border border-secondary">
 		<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
 			<Card.Title class="text-sm font-medium">Current Streak</Card.Title>
 			<Award class="text-muted-foreground h-4 w-4" />
@@ -91,7 +91,7 @@
 		</Card.Content>
 	</Card.Root>
 
-	<Card.Root>
+	<Card.Root class="border border-secondary">
 		<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
 			<Card.Title class="text-sm font-medium">Overall Progress</Card.Title>
 			<TrendingUp class="text-muted-foreground h-4 w-4" />
@@ -102,7 +102,7 @@
 		</Card.Content>
 	</Card.Root>
 
-	<Card.Root>
+	<Card.Root class="border border-secondary">
 		<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
 			<Card.Title class="text-sm font-medium">Milestones Completed</Card.Title>
 			<CheckCircle class="text-muted-foreground h-4 w-4" />
