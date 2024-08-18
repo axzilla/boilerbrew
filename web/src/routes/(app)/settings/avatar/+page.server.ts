@@ -24,12 +24,11 @@ export const actions: Actions = {
 		}
 
 		try {
-			console.log(form.data);
 			await locals.pb.collection('users').update(locals.user?.id, form.data);
 			return withFiles({ form });
 		} catch (err) {
 			if (err instanceof ClientResponseError) {
-				console.log('PB error: ', err);
+				console.error('PB error: ', err);
 				setError(form, 'avatar', 'Error updating avatar.');
 			} else {
 				console.error('Unexpected error:', err);

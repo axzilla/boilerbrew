@@ -26,7 +26,7 @@ export const actions: Actions = {
 			redirect(303, '/login');
 		} catch (err) {
 			if (err instanceof ClientResponseError) {
-				console.log('PB error: ', err);
+				console.error('PB error: ', err);
 			} else {
 				console.error('Unexpected error:', err);
 			}

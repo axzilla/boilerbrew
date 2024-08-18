@@ -14,6 +14,7 @@
 	import FormFieldErrors from '$lib/components/ui/form/form-field-errors.svelte';
 
 	let loading = false;
+	let showVerificationPrompt = false;
 
 	const form = superForm(defaultValues(zod(LoginUserSchema)), {
 		validators: zod(LoginUserSchema),
@@ -25,7 +26,11 @@
 			if (result.type === 'success') {
 				toast.success('Logged in successfully.');
 			} else {
-				toast.error('Failed to login.');
+				if (result.data?.form?.errors?.login[0] === 'Please verify your email address.') {
+					showVerificationPrompt = true;
+				} else {
+					toast.error('Failed to login.');
+				}
 			}
 		}
 	});
@@ -47,6 +52,11 @@
 							<Input {...attrs} bind:value={$formData.login} />
 						</FormControl>
 						<FormFieldErrors />
+						{#if showVerificationPrompt}
+							<div class="text-sm mt-2">
+								<a href="/request-verification" class="underline">Resend verification email</a>
+							</div>
+						{/if}
 					</FormField>
 				</div>
 				<div class="grid gap-2">
@@ -57,14 +67,13 @@
 						</FormControl>
 						<FormFieldErrors />
 						<div class="flex flex-col">
-							<a href="/forgot-password" class="text-sm"> Forgot your password? </a>
-							<a href="/request-verification" class="text-sm"> Request verification?</a>
+							<a href="/forgot-password" class="text-sm">Forgot your password?</a>
 						</div>
 					</FormField>
 				</div>
 				<Button disabled={loading} type="submit" class="w-full">Login</Button>
 			</div>
-			<div class="mt-4 text-sm">Don&apos;t have an account?</div>
+			<div class="mt-4 text-sm">Don't have an account?</div>
 			<div>
 				<a href="/register" class="underline">Register</a>
 			</div>

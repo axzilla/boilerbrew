@@ -35,7 +35,7 @@
 
 		return streak;
 	};
-	$: console.log(goals);
+
 	$: currentStreak = getStreak(goals);
 
 	$: completedGoals = goals?.filter((goal) => (goal.milestones?.length ?? 0) === 100).length ?? 0;
