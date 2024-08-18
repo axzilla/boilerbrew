@@ -4,7 +4,9 @@ This boilerplate provides a starting point for building a web application with S
 
 ## Environment Variables
 
-This project uses environment variables for configuration. The main variables to set are:
+This project relies on environment variables for configuration. These must be set manually in your hosting environment (e.g., Coolify) or locally for development.
+
+The main variables to set are:
 
 - `PUBLIC_PB_URL`: The URL of your PocketBase instance.
 - `ORIGIN`: The URL of your frontend application, used for CORS configuration in PocketBase.
@@ -21,18 +23,7 @@ ORIGIN=http://localhost:5173 # Origin for CORS
 
 ### Production Deployment
 
-When deploying to production:
-
-1. Do not commit your `.env` file to version control.
-2. Set the environment variables in your hosting platform (e.g., Coolify).
-3. Update the values to reflect your production environment:
-
-   ```
-   PUBLIC_PB_URL=https://api.your-production-domain.com
-   ORIGIN=https://your-production-domain.com
-   ```
-
-   Replace `https://api.your-production-domain.com` and `https://your-production-domain.com` with your actual production URLs.
+When deploying to production, you must manually set these environment variables in your hosting platform (e.g., Coolify). Do not commit sensitive information to version control.
 
 #### Setting Environment Variables in Coolify
 
@@ -40,24 +31,12 @@ To set environment variables in Coolify:
 
 1. Go to your project's dashboard in Coolify.
 2. Navigate to the 'Settings' or 'Environment Variables' section.
-3. Add each variable (`PUBLIC_PB_URL` and `ORIGIN`) with its corresponding production value.
+3. Add the following variables with their corresponding production values:
+   - `PUBLIC_PB_URL`: The URL of your PocketBase instance (e.g., https://api.your-production-domain.com)
+   - `ORIGIN`: The URL of your frontend application (e.g., https://your-production-domain.com)
 4. Save the changes and redeploy your application.
 
-## Docker Compose Configuration
-
-The `docker-compose.yml` file is configured to allow flexibility in setting the `PUBLIC_PB_URL`:
-
-```yaml
-environment:
-  - PUBLIC_PB_URL=${PUBLIC_PB_URL:-http://backend:8080}
-```
-
-This configuration means:
-
-- If `PUBLIC_PB_URL` is set in the environment (e.g., in Coolify), that value will be used.
-- If not set, it defaults to `http://backend:8080`, which works for local development and simple deployments.
-
-This approach provides flexibility for different hosting scenarios while maintaining ease of use for local development.
+For other hosting platforms, refer to their specific documentation on how to set environment variables.
 
 ## Development
 
@@ -79,9 +58,7 @@ To run the project locally:
 
 When deploying to production:
 
-1. Ensure your hosting platform (e.g., Coolify) has the correct environment variables set:
-   - Set `ORIGIN` to your frontend's URL.
-   - Set `PUBLIC_PB_URL` to your PocketBase instance's URL if hosting PocketBase separately. If not set, it will use the default Docker network configuration.
+1. Ensure your hosting platform has the correct environment variables set as described in the Production Deployment section.
 2. Deploy your application according to your hosting platform's instructions.
 
 Remember to secure your application properly before exposing it to the internet!
@@ -135,12 +112,6 @@ docker build -t pocketbase-backend ./backend
 ```
 
 Note that the image will be built for the architecture specified in the Dockerfile. Make sure this matches your deployment environment.
-
-## Customizing for Your Project
-
-1. Modify the SvelteKit app in the `web` directory to fit your project needs.
-2. Adjust the PocketBase configuration and migrations in the `backend` directory as required.
-3. Update this README to include any project-specific instructions or information.
 
 ## PocketBase Configuration
 
@@ -212,6 +183,13 @@ To use these features:
 
 Remember, whether you include these in your Docker image or mount them as volumes, ensure that your approach aligns with your development workflow and deployment strategy.
 
+## Customizing for Your Project
+
+1. Modify the SvelteKit app in the `web` directory to fit your project needs.
+2. Adjust the PocketBase configuration in the `backend` directory as required.
+3. Ensure all necessary environment variables are properly set in your development and production environments.
+4. Update this README to include any project-specific instructions or information.
+
 ## Security Considerations
 
 - Never store sensitive information (like API keys or database passwords) in your Docker files or commit them to version control.
@@ -220,9 +198,11 @@ Remember, whether you include these in your Docker image or mount them as volume
 
 ## Troubleshooting
 
-If you encounter CORS issues:
+If you encounter issues:
 
-1. Ensure the `ORIGIN` environment variable is correctly set in both development and production.
-2. Check that your PocketBase configuration allows requests from the specified origin.
+1. Verify that all required environment variables are correctly set in your hosting environment.
+2. For CORS issues, ensure the `ORIGIN` environment variable is correctly set and matches your frontend URL.
+3. Check that your PocketBase configuration allows requests from the specified origin.
+4. Review the logs of both the SvelteKit and PocketBase services for any error messages.
 
-For any other issues, please check the logs of both the SvelteKit and PocketBase services.
+If problems persist, check the GitHub issues for this boilerplate or create a new issue detailing your problem.
