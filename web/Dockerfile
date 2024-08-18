@@ -22,6 +22,6 @@ COPY --from=build /app/package-lock.json .
 # Install production dependencies
 RUN npm ci --only=production || npm install --only=production
 # Expose the port the app runs on
-EXPOSE 5173
+EXPOSE 3000
 # Start the application
 CMD ["node", "build"]
