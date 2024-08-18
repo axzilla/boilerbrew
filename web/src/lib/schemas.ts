@@ -58,36 +58,17 @@ export const UpdatePasswordSchema = z
 	.object({
 		oldPassword: z
 			.string({ required_error: 'Old password is required' })
-			.regex(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, {
-				message:
-					'Password must be a minimum of 8 characters & contain at least one letter, one number, and one special character.'
-			}),
+			.min(8, { message: 'Password must be at least 8 characters long' }),
 		password: z
 			.string({ required_error: 'Password is required' })
-			.regex(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, {
-				message:
-					'Password must be a minimum of 8 characters & contain at least one letter, one number, and one special character.'
-			}),
+			.min(8, { message: 'Password must be at least 8 characters long' }),
 		passwordConfirm: z
 			.string({ required_error: 'Confirm Password is required' })
-			.regex(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, {
-				message:
-					'Password must be a minimum of 8 characters & contain at least one letter, one number, and one special character.'
-			})
+			.min(8, { message: 'Password must be at least 8 characters long' })
 	})
-	.superRefine(({ passwordConfirm, password }, ctx) => {
-		if (passwordConfirm !== password) {
-			ctx.addIssue({
-				code: z.ZodIssueCode.custom,
-				message: 'Password & Confirm password must match',
-				path: ['password']
-			});
-			ctx.addIssue({
-				code: z.ZodIssueCode.custom,
-				message: 'Password & Confirm password must match',
-				path: ['passwordConfirm']
-			});
-		}
+	.refine((data) => data.password === data.passwordConfirm, {
+		message: "Passwords don't match",
+		path: ['passwordConfirm']
 	});
 
 export const DeleteUserSchema = z.object({
