@@ -13,7 +13,10 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - PUBLIC_PB_URL=http://backend:8080
+      # PUBLIC_PB_URL: URL for the PocketBase instance
+      # If not set in the environment, defaults to http://backend:8080
+      # This allows for flexibility in production
+      - PUBLIC_PB_URL=${PUBLIC_PB_URL:-http://backend:8080}
     depends_on:
       - backend
     restart: unless-stopped
