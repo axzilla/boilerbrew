@@ -25,6 +25,7 @@
 			},
 			body: JSON.stringify({ goals: e.detail.items })
 		});
+
 		if (!updatedGoalsResponse.ok) {
 			console.error('Error:', updatedGoalsResponse.statusText);
 		} else {
@@ -38,8 +39,8 @@
 </script>
 
 <div class="mb-16">
-	<div class="flex justify-between items-center mb-8">
-		<h2 class="text-2xl font-semibold">Goals</h2>
+	<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+		<h2 class="text-2xl font-semibold mb-4 md:mb-0">Goals</h2>
 		<Button on:click={() => (goalFormOpen = true)}>Create Goal</Button>
 	</div>
 
@@ -55,15 +56,19 @@
 	>
 		{#each $goals as goal (goal.id)}
 			<Card class="w-full">
-				<div class="flex items-center">
-					<div class="p-2 cursor-move">
+				<div class="flex items-stretch">
+					<div class="p-2 cursor-move flex items-center">
 						<GripVertical class="text-muted-foreground" />
 					</div>
-					<a href="/goals/{goal.id}" class="block flex-grow">
+					<a href="/goals/{goal.id}" class="block flex-grow w-full overflow-hidden">
 						<CardHeader>
-							<div class="flex justify-between items-center">
-								<CardTitle class="truncate">{goal.title}</CardTitle>
-								<div class="text-sm text-muted-foreground">
+							<div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+								<CardTitle class="truncate mb-2 md:mb-0 max-w-full md:max-w-[60%]">
+									<span class="block overflow-hidden text-ellipsis whitespace-nowrap">
+										{goal.title}
+									</span>
+								</CardTitle>
+								<div class="text-sm text-muted-foreground whitespace-nowrap">
 									{#if goal.milestones && goal.milestones.length > 0}
 										Last Progress: {formatDate(goal.milestones[goal.milestones.length - 1].created)}
 									{:else}
@@ -71,12 +76,14 @@
 									{/if}
 								</div>
 							</div>
-							<CardDescription class="truncate">{goal.description}</CardDescription>
+							<CardDescription class="truncate mt-2 md:mt-0">{goal.description}</CardDescription>
 						</CardHeader>
 						<CardContent>
 							<div class="flex items-center space-x-4">
 								<Progress value={goal.milestones?.length} max={100} class="flex-grow" />
-								<span class="text-sm font-medium">{goal.milestones?.length ?? 0}%</span>
+								<span class="text-sm font-medium whitespace-nowrap"
+									>{goal.milestones?.length ?? 0}%</span
+								>
 							</div>
 						</CardContent>
 					</a>
