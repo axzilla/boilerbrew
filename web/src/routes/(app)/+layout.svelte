@@ -24,7 +24,7 @@
 	} from '$lib/components/ui/card';
 	import { Separator } from '$lib/components/ui/separator';
 	import { config } from '$lib/config-client.js';
-	import ThemeSwitcher from '$lib/components/modules/theme-switcher/theme-switcher.svelte';
+	import { ThemeSwitcher } from '$lib/components/modules';
 
 	export let data;
 
