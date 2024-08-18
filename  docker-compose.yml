@@ -1,0 +1,22 @@
+version: '3'
+services:
+  backend:
+    build: ./backend
+    volumes:
+      - pocketbase_data:/pb/pb_data
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  web:
+    build: ./web
+    ports:
+      - "5173:5173"
+    environment:
+      - PUBLIC_PB_URL=http://backend:8080
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  pocketbase_data:
