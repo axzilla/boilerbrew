@@ -1,5 +1,5 @@
-import { PUBLIC_PB_URL } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 
 export const config = {
-	pbUrl: PUBLIC_PB_URL
+	pbUrl: env.PUBLIC_PB_URL
 };
