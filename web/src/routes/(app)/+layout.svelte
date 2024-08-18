@@ -12,10 +12,9 @@
 		DropdownMenuItem
 	} from '$lib/components/ui/dropdown-menu';
 	import { Sheet, SheetTrigger, SheetContent } from '$lib/components/ui/sheet';
-	import logo from '$lib/assets/logo.png';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { Home, Bolt } from 'lucide-svelte';
+	import { Home, Bolt, Beer } from 'lucide-svelte';
 	import {
 		Card,
 		CardHeader,
@@ -24,7 +23,6 @@
 		CardContent
 	} from '$lib/components/ui/card';
 	import { Separator } from '$lib/components/ui/separator';
-	import { resetMode, setMode } from 'mode-watcher';
 	import { config } from '$lib/config-client.js';
 	import ThemeSwitcher from '$lib/components/modules/theme-switcher/theme-switcher.svelte';
 
@@ -59,8 +57,9 @@
 	<div class="hidden flex-none md:block md:w-[280px] bg-muted/40 border-r">
 		<div class="flex h-full max-h-screen flex-col gap-2">
 			<div class="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-				<a href="/" class="flex items-center gap-2 font-semibold">
-					<img width="200px" alt="The project logo" src={logo} />
+				<a href="/" class="flex items-center gap-2">
+					<Beer class="text-primary h-8 w-8" />
+					<span class="text-lg font-semibold">BoilerBrew</span>
 				</a>
 			</div>
 			<div class="flex-1">
@@ -103,12 +102,9 @@
 				</SheetTrigger>
 				<SheetContent side="left" class="flex flex-col">
 					<nav class="grid gap-2 text-lg font-medium">
-						<a
-							on:click={() => (menuOpen = false)}
-							href="/"
-							class="flex items-center gap-2 text-lg font-semibold"
-						>
-							<img width="200px" alt="The project logo" src={logo} />
+						<a href="/" class="flex items-center gap-2">
+							<Beer class="text-primary h-8 w-8" />
+							<span class="text-lg font-semibold">BoilerBrew</span>
 						</a>
 						<Separator />
 						{#each navigation as { title, href, icon }}
