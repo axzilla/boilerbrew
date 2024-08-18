@@ -81,12 +81,12 @@
 				<Card>
 					<CardHeader class="p-2 pt-0 md:p-4">
 						<CardTitle>Upgrade to Pro</CardTitle>
-						<CardDescription>
-							Unlock all features and get unlimited access to our support team.
-						</CardDescription>
+						<CardDescription>Build faster, launch sooner, and grow bigger!</CardDescription>
 					</CardHeader>
 					<CardContent class="p-2 pt-0 md:p-4 md:pt-0">
-						<Button size="sm" class="w-full">Upgrade</Button>
+						<Button href="https://boilerbrew.xyz/#pricing" target="_blank" size="sm" class="w-full"
+							>Upgrade</Button
+						>
 					</CardContent>
 				</Card>
 			</div>
@@ -124,12 +124,15 @@
 						<Card>
 							<CardHeader>
 								<CardTitle>Upgrade to Pro</CardTitle>
-								<CardDescription>
-									Unlock all features and get unlimited access to our support team.
-								</CardDescription>
+								<CardDescription>Build faster, launch sooner, and grow bigger!</CardDescription>
 							</CardHeader>
 							<CardContent>
-								<Button size="sm" class="w-full">Upgrade</Button>
+								<Button
+									href="https://boilerbrew.xyz/#pricing"
+									target="_blank"
+									size="sm"
+									class="w-full">Upgrade</Button
+								>
 							</CardContent>
 						</Card>
 					</div>
