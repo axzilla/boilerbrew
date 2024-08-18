@@ -2,7 +2,7 @@ FROM alpine:latest
 
 ARG PB_VERSION=0.22.19
 # Change this line to switch between amd64 and arm64
-ARG PB_ARCH=amd64
+ARG PB_ARCH=arm64
 
 RUN apk add --no-cache \
     unzip \
