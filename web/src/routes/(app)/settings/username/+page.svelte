@@ -14,17 +14,18 @@
 	import FormLabel from '$lib/components/ui/form/form-label.svelte';
 	import FormFieldErrors from '$lib/components/ui/form/form-field-errors.svelte';
 	import CardFooter from '$lib/components/ui/card/card-footer.svelte';
+	import type { PageData } from './$types';
 
-	export let data;
-
+	export let data: PageData;
 	let loading = false;
 
 	const form = superForm(data.form, {
 		validators: zod(UpdateUsernameSchema),
+		resetForm: false,
 		onSubmit: () => {
 			loading = true;
 		},
-		onResult: ({ result }) => {
+		onResult: async ({ result }) => {
 			loading = false;
 			if (result.type === 'success') {
 				toast.success('Username updated');

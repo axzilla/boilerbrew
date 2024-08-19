@@ -27,7 +27,7 @@
 		onResult: ({ result }) => {
 			loading = false;
 			if (result.type === 'success') {
-				toast.success('Email updated');
+				toast.success('Please check your email to verify your new email address');
 			} else {
 				toast.error('Failed to update email');
 			}

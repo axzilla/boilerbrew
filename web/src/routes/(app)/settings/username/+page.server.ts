@@ -25,7 +25,7 @@ export const actions: Actions = {
 
 		try {
 			await locals.pb.collection('users').update(locals.user?.id, { username: form.data.username });
-			return message(form, 'Username updated.');
+			return { form };
 		} catch (err) {
 			if (err instanceof ClientResponseError) {
 				console.error('PB error: ', err);

@@ -25,7 +25,7 @@ export const actions: Actions = {
 
 		try {
 			await locals.pb.collection('users').requestEmailChange(form.data.email);
-			return message(form, 'Please confirm via your email.');
+			return { form };
 		} catch (err) {
 			if (err instanceof ClientResponseError) {
 				console.error('PB error: ', err);
