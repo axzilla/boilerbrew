@@ -25,7 +25,6 @@ export default [
 			'no-unused-vars': 'error',
 			'no-console': 'warn',
 			//
-			'@typescript-eslint/explicit-function-return-type': 'error',
 			'@typescript-eslint/no-unused-vars': 'error'
 		}
 	},

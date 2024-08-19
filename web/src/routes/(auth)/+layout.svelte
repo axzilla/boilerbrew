@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { ThemeSwitcher } from '$lib/components/modules';
 </script>
 
