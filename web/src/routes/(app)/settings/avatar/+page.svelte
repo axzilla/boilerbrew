@@ -2,7 +2,7 @@
 	import { Card } from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import { FormControl, FormField } from '$lib/components/ui/form';
-	import { defaultValues, fileProxy, superForm } from 'sveltekit-superforms';
+	import { fileProxy, superForm } from 'sveltekit-superforms';
 	import { toast } from 'svelte-sonner';
 	import { Camera, CircleUser, LoaderCircle, Trash } from 'lucide-svelte';
 	import { zod } from 'sveltekit-superforms/adapters';
