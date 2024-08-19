@@ -20,6 +20,16 @@ export default [
 		}
 	},
 	{
+		files: ['**/*.{js,ts}'],
+		rules: {
+			'no-unused-vars': 'error',
+			'no-console': 'warn',
+			//
+			'@typescript-eslint/explicit-function-return-type': 'error',
+			'@typescript-eslint/no-unused-vars': 'error'
+		}
+	},
+	{
 		files: ['**/*.svelte'],
 		languageOptions: {
 			parserOptions: {
