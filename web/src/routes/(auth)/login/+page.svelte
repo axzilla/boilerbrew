@@ -25,12 +25,13 @@
 			loading = false;
 			if (result.type === 'success') {
 				toast.success('Logged in successfully.');
-			} else {
+			}
+
+			if (result.type === 'failure') {
 				if (result.data?.form?.errors?.login[0] === 'Please verify your email address.') {
 					showVerificationPrompt = true;
-				} else {
-					toast.error('Failed to login.');
 				}
+				toast.error('Failed to login.');
 			}
 		}
 	});

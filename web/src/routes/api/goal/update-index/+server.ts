@@ -36,6 +36,7 @@ export const POST = async ({ locals, request }: { locals: App.Locals; request: R
 
 		return json(updatedGoals);
 	} catch (err) {
+		// eslint-disable-next-line no-console
 		console.error('Unexpected error:', err);
 		return json({ error: 'Unexpected error' }, { status: 500 });
 	}

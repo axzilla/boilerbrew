@@ -28,9 +28,11 @@ export const actions: Actions = {
 			return withFiles({ form });
 		} catch (err) {
 			if (err instanceof ClientResponseError) {
+				// eslint-disable-next-line no-console
 				console.error('PB error: ', err);
 				setError(form, 'avatar', 'Error updating avatar.');
 			} else {
+				// eslint-disable-next-line no-console
 				console.error('Unexpected error:', err);
 			}
 

@@ -18,11 +18,13 @@ export const actions: Actions = {
 			await locals.pb.collection('users').requestVerification(form.data.email);
 		} catch (err) {
 			if (err instanceof ClientResponseError) {
+				// eslint-disable-next-line no-console
 				console.error('PB error: ', err);
 				if (err.response.data.email) {
 					setError(form, 'email', err.response.data.email.message);
 				}
 			} else {
+				// eslint-disable-next-line no-console
 				console.error('Unexpected error:', err);
 			}
 

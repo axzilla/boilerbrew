@@ -25,10 +25,12 @@ export const actions: Actions = {
 			return { form };
 		} catch (err) {
 			if (err instanceof ClientResponseError) {
+				// eslint-disable-next-line no-console
 				console.error('PB error: ', err);
 				setError(form, 'login', 'Invalid credentials');
 				setError(form, 'password', 'Invalid credentials');
 			} else {
+				// eslint-disable-next-line no-console
 				console.error('Unexpected error:', err);
 			}
 

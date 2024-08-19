@@ -28,17 +28,17 @@ export const actions: Actions = {
 			locals.pb.authStore.clear();
 		} catch (err) {
 			if (err instanceof ClientResponseError) {
+				// eslint-disable-next-line no-console
 				console.error('PB error: ', err);
 				if (err.response.data.password) {
 					setError(form, 'password', err.response.data.password.message);
 				}
 			} else {
+				// eslint-disable-next-line no-console
 				console.error('Unexpected error:', err);
 			}
 
 			return fail(400, { form });
 		}
-
-		// FIXME: Do we need a logout here?
 	}
 };

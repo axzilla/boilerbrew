@@ -1,7 +1,7 @@
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { UpdateUsernameSchema } from '$lib/schemas';
 import { zod } from 'sveltekit-superforms/adapters';
-import { message, setError, superValidate } from 'sveltekit-superforms';
+import { setError, superValidate } from 'sveltekit-superforms';
 import { ClientResponseError } from 'pocketbase';
 
 export const load = async ({ locals }: { locals: App.Locals }) => {
@@ -28,11 +28,13 @@ export const actions: Actions = {
 			return { form };
 		} catch (err) {
 			if (err instanceof ClientResponseError) {
+				// eslint-disable-next-line no-console
 				console.error('PB error: ', err);
 				if (err.response.data.username) {
 					return setError(form, 'username', err.response.dat.username.message);
 				}
 			} else {
+				// eslint-disable-next-line no-console
 				console.error('Unexpected error:', err);
 			}
 
