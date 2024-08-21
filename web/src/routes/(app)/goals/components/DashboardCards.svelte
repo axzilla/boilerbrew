@@ -14,7 +14,7 @@
 
 		const sortedDates = goals
 			.flatMap((goal) => goal.milestones ?? [])
-			.map((milestone) => new Date(milestone.created))
+			.map((milestone) => new Date(milestone.created || ''))
 			.sort((a, b) => b.getTime() - a.getTime());
 
 		if (sortedDates.length === 0) return 0;
@@ -49,13 +49,13 @@
 
 		const thisMonthMilestones = goals.reduce(
 			(sum, goal) =>
-				sum + (goal.milestones?.filter((m) => new Date(m.created) >= lastMonth).length ?? 0),
+				sum + (goal.milestones?.filter((m) => new Date(m.created || '') >= lastMonth).length ?? 0),
 			0
 		);
 
 		const lastMonthMilestones = goals.reduce(
 			(sum, goal) =>
-				sum + (goal.milestones?.filter((m) => new Date(m.created) < lastMonth).length ?? 0),
+				sum + (goal.milestones?.filter((m) => new Date(m.created || '') < lastMonth).length ?? 0),
 			0
 		);
 

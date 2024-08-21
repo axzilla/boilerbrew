@@ -14,6 +14,7 @@
 	let goalFormOpen = false;
 	let milestoneFormOpen = false;
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 	$: !milestoneFormOpen && (choosenMilestone = null);
 
 	function handleMilestoneClick(milestone: Milestone | null) {
