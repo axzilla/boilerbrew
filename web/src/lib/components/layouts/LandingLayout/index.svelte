@@ -57,6 +57,7 @@
 			{/each}
 		</nav>
 		<div class="flex items-center gap-4 md:gap-2 lg:gap-4">
+			<Button href="/register" class="shrink-0">Get Started</Button>
 			<ThemeSwitcher />
 		</div>
 	</header>
