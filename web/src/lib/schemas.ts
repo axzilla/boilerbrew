@@ -98,3 +98,7 @@ export const GoalSchema = z.object({
 	updated: z.union([z.date().optional(), z.string().optional()])
 });
 export type Goal = z.infer<typeof GoalSchema>;
+
+export const emailSchema = z.object({
+	email: z.string().email('Invalid email address')
+});

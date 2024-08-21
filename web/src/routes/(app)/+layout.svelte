@@ -14,7 +14,7 @@
 	import { Sheet, SheetTrigger, SheetContent } from '$lib/components/ui/sheet';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { Home, Bolt, Beer } from 'lucide-svelte';
+	import { Home, Bolt, Goal } from 'lucide-svelte';
 	import {
 		Card,
 		CardHeader,
@@ -58,8 +58,8 @@
 		<div class="flex h-full max-h-screen flex-col gap-2">
 			<div class="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
 				<a href="/" class="flex items-center gap-2">
-					<Beer class="text-primary h-8 w-8" />
-					<span class="text-lg font-semibold">BoilerBrew</span>
+					<Goal class="text-primary h-8 w-8" />
+					<span class="text-lg font-semibold">LawOf100</span>
 				</a>
 			</div>
 			<div class="flex-1">
@@ -103,8 +103,8 @@
 				<SheetContent side="left" class="flex flex-col">
 					<nav class="grid gap-2 text-lg font-medium">
 						<a href="/" class="flex items-center gap-2">
-							<Beer class="text-primary h-8 w-8" />
-							<span class="text-lg font-semibold">BoilerBrew</span>
+							<Goal class="text-primary h-8 w-8" />
+							<span class="text-lg font-semibold">LawOf100</span>
 						</a>
 						<Separator />
 						{#each navigation as { title, href, icon }}

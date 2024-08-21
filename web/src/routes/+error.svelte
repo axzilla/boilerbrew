@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
 </script>
 
 <div class="h-screen flex items-center justify-center">
