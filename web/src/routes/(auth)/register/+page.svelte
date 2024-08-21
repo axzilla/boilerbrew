@@ -71,9 +71,9 @@
 				</div>
 				<Button disabled={loading} type="submit" class="w-full">Create an account</Button>
 			</div>
-			<div class="mt-4 text-sm">Already have an account?</div>
+			<div class="mt-4 text-sm text-muted-foreground">Already have an account?</div>
 			<div>
-				<a href="/login" class="underline">Login</a>
+				<a href="/login" class="hover:underline">Login</a>
 			</div>
 		</form>
 	</CardContent>

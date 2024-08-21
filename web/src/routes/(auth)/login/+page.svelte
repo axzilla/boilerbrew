@@ -54,8 +54,9 @@
 						</FormControl>
 						<FormFieldErrors />
 						{#if showVerificationPrompt}
-							<div class="text-sm mt-2">
-								<a href="/request-verification" class="underline">Resend verification email</a>
+							<div class="text-sm mt-2 text-muted-foreground">
+								<a href="/request-verification" class="hover:underline">Resend verification email</a
+								>
 							</div>
 						{/if}
 					</FormField>
@@ -68,15 +69,17 @@
 						</FormControl>
 						<FormFieldErrors />
 						<div class="flex flex-col">
-							<a href="/forgot-password" class="text-sm">Forgot your password?</a>
+							<a href="/forgot-password" class="text-sm text-muted-foreground hover:underline"
+								>Forgot your password?</a
+							>
 						</div>
 					</FormField>
 				</div>
 				<Button disabled={loading} type="submit" class="w-full">Login</Button>
 			</div>
-			<div class="mt-4 text-sm">Don't have an account?</div>
+			<div class="mt-4 text-sm text-muted-foreground">Don't have an account?</div>
 			<div>
-				<a href="/register" class="underline">Register</a>
+				<a href="/register" class="hover:underline">Register</a>
 			</div>
 		</form>
 	</CardContent>

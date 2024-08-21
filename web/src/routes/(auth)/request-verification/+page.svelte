@@ -53,9 +53,9 @@
 				</div>
 				<Button disabled={loading} type="submit" class="w-full">Send Email</Button>
 			</div>
-			<div class="mt-4 text-sm">Go back to:</div>
+			<div class="mt-4 text-sm text-muted-foreground">Go back to:</div>
 			<div>
-				<a href="/login" class="underline">Login</a>
+				<a href="/login" class="hover:underline">Login</a>
 			</div>
 		</form>
 	</CardContent>

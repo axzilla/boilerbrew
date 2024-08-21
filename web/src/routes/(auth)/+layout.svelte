@@ -12,4 +12,7 @@
 		<ThemeSwitcher />
 	</div>
 	<slot />
+	<p class="text-base text-gray-400 text-center">
+		&copy; {new Date().getFullYear()} LawOf100. All rights reserved.
+	</p>
 </div>
