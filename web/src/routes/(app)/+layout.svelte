@@ -24,6 +24,7 @@
 	} from '$lib/components/ui/card';
 	import { Separator } from '$lib/components/ui/separator';
 	import { config } from '$lib/config-client.js';
+
 	import { ThemeSwitcher } from '$lib/components/modules';
 
 	export let data;
@@ -59,7 +60,7 @@
 			<div class="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
 				<a href="/" class="flex items-center gap-2">
 					<Goal class="text-primary h-8 w-8" />
-					<span class="text-lg font-semibold">LawOf100</span>
+					<span class="text-lg font-semibold">{config.appName}</span>
 				</a>
 			</div>
 			<div class="flex-1">

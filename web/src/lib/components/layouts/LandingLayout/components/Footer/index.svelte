@@ -3,6 +3,7 @@
 	import GithubIcon from '$lib/components/icons/brands/github.svelte';
 	import XIcon from '$lib/components/icons/brands/x.svelte';
 	import Envelope from '$lib/components/icons/common/envelope.svelte';
+	import { config } from '$lib/config-client';
 
 	export let menuItems: {
 		name: string;
@@ -29,7 +30,7 @@
 				<a href="/" class="flex items-center gap-2 text-lg font-semibold md:text-base">
 					<Goal class="text-primary h-8 w-8" />
 					<span class="font-bold text-foreground hover:text-foreground transition-colors"
-						>LawOf100</span
+						>{config.appName}</span
 					>
 				</a>
 				<p class="text-gray-500 dark:text-gray-400 text-base">

@@ -4,6 +4,7 @@
 	import * as Sheet from '$lib/components/ui/sheet/index.js';
 	import { ThemeSwitcher } from '$lib/components/modules/index';
 	import { Footer } from './components';
+	import { config } from '$lib/config-client';
 
 	const menuItems = [
 		{ name: 'Tools', href: '/#tools' },
@@ -42,7 +43,7 @@
 			</Sheet.Root>
 			<a href="/" class="flex items-center gap-2">
 				<Goal class="text-primary h-8 w-8" />
-				<span class="text-lg font-semibold">LawOf100</span>
+				<span class="text-lg font-semibold">{config.appName}</span>
 			</a>
 		</div>
 		<nav class="hidden flex-col text-lg font-medium md:flex md:flex-row">

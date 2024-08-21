@@ -3,6 +3,7 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Sheet from '$lib/components/ui/sheet/index.js';
 	import { ThemeSwitcher } from '$lib/components/modules/index';
+	import { config } from '$lib/config-client';
 
 	const menuItems = [
 		{ name: 'Tools', href: '#tools' },
@@ -39,7 +40,7 @@
 		</Sheet.Root>
 		<a href="/" class="flex items-center gap-2 text-lg font-semibold md:text-base">
 			<Goal class="text-primary h-8 w-8" />
-			<span class="sr-only">LawOf100</span>
+			<span class="sr-only">{config.appName}</span>
 		</a>
 		<a href="/" class="font-bold text-foreground text-xl hover:text-foreground transition-colors"
 			>BoilerBrew</a

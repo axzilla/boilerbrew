@@ -1,6 +1,6 @@
 import type { Handle } from '@sveltejs/kit';
 import PocketBase, { type AuthModel } from 'pocketbase';
-import { config } from '$lib/config-server';
+import { config } from '$lib/config-client';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.pb = new PocketBase(config.pbUrl);
@@ -10,7 +10,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 			await event.locals.pb.collection('users').authRefresh();
 			event.locals.user = event.locals.pb.authStore.model;
 		}
-	} catch (_) {
+	} catch (error) {
+		// eslint-disable-next-line no-console
+		console.error(error);
 		event.locals.pb.authStore.clear();
 		event.locals.user = {} as AuthModel;
 	}
