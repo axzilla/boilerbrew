@@ -17,8 +17,7 @@
 
 	const legal = [
 		{ name: 'Privacy Policy', href: '/privacy-policy' },
-		{ name: 'Terms of Service', href: '/terms-of-service' },
-		{ name: 'License', href: '/license' }
+		{ name: 'Terms of Service', href: '/terms-of-service' }
 	];
 </script>
 
