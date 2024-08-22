@@ -5,16 +5,10 @@
 	import { ThemeSwitcher } from '$lib/components/modules/index';
 	import { config } from '$lib/config-client';
 
-	const menuItems = [
-		{ name: 'Tools', href: '#tools' },
-		{ name: 'Pricing', href: '#pricing' },
-		{ name: 'Features', href: '#features' },
-		{ name: 'Demo', href: '#demo' },
-		{ name: 'FAQ', href: '#faq' }
-		// { name: 'Demo', href: '#' },
-		// { name: 'Blog', href: '#' },
-		// { name: 'Docs', href: '#' }
-	];
+	export let menuItems: {
+		name: string;
+		href: string;
+	}[];
 </script>
 
 <header
@@ -38,13 +32,10 @@
 				</nav>
 			</Sheet.Content>
 		</Sheet.Root>
-		<a href="/" class="flex items-center gap-2 text-lg font-semibold md:text-base">
+		<a href="/" class="flex items-center gap-2">
 			<Goal class="text-primary h-8 w-8" />
-			<span class="sr-only">{config.appName}</span>
+			<span class="text-lg font-semibold">{config.appName}</span>
 		</a>
-		<a href="/" class="font-bold text-foreground text-xl hover:text-foreground transition-colors"
-			>BoilerBrew</a
-		>
 	</div>
 	<nav class="hidden flex-col text-lg font-medium md:flex md:flex-row">
 		{#each menuItems as { name, href }}

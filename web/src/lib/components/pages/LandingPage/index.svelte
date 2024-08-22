@@ -7,8 +7,7 @@
 		ToolsSection,
 		DemoSection,
 		CountdownSection,
-		StickyCountdownSection,
-		WhySection
+		StickyCountdownSection
 	} from './components';
 	import { LandingLayout } from '$lib/components/layouts';
 </script>
@@ -18,7 +17,6 @@
 	<ToolsSection />
 	<PricingSection />
 	<FeatureSection />
-	<WhySection />
 	<DemoSection />
 	<FaqSection />
 	<CountdownSection />

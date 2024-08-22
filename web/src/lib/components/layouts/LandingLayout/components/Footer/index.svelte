@@ -11,9 +11,9 @@
 	}[];
 
 	let socialLinks = [
-		{ name: 'GitHub', href: 'https://github.com/axzilla', icon: GithubIcon },
-		{ name: 'Twitter', href: 'https://twitter.com/_axzilla', icon: XIcon },
-		{ name: 'Email', href: 'mailto:kickstart@boilerbrew.xyz', icon: Envelope }
+		{ name: 'GitHub', href: 'https://github.com/example', icon: GithubIcon },
+		{ name: 'Twitter', href: 'https://twitter.com/_example', icon: XIcon },
+		{ name: 'Email', href: 'mailto:hello@example.com', icon: Envelope }
 	];
 
 	const legal = [
@@ -81,7 +81,8 @@
 	</div>
 	<div class="mb-24 border-t border-gray-200 pt-8">
 		<p class="text-base text-gray-400 text-center">
-			&copy; {new Date().getFullYear()} BoilerBrew. All rights reserved.
+			&copy; {new Date().getFullYear()}
+			{config.appName}. All rights reserved.
 		</p>
 	</div>
 </footer>
