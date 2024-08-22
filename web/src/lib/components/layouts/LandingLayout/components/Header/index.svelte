@@ -12,7 +12,7 @@
 </script>
 
 <header
-	class="bg-background sticky top-0 flex h-16 justify-between items-center gap-4 border-b px-4 md:px-6 w-full"
+	class="z-50 bg-background sticky top-0 flex h-16 justify-between items-center gap-4 border-b px-4 md:px-6 w-full"
 >
 	<div class="flex gap-2 items-center">
 		<Sheet.Root>
