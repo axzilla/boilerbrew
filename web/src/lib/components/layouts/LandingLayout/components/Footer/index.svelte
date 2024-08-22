@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { Goal } from 'lucide-svelte';
 	import GithubIcon from '$lib/components/icons/brands/github.svelte';
 	import XIcon from '$lib/components/icons/brands/x.svelte';
 	import Envelope from '$lib/components/icons/common/envelope.svelte';
@@ -28,7 +27,7 @@
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 			<div class="space-y-8">
 				<a href="/" class="flex items-center gap-2 text-lg font-semibold md:text-base">
-					<Goal class="text-primary h-8 w-8" />
+					<img src="/logo.svg" alt="Logo" class="w-8 h-8" />
 					<span class="font-bold text-foreground hover:text-foreground transition-colors"
 						>{config.appName}</span
 					>

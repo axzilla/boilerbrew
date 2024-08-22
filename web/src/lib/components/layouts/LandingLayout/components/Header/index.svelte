@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Menu, Goal } from 'lucide-svelte/icons';
+	import { Menu } from 'lucide-svelte/icons';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Sheet from '$lib/components/ui/sheet/index.js';
 	import { ThemeSwitcher } from '$lib/components/modules/index';
@@ -33,7 +33,7 @@
 			</Sheet.Content>
 		</Sheet.Root>
 		<a href="/" class="flex items-center gap-2">
-			<Goal class="text-primary h-8 w-8" />
+			<img src="/logo.svg" alt="Logo" class="w-8 h-8" />
 			<span class="text-lg font-semibold">{config.appName}</span>
 		</a>
 	</div>
@@ -49,6 +49,7 @@
 		{/each}
 	</nav>
 	<div class="flex items-center gap-4 md:gap-2 lg:gap-4">
+		<Button href="/register">Get Started</Button>
 		<ThemeSwitcher />
 	</div>
 </header>
