@@ -8,6 +8,7 @@
 		// DemoSection,
 		// CountdownSection,
 		// StickyCountdownSection,
+		SeenInSection,
 		AvatarSection
 	} from './components';
 	import { LandingLayout } from '$lib/components/layouts';
@@ -15,6 +16,7 @@
 
 <LandingLayout>
 	<HeroSection />
+	<SeenInSection />
 	<!-- <ToolsSection /> -->
 	<PricingSection />
 	<FeatureSection />
