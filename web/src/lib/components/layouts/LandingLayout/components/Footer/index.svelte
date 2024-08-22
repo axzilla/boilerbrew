@@ -1,7 +1,8 @@
 <script lang="ts">
-	import GithubIcon from '$lib/components/icons/brands/github.svelte';
-	import XIcon from '$lib/components/icons/brands/x.svelte';
-	import Envelope from '$lib/components/icons/common/envelope.svelte';
+	import XIcon from '$lib/components/icons/brands/X.svelte';
+	import InstagramIcon from '$lib/components/icons/brands/Instagram.svelte';
+	import TikTokIcon from '$lib/components/icons/brands/TikTok.svelte';
+
 	import { config } from '$lib/config-client';
 
 	export let menuItems: {
@@ -10,9 +11,9 @@
 	}[];
 
 	let socialLinks = [
-		{ name: 'GitHub', href: 'https://github.com/example', icon: GithubIcon },
-		{ name: 'Twitter', href: 'https://twitter.com/_example', icon: XIcon },
-		{ name: 'Email', href: 'mailto:hello@example.com', icon: Envelope }
+		{ name: 'X', href: 'https://x.com', icon: XIcon },
+		{ name: 'Instagram', href: 'https://instagram.com', icon: InstagramIcon },
+		{ name: 'TikTok', href: 'https://tiktok.com/', icon: TikTokIcon }
 	];
 
 	const legal = [
@@ -32,9 +33,9 @@
 					>
 				</a>
 				<p class="text-gray-500 dark:text-gray-400 text-base">
-					Building the future of web development, one boilerplate at a time.
+					Shaping the future of goal achievement, one milestone at a time.
 				</p>
-				<p class="text-muted-foreground">Made with ❤️🚀🔥</p>
+				<p class="text-muted-foreground">Made with 🔥</p>
 
 				<div class="flex space-x-6">
 					{#each socialLinks as { name, href, icon }}

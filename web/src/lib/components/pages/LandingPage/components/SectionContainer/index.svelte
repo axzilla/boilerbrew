@@ -10,7 +10,7 @@
 	export let contentClass: string = '';
 </script>
 
-<section {id} class={cn('mx-auto w-full px-4 py-12', sectionClass)}>
+<section {id} class={cn('mx-auto w-full px-4 py-12 pt-20', sectionClass)}>
 	<div class={cn('mx-auto', contentClass)}>
 		{#if title}
 			<h2 class={cn('text-center text-4xl font-bold mb-2', titleClass)}>
