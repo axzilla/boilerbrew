@@ -2,10 +2,10 @@
 	import { Footer, Header } from './components';
 
 	const menuItems = [
-		{ name: 'Tools', href: '/#tools' },
+		// { name: 'Tools', href: '/#tools' },
 		{ name: 'Pricing', href: '/#pricing' },
 		{ name: 'Features', href: '/#features' },
-		{ name: 'Demo', href: '/#demo' },
+		// { name: 'Demo', href: '/#demo' },
 		{ name: 'FAQ', href: '/#faq' }
 	];
 </script>

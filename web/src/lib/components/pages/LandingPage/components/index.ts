@@ -7,3 +7,4 @@ export { default as DemoSection } from './DemoSection/index.svelte';
 export { default as SectionContainer } from './SectionContainer/index.svelte';
 export { default as CountdownSection } from './CountdownSection/index.svelte';
 export { default as StickyCountdownSection } from './StickyCountdownSection/index.svelte';
+export { default as AvatarSection } from './AvatarSection/index.svelte';

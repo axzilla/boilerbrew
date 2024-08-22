@@ -4,21 +4,23 @@
 		PricingSection,
 		FeatureSection,
 		FaqSection,
-		ToolsSection,
-		DemoSection,
-		CountdownSection,
-		StickyCountdownSection
+		// ToolsSection,
+		// DemoSection,
+		// CountdownSection,
+		// StickyCountdownSection,
+		AvatarSection
 	} from './components';
 	import { LandingLayout } from '$lib/components/layouts';
 </script>
 
 <LandingLayout>
 	<HeroSection />
-	<ToolsSection />
+	<!-- <ToolsSection /> -->
 	<PricingSection />
 	<FeatureSection />
-	<DemoSection />
+	<!-- <DemoSection /> -->
 	<FaqSection />
-	<CountdownSection />
-	<StickyCountdownSection />
+	<!-- <CountdownSection /> -->
+	<!-- <StickyCountdownSection /> -->
+	<AvatarSection />
 </LandingLayout>
