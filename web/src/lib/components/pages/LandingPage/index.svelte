@@ -11,18 +11,15 @@
 		SeenInSection,
 		AvatarSection
 	} from './components';
-	import { LandingLayout } from '$lib/components/layouts';
 </script>
 
-<LandingLayout>
-	<HeroSection />
-	<SeenInSection />
-	<!-- <ToolsSection /> -->
-	<PricingSection />
-	<FeatureSection />
-	<!-- <DemoSection /> -->
-	<FaqSection />
-	<!-- <CountdownSection /> -->
-	<!-- <StickyCountdownSection /> -->
-	<AvatarSection />
-</LandingLayout>
+<HeroSection />
+<SeenInSection />
+<!-- <ToolsSection /> -->
+<PricingSection />
+<FeatureSection />
+<!-- <DemoSection /> -->
+<FaqSection />
+<!-- <CountdownSection /> -->
+<!-- <StickyCountdownSection /> -->
+<AvatarSection />
