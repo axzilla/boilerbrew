@@ -45,7 +45,7 @@ export function isPlanEqualOrBetter(
 
 export function getPlanName(plan: SubscriptionPlan): string {
 	const names: Record<SubscriptionPlan, string> = {
-		free: 'Kostenlos',
+		free: 'Free',
 		pro: 'Pro',
 		premium: 'Premium'
 	};

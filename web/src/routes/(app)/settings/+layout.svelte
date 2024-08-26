@@ -25,8 +25,8 @@
 			icon: Lock
 		},
 		{
-			title: 'Subscriptions',
-			href: '/settings/subscriptions',
+			title: 'Plans',
+			href: '/settings/plans',
 			icon: CircleDollarSign
 		},
 		{
