@@ -14,6 +14,7 @@ export const actions: Actions = {
 		}
 
 		try {
+			formData.set('subscription', 'free');
 			await locals.pb.collection('users').create(formData);
 			await locals.pb.collection('users').requestVerification(form.data.email);
 		} catch (err) {

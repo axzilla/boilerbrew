@@ -22,7 +22,7 @@ export default [
 	{
 		files: ['**/*.{js,ts}'],
 		rules: {
-			'no-unused-vars': 'error',
+			'no-unused-vars': 'off',
 			'no-console': 'warn',
 			//
 			'@typescript-eslint/no-unused-vars': 'error'

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { cn } from '$lib/utils';
-	import { Trash, Lock, User, Mail, Images } from 'lucide-svelte';
+	import { Trash, Lock, User, Mail, Images, CircleDollarSign } from 'lucide-svelte';
 
 	const navigation = [
 		{
@@ -23,6 +23,11 @@
 			title: 'Password',
 			href: '/settings/password',
 			icon: Lock
+		},
+		{
+			title: 'Subscriptions',
+			href: '/settings/subscriptions',
+			icon: CircleDollarSign
 		},
 		{
 			title: 'Delete Account',

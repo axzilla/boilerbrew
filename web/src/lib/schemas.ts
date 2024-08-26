@@ -17,7 +17,8 @@ export const RegisterUserSchema = z
 			.min(8, { message: 'Password must be at least 8 characters long' }),
 		passwordConfirm: z
 			.string({ required_error: 'Confirm Password is required' })
-			.min(8, { message: 'Password must be at least 8 characters long' })
+			.min(8, { message: 'Password must be at least 8 characters long' }),
+		subsciption: z.string()
 	})
 	.refine((data) => data.password === data.passwordConfirm, {
 		message: "Passwords don't match",
