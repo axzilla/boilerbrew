@@ -17,6 +17,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 		event.locals.user = {} as AuthModel;
 	}
 	const response = await resolve(event);
-	response.headers.set('set-cookie', event.locals.pb.authStore.exportToCookie({ secure: false }));
+	response.headers.set(
+		'set-cookie',
+		event.locals.pb.authStore.exportToCookie({
+			secure: false,
+			sameSite: 'lax'
+		})
+	);
 	return response;
 };

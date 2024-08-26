@@ -4,7 +4,7 @@ import { config as clientConfig } from '$lib/config-client';
 import Stripe from 'stripe';
 const stripe = new Stripe(serverConfig.stripeSecretKey || '');
 
-export async function POST({ request }) {
+export async function POST({ request }: { request: Request }) {
 	const { priceId } = await request.json();
 
 	const session = await stripe.checkout.sessions.create({
