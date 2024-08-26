@@ -5,6 +5,7 @@ export type PlanFeatures = {
 	maxGoals: number;
 	aiFeatures: boolean;
 	statistics: Statistics;
+	priceId?: string;
 };
 
 export const SUBSCRIPTION_PLANS: Record<SubscriptionPlan, PlanFeatures> = {
@@ -16,12 +17,14 @@ export const SUBSCRIPTION_PLANS: Record<SubscriptionPlan, PlanFeatures> = {
 	pro: {
 		maxGoals: 5,
 		aiFeatures: false,
-		statistics: 'advanced'
+		statistics: 'advanced',
+		priceId: 'price_1Ps2LuJUXvHzb28FvipDN1pa'
 	},
 	premium: {
 		maxGoals: Infinity,
 		aiFeatures: true,
-		statistics: 'advanced'
+		statistics: 'advanced',
+		priceId: 'price_1Ps2MNJUXvHzb28FOwU6x6l3'
 	}
 };
 

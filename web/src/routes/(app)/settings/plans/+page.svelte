@@ -5,7 +5,8 @@
 		getUserPermissions,
 		getNextSubscriptionPlan,
 		isPlanEqualOrBetter,
-		getPlanName
+		getPlanName,
+		SUBSCRIPTION_PLANS
 	} from '$lib/subscriptionPlans';
 	import type { PageData } from './$types';
 	import { Button } from '$lib/components/ui/button';
@@ -19,7 +20,12 @@
 	} from '$lib/components/ui/card';
 	import { Badge } from '$lib/components/ui/badge';
 	import { CheckCircle, XCircle } from 'lucide-svelte';
+	import { loadStripe } from '@stripe/stripe-js';
+	import { config } from '$lib/config-client';
+
 	export let data: PageData;
+
+	const stripePromise = loadStripe(config.stripePublicKey);
 
 	let currentPlan: SubscriptionPlan = data.user?.subscription;
 	$: userPermissions = getUserPermissions(currentPlan);
@@ -28,6 +34,30 @@
 	function upgradePlan() {
 		if (nextPlan) {
 			currentPlan = nextPlan;
+		}
+	}
+
+	async function handleCheckout(priceId: string) {
+		try {
+			const url = '/api/stripe/create-checkout-session';
+
+			const stripe = await stripePromise;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ priceId })
+			});
+			const session = await response.json();
+			const result = await stripe?.redirectToCheckout({
+				sessionId: session.id
+			});
+			if (result?.error) {
+				console.error(result.error);
+			}
+		} catch (error) {
+			console.error(error);
 		}
 	}
 </script>
@@ -97,6 +127,13 @@
 						<li>Statistics: {getUserPermissions(plan).statistics}</li>
 					</ul>
 				</CardContent>
+				{#if SUBSCRIPTION_PLANS[plan].priceId}
+					<CardFooter>
+						<Button on:click={() => handleCheckout(SUBSCRIPTION_PLANS[plan].priceId || '')}
+							>BUY</Button
+						>
+					</CardFooter>
+				{/if}
 			</Card>
 		{/each}
 	</div>
