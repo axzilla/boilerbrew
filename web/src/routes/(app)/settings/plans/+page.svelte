@@ -3,7 +3,6 @@
 		type SubscriptionPlan,
 		ALL_SUBSCRIPTION_PLANS,
 		getUserPermissions,
-		getNextSubscriptionPlan,
 		isPlanEqualOrBetter,
 		getPlanName,
 		SUBSCRIPTION_PLANS
@@ -26,9 +25,8 @@
 
 	export let data: PageData;
 	const stripePromise = loadStripe(config.stripePublicKey);
-	let currentPlan: SubscriptionPlan = data.user?.subscription;
+	let currentPlan: SubscriptionPlan = data.user?.subscription as SubscriptionPlan;
 	$: userPermissions = getUserPermissions(currentPlan);
-	$: nextPlan = getNextSubscriptionPlan(currentPlan);
 
 	async function handleSubscriptionAction(action: StripeAction, newPlan?: SubscriptionPlan) {
 		try {

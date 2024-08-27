@@ -1,7 +1,7 @@
 import type { Goal } from '$lib/schemas';
-import { json } from '@sveltejs/kit';
+import { json, type RequestHandler } from '@sveltejs/kit';
 
-export const POST = async ({ locals, request }: { locals: App.Locals; request: Request }) => {
+export const POST: RequestHandler = async ({ locals, request }) => {
 	try {
 		const userId = locals.user?.id;
 		const { goals }: { goals: Goal[] } = await request.json();

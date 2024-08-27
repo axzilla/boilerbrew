@@ -3,8 +3,9 @@ import { UpdateEmailSchema } from '$lib/schemas';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { ClientResponseError } from 'pocketbase';
+import type { PageServerLoad } from './$types';
 
-export const load = async ({ locals }: { locals: App.Locals }) => {
+export const load: PageServerLoad = async ({ locals }) => {
 	if (!locals.pb.authStore.isValid) {
 		redirect(303, '/login');
 	}

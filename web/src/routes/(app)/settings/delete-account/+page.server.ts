@@ -1,10 +1,11 @@
 import { UpdateAvatarSchema } from '$lib/schemas';
-import { redirect, type Actions } from '@sveltejs/kit';
+import { error, redirect, type Actions } from '@sveltejs/kit';
 import { ClientResponseError } from 'pocketbase';
 import { fail, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
+import type { PageServerLoad } from './$types';
 
-export const load = async ({ locals }: { locals: App.Locals }) => {
+export const load: PageServerLoad = async ({ locals }) => {
 	if (!locals.pb.authStore.isValid) {
 		redirect(303, '/login');
 	}
@@ -12,6 +13,10 @@ export const load = async ({ locals }: { locals: App.Locals }) => {
 
 export const actions: Actions = {
 	deleteAccount: async ({ request, locals }) => {
+		if (!locals.pb.authStore.isValid || !locals.user) {
+			throw error(401, 'Unauthorized');
+		}
+
 		const formData = await request.formData();
 		const form = await superValidate(formData, zod(UpdateAvatarSchema));
 

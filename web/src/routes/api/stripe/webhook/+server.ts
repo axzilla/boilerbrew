@@ -60,7 +60,7 @@ export async function POST({ request }: { request: Request }) {
 
 		return json({ received: true });
 	} catch (error) {
-		// esoint-disable-next-line no-console
+		// eslint-disable-next-line no-console
 		console.error('Webhook error:', error);
 		return json({ error: (error as Error).message }, { status: 400 });
 	}

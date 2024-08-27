@@ -34,11 +34,6 @@ export function getUserPermissions(subscriptionType: SubscriptionPlan | null): P
 	return subscriptionType ? SUBSCRIPTION_PLANS[subscriptionType] : SUBSCRIPTION_PLANS['free'];
 }
 
-export function getNextSubscriptionPlan(currentPlan: SubscriptionPlan): SubscriptionPlan | null {
-	const index = ALL_SUBSCRIPTION_PLANS.indexOf(currentPlan);
-	return index < ALL_SUBSCRIPTION_PLANS.length - 1 ? ALL_SUBSCRIPTION_PLANS[index + 1] : null;
-}
-
 export function isPlanEqualOrBetter(
 	userPlan: SubscriptionPlan,
 	requiredPlan: SubscriptionPlan

@@ -1,10 +1,11 @@
-import { fail, redirect, type Actions } from '@sveltejs/kit';
+import { error, fail, redirect, type Actions } from '@sveltejs/kit';
 import { UpdatePasswordSchema } from '$lib/schemas';
 import { zod } from 'sveltekit-superforms/adapters';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { ClientResponseError } from 'pocketbase';
+import type { PageServerLoad } from './$types';
 
-export const load = async ({ locals }: { locals: App.Locals }) => {
+export const load: PageServerLoad = async ({ locals }) => {
 	if (!locals.pb.authStore.isValid) {
 		redirect(303, '/login');
 	}
@@ -16,6 +17,10 @@ export const load = async ({ locals }: { locals: App.Locals }) => {
 
 export const actions: Actions = {
 	updatePassword: async ({ request, locals }) => {
+		if (!locals.pb.authStore.isValid || !locals.user) {
+			throw error(401, 'Unauthorized');
+		}
+
 		const formData = await request.formData();
 		const form = await superValidate(formData, zod(UpdatePasswordSchema));
 

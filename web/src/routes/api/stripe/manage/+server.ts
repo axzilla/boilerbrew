@@ -1,44 +1,40 @@
-import { json } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from '@sveltejs/kit';
 import Stripe from 'stripe';
 import type PocketBase from 'pocketbase';
 import { config as serverConfig } from '$lib/config-server';
 import { config as clientConfig } from '$lib/config-client';
-import type { StripeAction } from '$lib/types';
+import type { StripeAction, User } from '$lib/types';
 
 const stripe = new Stripe(serverConfig.stripeSecretKey);
 
-interface User {
-	id: string;
-	stripeCustomerId: string;
-	stripeSubscriptionId?: string;
-	email: string;
-}
-
 export const POST: RequestHandler = async ({ request, locals }) => {
+	if (!locals.pb.authStore.isValid || !locals.user) {
+		throw error(401, 'Unauthorized');
+	}
+
 	const { action, priceId }: { action: StripeAction; priceId: string } = await request.json();
-	const user = locals.user as User;
 
 	try {
 		let result;
 		let message = '';
 		switch (action) {
 			case 'create':
-				result = await createSubscription(user, priceId, locals.pb);
+				result = await createSubscription(locals.user, priceId, locals.pb);
 				return json({ success: true, sessionId: result.id });
 			case 'update':
-				result = await updateSubscription(user, priceId);
+				result = await updateSubscription(locals.user, priceId);
 				message = 'Subscription updated successfully';
 				break;
 			case 'cancel':
-				result = await cancelSubscription(user);
+				result = await cancelSubscription(locals.user);
 				message = 'Subscription cancelled successfully';
 				break;
 			default:
 				return json({ success: false, message: 'Invalid action' }, { status: 400 });
 		}
 
-		await updateUserInDB(user.id, result, locals.pb);
+		await updateUserInDB(locals.user.id, result, locals.pb);
 		return json({ success: true, message, subscription: result });
 	} catch (error) {
 		// eslint-disable-next-line no-console
@@ -47,11 +43,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 	}
 };
 
-async function createSubscription(
-	user: User,
-	priceId: string,
-	pb: PocketBase
-): Promise<Stripe.Checkout.Session> {
+async function createSubscription(user: User, priceId: string, pb: PocketBase) {
 	// Create or retrieve Stripe Customer
 	let customer;
 	if (user.stripeCustomerId) {
@@ -77,7 +69,7 @@ async function createSubscription(
 	});
 }
 
-async function updateSubscription(user: User, priceId: string): Promise<Stripe.Subscription> {
+async function updateSubscription(user: User, priceId: string) {
 	const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId!);
 	return await stripe.subscriptions.update(user.stripeSubscriptionId!, {
 		items: [{ id: subscription.items.data[0].id, price: priceId }],
@@ -85,8 +77,12 @@ async function updateSubscription(user: User, priceId: string): Promise<Stripe.S
 	});
 }
 
-async function cancelSubscription(user: User): Promise<Stripe.Subscription> {
-	return await stripe.subscriptions.update(user.stripeSubscriptionId!, {
+async function cancelSubscription(user: User) {
+	if (!user.stripeSubscriptionId) {
+		throw new Error('User does not have a subscription');
+	}
+
+	return await stripe.subscriptions.update(user.stripeSubscriptionId, {
 		cancel_at_period_end: true
 	});
 }
