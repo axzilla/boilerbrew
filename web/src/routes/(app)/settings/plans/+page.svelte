@@ -22,6 +22,7 @@
 	import { CheckCircle, XCircle } from 'lucide-svelte';
 	import { loadStripe } from '@stripe/stripe-js';
 	import { config } from '$lib/config-client';
+	import type { StripeAction } from '$lib/types';
 
 	export let data: PageData;
 	const stripePromise = loadStripe(config.stripePublicKey);
@@ -29,10 +30,7 @@
 	$: userPermissions = getUserPermissions(currentPlan);
 	$: nextPlan = getNextSubscriptionPlan(currentPlan);
 
-	async function handleSubscriptionAction(
-		action: 'create' | 'update' | 'cancel',
-		newPlan?: SubscriptionPlan
-	) {
+	async function handleSubscriptionAction(action: StripeAction, newPlan?: SubscriptionPlan) {
 		try {
 			const response = await fetch('/api/stripe/manage', {
 				method: 'POST',

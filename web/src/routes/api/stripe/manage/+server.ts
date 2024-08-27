@@ -4,6 +4,7 @@ import Stripe from 'stripe';
 import type PocketBase from 'pocketbase';
 import { config as serverConfig } from '$lib/config-server';
 import { config as clientConfig } from '$lib/config-client';
+import type { StripeAction } from '$lib/types';
 
 const stripe = new Stripe(serverConfig.stripeSecretKey);
 
@@ -11,10 +12,11 @@ interface User {
 	id: string;
 	stripeCustomerId: string;
 	stripeSubscriptionId?: string;
+	email: string;
 }
 
 export const POST: RequestHandler = async ({ request, locals }) => {
-	const { action, priceId } = await request.json();
+	const { action, priceId }: { action: StripeAction; priceId: string } = await request.json();
 	const user = locals.user as User;
 
 	try {
@@ -22,7 +24,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		let message = '';
 		switch (action) {
 			case 'create':
-				result = await createSubscription(user, priceId);
+				result = await createSubscription(user, priceId, locals.pb);
 				return json({ success: true, sessionId: result.id });
 			case 'update':
 				result = await updateSubscription(user, priceId);
@@ -45,9 +47,28 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 	}
 };
 
-async function createSubscription(user: User, priceId: string): Promise<Stripe.Checkout.Session> {
+async function createSubscription(
+	user: User,
+	priceId: string,
+	pb: PocketBase
+): Promise<Stripe.Checkout.Session> {
+	// Create or retrieve Stripe Customer
+	let customer;
+	if (user.stripeCustomerId) {
+		// If user already has a Stripe Customer ID, retrieve the customer
+		customer = await stripe.customers.retrieve(user.stripeCustomerId);
+	} else {
+		// If user doesn't have a Stripe Customer ID, create a new customer
+		customer = await stripe.customers.create({
+			email: user.email,
+			metadata: { userId: user.id }
+		});
+		// Save the new Stripe Customer ID in the database
+		await pb.collection('users').update(user.id, { stripeCustomerId: customer.id });
+	}
+
 	return await stripe.checkout.sessions.create({
-		customer: user.stripeCustomerId,
+		customer: customer.id,
 		line_items: [{ price: priceId, quantity: 1 }],
 		mode: 'subscription',
 		success_url: `${clientConfig.baseUrl}/settings/plans`,

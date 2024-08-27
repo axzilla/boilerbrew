@@ -53,11 +53,14 @@ export async function POST({ request }: { request: Request }) {
 			case 'customer.subscription.updated':
 				await handleSubscriptionChange(event.data.object as Stripe.Subscription);
 				break;
+			case 'customer.subscription.deleted':
+				await handleSubscriptionChange(event.data.object as Stripe.Subscription);
+				break;
 		}
 
 		return json({ received: true });
 	} catch (error) {
-		// eslint-disable-next-line no-console
+		// esoint-disable-next-line no-console
 		console.error('Webhook error:', error);
 		return json({ error: (error as Error).message }, { status: 400 });
 	}
