@@ -24,40 +24,49 @@
 	import { config } from '$lib/config-client';
 
 	export let data: PageData;
-
 	const stripePromise = loadStripe(config.stripePublicKey);
-
 	let currentPlan: SubscriptionPlan = data.user?.subscription;
 	$: userPermissions = getUserPermissions(currentPlan);
 	$: nextPlan = getNextSubscriptionPlan(currentPlan);
 
-	function upgradePlan() {
-		if (nextPlan) {
-			currentPlan = nextPlan;
-		}
-	}
-
-	async function handleCheckout(priceId: string) {
+	async function handleSubscriptionAction(
+		action: 'create' | 'update' | 'cancel',
+		newPlan?: SubscriptionPlan
+	) {
 		try {
-			const url = '/api/stripe/create-checkout-session';
-
-			const stripe = await stripePromise;
-			const response = await fetch(url, {
+			const response = await fetch('/api/stripe/manage', {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ priceId })
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					action,
+					priceId: newPlan ? SUBSCRIPTION_PLANS[newPlan].priceId : undefined
+				})
 			});
-			const session = await response.json();
-			const result = await stripe?.redirectToCheckout({
-				sessionId: session.id
-			});
-			if (result?.error) {
-				console.error(result.error);
+			const result = await response.json();
+
+			if (result.success) {
+				if (action === 'create') {
+					const stripe = await stripePromise;
+					const { error } = await stripe!.redirectToCheckout({ sessionId: result.sessionId });
+					if (error) {
+						console.error('Error in redirectToCheckout:', error);
+						alert('Failed to start checkout process. Please try again.');
+					}
+				} else {
+					if (action === 'update') {
+						currentPlan = newPlan!;
+					} else if (action === 'cancel') {
+						currentPlan = 'free'; // Assuming 'free' is your base plan
+					}
+					alert(result.message || 'Subscription updated successfully');
+				}
+			} else {
+				console.error('Failed to change subscription:', result.message);
+				alert(result.message || 'Failed to update subscription');
 			}
 		} catch (error) {
-			console.error(error);
+			console.error('Error changing subscription:', error);
+			alert('An error occurred. Please try again.');
 		}
 	}
 </script>
@@ -90,13 +99,13 @@
 				</li>
 			</ul>
 		</CardContent>
-		<CardFooter>
-			{#if nextPlan}
-				<Button on:click={upgradePlan}>Upgrade to {getPlanName(nextPlan)}</Button>
-			{:else}
-				<Badge variant="secondary">Highest plan level reached</Badge>
-			{/if}
-		</CardFooter>
+		{#if currentPlan !== 'free'}
+			<CardFooter>
+				<Button variant="destructive" on:click={() => handleSubscriptionAction('cancel')}>
+					Cancel Subscription
+				</Button>
+			</CardFooter>
+		{/if}
 	</Card>
 
 	<h2 class="text-2xl font-semibold mb-4">All Available Plans:</h2>
@@ -127,13 +136,26 @@
 						<li>Statistics: {getUserPermissions(plan).statistics}</li>
 					</ul>
 				</CardContent>
-				{#if SUBSCRIPTION_PLANS[plan].priceId}
-					<CardFooter>
-						<Button on:click={() => handleCheckout(SUBSCRIPTION_PLANS[plan].priceId || '')}
-							>BUY</Button
+				<CardFooter>
+					{#if plan !== currentPlan}
+						<Button
+							on:click={() =>
+								handleSubscriptionAction(
+									data.user?.stripeSubscriptionId ? 'update' : 'create',
+									plan
+								)}
 						>
-					</CardFooter>
-				{/if}
+							{data.user?.stripeSubscriptionId
+								? isPlanEqualOrBetter(plan, currentPlan)
+									? 'Upgrade to'
+									: 'Change to'
+								: 'Subscribe to'}
+							{getPlanName(plan)}
+						</Button>
+					{:else}
+						<Badge variant="outline">Current Plan</Badge>
+					{/if}
+				</CardFooter>
 			</Card>
 		{/each}
 	</div>

@@ -20,6 +20,7 @@ async function ensureAuthenticated() {
 					);
 					return authData;
 				} catch (error) {
+					// eslint-disable-next-line no-console
 					console.error('Authentication error:', error);
 					authPromise = null;
 					throw error;
@@ -56,6 +57,7 @@ export async function POST({ request }: { request: Request }) {
 
 		return json({ received: true });
 	} catch (error) {
+		// eslint-disable-next-line no-console
 		console.error('Webhook error:', error);
 		return json({ error: (error as Error).message }, { status: 400 });
 	}
@@ -88,6 +90,7 @@ async function updateUserSubscription(userId: string, subscription: Stripe.Subsc
 			stripeSubscriptionPeriodEnd: new Date(subscription.current_period_end * 1000)
 		});
 	} catch (error) {
+		// eslint-disable-next-line no-console
 		console.error('Error updating user subscription:', error);
 		throw error;
 	}
