@@ -1,7 +1,7 @@
 import { zod } from 'sveltekit-superforms/adapters';
 import { UpdateAvatarSchema } from '$lib/schemas.js';
 import { redirect, type Actions, error, fail } from '@sveltejs/kit';
-import { setError, superValidate } from 'sveltekit-superforms/server';
+import { setError, superValidate, withFiles } from 'sveltekit-superforms/server';
 import { ClientResponseError } from 'pocketbase';
 import type { PageServerLoad } from './$types';
 
@@ -17,7 +17,6 @@ export const load: PageServerLoad = async ({ locals }) => {
 export const actions: Actions = {
 	updateAvatar: async ({ request, locals }) => {
 		if (!locals.pb.authStore.isValid || !locals.user) {
-			console.log('xxxxxx');
 			throw error(401, 'Unauthorized');
 		}
 
@@ -25,13 +24,12 @@ export const actions: Actions = {
 		const form = await superValidate(formData, zod(UpdateAvatarSchema));
 
 		if (!form.valid) {
-			return fail(400, { form });
+			return fail(400, withFiles({ form }));
 		}
 
 		try {
-			// Verwenden Sie locals.user.id konsistent
 			await locals.pb.collection('users').update(locals.user.id, form.data);
-			return { form };
+			return withFiles({ form });
 		} catch (err) {
 			if (err instanceof ClientResponseError) {
 				// eslint-disable-next-line no-console
@@ -42,7 +40,7 @@ export const actions: Actions = {
 				console.error('Unexpected error:', err);
 				setError(form, '', 'An unexpected error occurred. Please try again later.');
 			}
-			return fail(500, { form });
+			return fail(400, withFiles({ form }));
 		}
 	}
 };
