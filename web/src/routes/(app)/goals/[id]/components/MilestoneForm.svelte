@@ -3,12 +3,13 @@
 	import { Dialog, DialogContent, DialogHeader, DialogTitle } from '$lib/components/ui/dialog';
 	import { defaultValues, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
-	import { MilestoneSchema, type Milestone } from '$lib/schemas';
+	import { MilestoneSchema } from '$lib/schemas';
 	import { FormControl, FormField, FormFieldErrors, FormLabel } from '$lib/components/ui/form';
 	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
 	import { Trash } from 'lucide-svelte';
 	import { toast } from 'svelte-sonner';
 	import { formatDate } from '$lib/utils';
+	import type { Milestone } from '$lib/types';
 
 	export let open = false;
 	export let milestone: Milestone | null = null;

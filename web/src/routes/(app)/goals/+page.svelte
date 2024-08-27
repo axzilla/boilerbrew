@@ -7,9 +7,9 @@
 	import type { PageData } from './$types';
 	import { dndzone, type DndEvent } from 'svelte-dnd-action';
 	import { GoalForm, DashboardCards } from './components';
-	import type { Goal } from '$lib/schemas';
 	import { formatDate } from '$lib/utils';
 	import { GripVertical } from 'lucide-svelte';
+	import type { Goal } from '$lib/types';
 
 	export let data: PageData;
 

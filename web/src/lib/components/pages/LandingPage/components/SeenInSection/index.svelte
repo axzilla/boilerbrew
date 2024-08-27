@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { SectionContainer } from '..';
-	import { fade } from 'svelte/transition';
 
 	import LogoTechCrunch from './logos/techcrunch.svelte';
 	import LogoForbes from './logos/forbes.svelte';

@@ -3,13 +3,14 @@
 	import { Dialog, DialogContent, DialogHeader, DialogTitle } from '$lib/components/ui/dialog';
 	import { defaultValues, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
-	import { GoalSchema, type Goal } from '$lib/schemas';
+	import { GoalSchema } from '$lib/schemas';
 	import { Input } from '$lib/components/ui/input';
 	import { FormControl, FormField, FormFieldErrors, FormLabel } from '$lib/components/ui/form';
 	import { toast } from 'svelte-sonner';
 	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
 	import { Trash } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
+	import type { Goal } from '$lib/types';
 
 	export let open = false;
 	export let goal: Goal | null = null;

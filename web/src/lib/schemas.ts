@@ -75,7 +75,6 @@ export const UpdatePasswordSchema = z
 export const DeleteUserSchema = z.object({
 	word: z.string().refine((data) => data === 'DELETE', { message: 'Word must be "DELETE"' })
 });
-export type DeleteUser = z.infer<typeof DeleteUserSchema>;
 
 export const MilestoneSchema = z.object({
 	id: z.string(),
@@ -85,7 +84,6 @@ export const MilestoneSchema = z.object({
 	created: z.union([z.date().optional(), z.string().optional()]),
 	updated: z.union([z.date().optional(), z.string().optional()])
 });
-export type Milestone = z.infer<typeof MilestoneSchema>;
 
 export const GoalSchema = z.object({
 	id: z.string(),
@@ -98,7 +96,6 @@ export const GoalSchema = z.object({
 	created: z.union([z.date().optional(), z.string().optional()]),
 	updated: z.union([z.date().optional(), z.string().optional()])
 });
-export type Goal = z.infer<typeof GoalSchema>;
 
 export const emailSchema = z.object({
 	email: z.string().email('Invalid email address')

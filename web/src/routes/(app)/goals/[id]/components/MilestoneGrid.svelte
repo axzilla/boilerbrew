@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Milestone } from '$lib/schemas';
+	import type { Milestone } from '$lib/types';
 
 	export let milestones: Milestone[];
 	export let onMilestoneClick: (milestone: Milestone | null) => void;

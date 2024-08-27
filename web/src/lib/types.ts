@@ -16,3 +16,16 @@ export interface User extends RecordModel {
 	stripeSubscriptionStatus?: string;
 	stripeSubscriptionPeriodEnd?: number;
 }
+
+export interface Goal extends RecordModel {
+	title: string;
+	description: string;
+	progress: number;
+	milestones: Milestone[];
+}
+
+export interface Milestone extends RecordModel {
+	notes: string;
+	goal_id: string;
+	user_id: string;
+}

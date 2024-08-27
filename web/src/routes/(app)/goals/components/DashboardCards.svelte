@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
-	import type { Goal } from '$lib/schemas';
+	import type { Goal } from '$lib/types';
 	import { Target, Award, TrendingUp, CheckCircle } from 'lucide-svelte';
 
 	export let goals: Goal[];

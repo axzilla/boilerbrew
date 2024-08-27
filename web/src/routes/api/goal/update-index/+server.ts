@@ -1,4 +1,4 @@
-import type { Goal } from '$lib/schemas';
+import type { Goal } from '$lib/types';
 import { json, type RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ locals, request }) => {

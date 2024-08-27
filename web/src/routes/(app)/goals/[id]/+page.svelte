@@ -1,12 +1,12 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
 	import type { PageData } from './$types';
-	import { type Milestone } from '$lib/schemas';
 	import { Bolt, CircleArrowLeft } from 'lucide-svelte';
 	import { GoalForm } from '../components';
 	import { MilestoneForm, MilestoneGrid } from './components';
 	import { formatDate } from '$lib/utils';
 	import MilestoneNotes from './components/MilestoneNotes.svelte';
+	import type { Milestone } from '$lib/types';
 
 	export let data: PageData;
 

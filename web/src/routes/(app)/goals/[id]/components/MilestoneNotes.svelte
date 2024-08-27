@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { type Milestone } from '$lib/schemas';
 	import * as Table from '$lib/components/ui/table';
+	import type { Milestone } from '$lib/types';
 
 	export let milestones: Milestone[];
 	export let choosenMilestone: Milestone | null = null;

@@ -1,9 +1,10 @@
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
-import { GoalSchema, MilestoneSchema, type Goal, type Milestone } from '$lib/schemas.js';
+import { GoalSchema, MilestoneSchema } from '$lib/schemas.js';
 import { fail, superValidate } from 'sveltekit-superforms';
 import type { Actions } from '@sveltejs/kit';
 import { ClientResponseError } from 'pocketbase';
+import type { Goal, Milestone } from '$lib/types';
 
 export const load: PageServerLoad = async ({ locals, params }) => {
 	const { id } = params;

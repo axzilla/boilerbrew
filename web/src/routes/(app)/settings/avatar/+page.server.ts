@@ -17,6 +17,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 export const actions: Actions = {
 	updateAvatar: async ({ request, locals }) => {
 		if (!locals.pb.authStore.isValid || !locals.user) {
+			console.log('xxxxxx');
 			throw error(401, 'Unauthorized');
 		}
 
