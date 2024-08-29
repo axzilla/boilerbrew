@@ -87,21 +87,25 @@ async function cancelSubscription(user: User) {
 	});
 }
 
-async function updateUserInDB(
-	userId: string,
-	subscriptionData: Stripe.Subscription,
-	pb: PocketBase
-) {
-	const updateData: Record<string, string | Date> = {
-		stripeSubscriptionId: subscriptionData.id,
-		stripeSubscriptionStatus: subscriptionData.status,
-		subscriptionPeriodEnd: new Date(subscriptionData.current_period_end * 1000)
-	};
-
-	if (subscriptionData.items.data.length > 0) {
-		updateData.stripeSubscriptionItemId = subscriptionData.items.data[0].id;
-		updateData.stripePlanId = subscriptionData.items.data[0].price.id;
+async function updateUserInDB(userId: string, subscription: Stripe.Subscription, pb: PocketBase) {
+	try {
+		await pb.collection('users').update(userId, {
+			// Subscription
+			stripeSubscriptionId: subscription.id,
+			stripeSubscriptionStatus: subscription.status,
+			stripeSubscriptionCurrentPeriodStart: new Date(subscription.current_period_start * 1000),
+			stripeSubscriptionCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
+			stripeSubscriptionCancelAtPeriodEnd: subscription.cancel_at_period_end,
+			stripeSubscriptionCanceledAt: subscription.canceled_at
+				? new Date(subscription.canceled_at * 1000)
+				: null,
+			// SubscriptionItem
+			stripeSubscriptionItemId: subscription.items.data[0]?.id,
+			stripeSubscriptionItemPriceId: subscription.items.data[0].price.id
+		});
+	} catch (error) {
+		// eslint-disable-next-line no-console
+		console.error('Error updating user subscription:', error);
+		throw error;
 	}
-
-	await pb.collection('users').update(userId, updateData);
 }

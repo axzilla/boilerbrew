@@ -86,11 +86,18 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
 async function updateUserSubscription(userId: string, subscription: Stripe.Subscription) {
 	try {
 		await pb.collection('users').update(userId, {
+			// Subscription
 			stripeSubscriptionId: subscription.id,
-			stripeSubscriptionItemId: subscription.items.data[0]?.id,
-			stripePlanId: subscription.items.data[0]?.price?.id,
 			stripeSubscriptionStatus: subscription.status,
-			stripeSubscriptionPeriodEnd: new Date(subscription.current_period_end * 1000)
+			stripeSubscriptionCurrentPeriodStart: new Date(subscription.current_period_start * 1000),
+			stripeSubscriptionCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
+			stripeSubscriptionCancelAtPeriodEnd: subscription.cancel_at_period_end,
+			stripeSubscriptionCanceledAt: subscription.canceled_at
+				? new Date(subscription.canceled_at * 1000)
+				: null,
+			// Item
+			stripeSubscriptionItemId: subscription.items.data[0]?.id,
+			stripeSubscriptionItemPriceId: subscription.items.data[0].price.id
 		});
 	} catch (error) {
 		// eslint-disable-next-line no-console
