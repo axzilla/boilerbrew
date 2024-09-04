@@ -63,7 +63,7 @@ async function createSubscription(user: User, priceId: string, pb: PocketBase) {
 		customer: customer.id,
 		line_items: [{ price: priceId, quantity: 1 }],
 		mode: 'subscription',
-		success_url: `${clientConfig.baseUrl}/settings/plans`,
+		success_url: `${clientConfig.baseUrl}/settings/plans?session_id={CHECKOUT_SESSION_ID}`,
 		cancel_url: `${clientConfig.baseUrl}/settings/plans`,
 		metadata: { userId: user.id }
 	});

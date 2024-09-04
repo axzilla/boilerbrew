@@ -1,10 +1,10 @@
 import { GoalSchema } from '$lib/schemas';
-import { type Actions } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
-import { zod } from 'sveltekit-superforms/adapters';
-import { fail, superValidate } from 'sveltekit-superforms';
-import { ClientResponseError } from 'pocketbase';
 import type { Goal } from '$lib/types';
+import { type Actions } from '@sveltejs/kit';
+import { ClientResponseError } from 'pocketbase';
+import { fail, superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
+import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const goalsWithExpandedMilestones = await locals.pb.collection('goals').getFullList({
