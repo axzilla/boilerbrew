@@ -11,38 +11,38 @@ A comprehensive starting point for building modern web applications with SvelteK
 - Authentication system pre-configured
 - CRUD operations demo included
 
+## TODO
+
+- [ ] Stripe Integration (WIP):
+  - Connect with Stripe API
+  - Implement subscription plans
+  - Add payment processing
+  - Handle webhooks
+
 ## Local Development
 
 1. Clone the repository:
-
    ```
    git clone https://github.com/yourusername/your-repo-name.git
    cd your-repo-name
    ```
-
 2. Set up environment variables:
    Create a `.env` file in the root directory:
-
    ```
    PUBLIC_PB_URL=http://localhost:8090
    ORIGIN=http://localhost:5173
    ```
-
 3. Start PocketBase:
-
    ```
    cd backend
    ./pocketbase serve
    ```
-
 4. In a new terminal, start the SvelteKit dev server:
-
    ```
    cd web
    npm install
    npm run dev
    ```
-
 5. Open `http://localhost:5173` in your browser.
 
 ## Deployment
@@ -50,9 +50,7 @@ A comprehensive starting point for building modern web applications with SvelteK
 We recommend using Hetzner with Coolify for straightforward deployment:
 
 1. Set up a Hetzner server and install Coolify (refer to Coolify docs for installation).
-
 2. In Coolify:
-
    - Connect your GitHub repository.
    - Choose Docker Compose as the deployment method.
    - Set environment variables:
@@ -61,7 +59,6 @@ We recommend using Hetzner with Coolify for straightforward deployment:
      ORIGIN=https://your-domain.com
      ```
    - Link your domains for API (PocketBase) and frontend (SvelteKit).
-
 3. Deploy your application through Coolify's interface.
 
 ### Manual Deployment
@@ -107,8 +104,7 @@ If not using Coolify, you can deploy manually:
   ```
   docker-compose logs -f
   ```
-
-For more advanced issues, please consult the project's GitHub issues or create a new one.
+  For more advanced issues, please consult the project's GitHub issues or create a new one.
 
 ## Further Documentation
 
@@ -116,5 +112,4 @@ For more advanced issues, please consult the project's GitHub issues or create a
 - [PocketBase Documentation](https://pocketbase.io/docs/)
 - [Coolify Documentation](https://coolify.io/docs)
 - [Hetzner Cloud Documentation](https://docs.hetzner.com/)
-
-For any questions not covered here, feel free to open an issue in the GitHub repository.
+  For any questions not covered here, feel free to open an issue in the GitHub repository.
