@@ -25,7 +25,7 @@
 			icon: Lock
 		},
 		{
-			title: 'Plans',
+			title: 'Plans (WIP)',
 			href: '/settings/plans',
 			icon: CircleDollarSign
 		},
