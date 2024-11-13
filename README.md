@@ -1,115 +1,146 @@
-# SvelteKit and PocketBase Boilerplate
+# BoilerBrew
 
-A comprehensive starting point for building modern web applications with SvelteKit frontend and PocketBase backend.
+Open-source SaaS starter kit featuring a Law of 100 challenge app, built with SvelteKit + PocketBase.
 
-## Features
+## 🌟 Overview
 
-- SvelteKit for a powerful, performant frontend
-- PocketBase for a flexible, easy-to-use backend
-- Docker support for easy deployment
-- Tailwind CSS for rapid UI development
-- Authentication system pre-configured
-- CRUD operations demo included
+BoilerBrew is your starting point for modern web applications, demonstrated through a complete Law of 100 challenge app.
 
-## TODO
+## 🏗 Project Structure
+
+- `src/web`: SvelteKit frontend
+- `src/backend`: PocketBase backend
+- `website`: Our marketing page (safe to delete)
+
+## ⭐️ Features
+
+- Complete Law of 100 challenge app
+- SvelteKit frontend with TailwindCSS
+- PocketBase backend with SQLite
+- Docker deployment ready
+- Authentication system
+- CRUD with drag & drop
+- Dark/Light mode
+- File upload system
+- Email integration
+- Mobile optimized
+
+## 📋 TODO
 
 - [ ] Stripe Integration (WIP):
-  - Connect with Stripe API
-  - Implement subscription plans
-  - Add payment processing
-  - Handle webhooks
+  - Payment processing
+  - Subscription handling
+  - Webhook integration
+- [ ] Social Authentication (Coming Soon)
+- [ ] Analytics Dashboard (Coming Soon)
+- [ ] AI Features (Coming Soon)
 
-## Local Development
+## 🚀 Local Development
 
 1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/boilerbrew.git
+   cd boilerbrew
    ```
-   git clone https://github.com/yourusername/your-repo-name.git
-   cd your-repo-name
-   ```
-2. Set up environment variables:
-   Create a `.env` file in the root directory:
-   ```
+
+2. Set up environment:
+
+   ```bash
+   # Create .env in src/web
    PUBLIC_PB_URL=http://localhost:8090
    ORIGIN=http://localhost:5173
    ```
-3. Start PocketBase:
-   ```
-   cd backend
+
+3. Start backend:
+
+   ```bash
+   cd src/backend
    ./pocketbase serve
    ```
-4. In a new terminal, start the SvelteKit dev server:
-   ```
-   cd web
+
+4. Start frontend:
+
+   ```bash
+   cd src/web
    npm install
    npm run dev
    ```
-5. Open `http://localhost:5173` in your browser.
 
-## Deployment
+5. Open `http://localhost:5173`
 
-We recommend using Hetzner with Coolify for straightforward deployment:
+## 🌐 Deployment
 
-1. Set up a Hetzner server and install Coolify (refer to Coolify docs for installation).
-2. In Coolify:
-   - Connect your GitHub repository.
-   - Choose Docker Compose as the deployment method.
-   - Set environment variables:
-     ```
-     PUBLIC_PB_URL=https://api.your-domain.com
-     ORIGIN=https://your-domain.com
-     ```
-   - Link your domains for API (PocketBase) and frontend (SvelteKit).
-3. Deploy your application through Coolify's interface.
+### Using Coolify (Recommended)
+
+1. Set up on Hetzner
+2. Configure in Coolify:
+   ```bash
+   PUBLIC_PB_URL=https://api.your-domain.com
+   ORIGIN=https://your-domain.com
+   ```
+3. Deploy via Coolify interface
 
 ### Manual Deployment
 
-If not using Coolify, you can deploy manually:
+```bash
+cd src
+docker-compose up -d
+```
 
-1. SSH into your server.
-2. Clone your repository.
-3. Set up environment variables.
-4. Run `docker-compose up -d` in the project root.
+## 🐳 Docker Support
 
-## Docker and Architecture
+- Supports AMD64 and ARM
+- Modify `ARG PB_ARCH=arm64` in `src/backend/Dockerfile`
+- Build: `docker build -t pocketbase-backend ./src/backend`
 
-- The project supports both AMD64 and ARM architectures.
-- To change architecture, modify `ARG PB_ARCH=arm64` in `backend/Dockerfile`.
-- Build the Docker image: `docker build -t pocketbase-backend ./backend`
+## 🔧 Configuration
 
-## PocketBase Configuration
+### PocketBase
 
-- Data is persisted in a Docker volume named `pocketbase_data`.
-- For database migrations, use the `pb_migrations` directory.
-- For custom hooks, use the `pb_hooks` directory.
-- Access the PocketBase admin panel at `http://localhost:8090/_/` during local development.
+- Admin panel: `http://localhost:8090/_/`
+- Uses `pb_migrations` for schema
+- Uses `pb_hooks` for custom logic
+- Data in `pocketbase_data` volume
 
-## Customization
+### Frontend
 
-- Modify SvelteKit components in the `web/src` directory.
-- Adjust PocketBase settings through the admin panel or `pb_migrations`.
-- Add new API endpoints in PocketBase using `pb_hooks`.
+- Components in `src/web/src`
+- Uses shadcn-svelte components
+- Tailwind for styling
+- Superforms for form handling
 
-## Security Best Practices
+## 🔒 Security
 
-- Use environment variables for all sensitive information.
-- Regularly update dependencies and Docker images.
-- Enable HTTPS in production.
-- Implement proper authentication and authorization in your app.
+- Use environment variables
+- Keep dependencies updated
+- Enable HTTPS in production
+- Proper authentication implemented
 
-## Troubleshooting
+## 🛠 Troubleshooting
 
-- Verify all environment variables are set correctly.
-- Check CORS settings if you encounter API issues.
-- Review logs for both SvelteKit and PocketBase services:
-  ```
+- Check environment variables
+- Verify CORS settings
+- View logs:
+  ```bash
   docker-compose logs -f
   ```
-  For more advanced issues, please consult the project's GitHub issues or create a new one.
 
-## Further Documentation
+## 📚 Documentation
 
-- [SvelteKit Documentation](https://kit.svelte.dev/docs)
-- [PocketBase Documentation](https://pocketbase.io/docs/)
-- [Coolify Documentation](https://coolify.io/docs)
-- [Hetzner Cloud Documentation](https://docs.hetzner.com/)
-  For any questions not covered here, feel free to open an issue in the GitHub repository.
+- [SvelteKit](https://kit.svelte.dev/docs)
+- [PocketBase](https://pocketbase.io/docs/)
+- [Coolify](https://coolify.io/docs)
+- [Hetzner](https://docs.hetzner.com/)
+
+## 💖 Contributing
+
+Issues and PRs welcome!
+
+## 📜 License
+
+MIT
+
+## ⭐️ Support
+
+If you find BoilerBrew helpful, please give it a star!
