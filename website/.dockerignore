@@ -1,0 +1,30 @@
+# Ignore node modules (these will be installed inside Docker)
+node_modules
+/build
+
+# Ignore local environment variables
+.env
+.env.local
+
+# Ignore Docker files
+Dockerfile
+.dockerignore
+
+# Ignore any logs
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Ignore IDE/editor configurations
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore MacOS specific files
+.DS_Store
+
+# Ignore test files
+*.test.js
+*.spec.js
+__tests__/
