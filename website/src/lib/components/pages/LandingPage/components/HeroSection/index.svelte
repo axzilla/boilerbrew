@@ -15,7 +15,7 @@
 		<h1 class="text-4xl font-extrabold tracking-tight md:text-6xl">
 			Get sh*t done &<br />
 			<span class="relative inline-block">
-				<span class="text-white relative z-10 whitespace-nowrap">kickstart your SaaS</span>
+				<span class="text-white relative z-10 whitespace-nowrap">x your SaaS</span>
 				<span
 					class="absolute inset-y-0 -left-3 -right-3 bg-primary transform -skew-y-1"
 					style="z-index: 0;;"
