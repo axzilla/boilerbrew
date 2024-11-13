@@ -23,7 +23,7 @@
 			</span>
 		</h1>
 		<p class="text-lg text-muted-foreground md:text-xl">
-			You
+			Your
 			<span class="text-primary font-bold underline underline-offset-4">SvelteKit boilerplate</span>
 			on steroids. Skip the BS, launch at light speed, and watch your competition eat dust.
 		</p>
