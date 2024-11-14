@@ -11,9 +11,6 @@
 	import { Github, Mail, TwitterIcon } from 'lucide-svelte';
 	import GithubIcon from '$lib/components/icons/brands/github.svelte';
 	import XIcon from '$lib/components/icons/brands/x.svelte';
-	import EmailIcon from '$lib/components/icons/common/envelope.svelte';
-
-	const contactEmail = 'kickstart@boilerbrew.xyz';
 </script>
 
 <div class="mx-auto px-4 py-8">
@@ -35,9 +32,6 @@
 					If you encounter any issues or have questions, please don't hesitate to reach out.
 				</p>
 				<CardFooter class="flex items-center justify-center gap-4">
-					<a href="mailto:kickstart@boilerbrew.xyz">
-						<EmailIcon customClass="w-6 h-6" />
-					</a>
 					<a href="https://github.com/axzilla" target="_blank">
 						<GithubIcon customClass="w-6 h-6" />
 					</a>

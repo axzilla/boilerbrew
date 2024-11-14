@@ -6,7 +6,7 @@
 	const title = 'See Our Boilerplate in Action';
 	const subtitle = 'Experience the power and flexibility of our SvelteKit MVP SaaS Boilerplate';
 	const imageAlt = 'SvelteKit MVP SaaS Boilerplate Demo';
-	const ctaLinkLite = 'https://starter-web.boilerbrew.xyz';
+	const ctaLinkLite = 'https://lawof100-web.boilerbrew.xyz';
 </script>
 
 <SectionContainer {title} {subtitle} id="demo">
