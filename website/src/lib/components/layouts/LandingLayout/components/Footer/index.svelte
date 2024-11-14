@@ -77,7 +77,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="mb-24 border-t border-gray-200 pt-8">
+	<div class="border-t border-gray-200 py-8">
 		<p class="text-base text-gray-400 text-center">
 			&copy; {new Date().getFullYear()} BoilerBrew. All rights reserved.
 		</p>
