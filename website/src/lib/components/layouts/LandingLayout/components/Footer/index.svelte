@@ -11,8 +11,7 @@
 
 	let socialLinks = [
 		{ name: 'GitHub', href: 'https://github.com/axzilla', icon: GithubIcon },
-		{ name: 'Twitter', href: 'https://twitter.com/_axzilla', icon: XIcon },
-		{ name: 'Email', href: 'mailto:kickstart@boilerbrew.xyz', icon: Envelope }
+		{ name: 'Twitter', href: 'https://twitter.com/_axzilla', icon: XIcon }
 	];
 
 	const legal = [
