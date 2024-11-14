@@ -16,11 +16,8 @@
 		</div>
 		<div class="mt-8 text-center">
 			<Button href={ctaLinkLite} target="_blank" size="lg" class="px-8">Live Demo</Button>
-			<Button
-				href="https://github.com/axzilla/boilerbrew-starter"
-				target="_blank"
-				size="lg"
-				class="px-8">Github Repo</Button
+			<Button href="https://github.com/axzilla/boilerbrew" target="_blank" size="lg" class="px-8"
+				>Github Repo</Button
 			>
 		</div>
 	</div>

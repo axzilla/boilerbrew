@@ -10,7 +10,7 @@
 	}[];
 
 	let socialLinks = [
-		{ name: 'GitHub', href: 'https://github.com/axzilla', icon: GithubIcon },
+		{ name: 'GitHub', href: 'https://github.com/axzilla/boilerbrew', icon: GithubIcon },
 		{ name: 'Twitter', href: 'https://twitter.com/_axzilla', icon: XIcon }
 	];
 

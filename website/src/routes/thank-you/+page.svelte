@@ -32,7 +32,7 @@
 					If you encounter any issues or have questions, please don't hesitate to reach out.
 				</p>
 				<CardFooter class="flex items-center justify-center gap-4">
-					<a href="https://github.com/axzilla" target="_blank">
+					<a href="https://github.com/axzilla/boilerbrew" target="_blank">
 						<GithubIcon customClass="w-6 h-6" />
 					</a>
 					<a href="https://twitter.com/_axzilla" target="_blank">

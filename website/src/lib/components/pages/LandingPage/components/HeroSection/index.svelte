@@ -28,7 +28,7 @@
 			on steroids. Skip the BS, launch at light speed, and watch your competition eat dust.
 		</p>
 		<div class="flex gap-4">
-			<Button href="https://github.com/axzilla/boilerbrew-starter" target="_blank" size="lg"
+			<Button href="https://github.com/axzilla/boilerbrew" target="_blank" size="lg"
 				>Get Started</Button
 			>
 			<Button href="#tools" variant="outline" size="lg">Learn More</Button>

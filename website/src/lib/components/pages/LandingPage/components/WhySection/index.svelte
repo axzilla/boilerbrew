@@ -69,11 +69,8 @@
 		<p class="text-lg mb-2">🕒 {totalTime}+ hours of "Why did I choose web development?"</p>
 		<p class="text-lg mb-4">💇‍♂️ {totalHair} steps closer to a new aerodynamic hairstyle</p>
 		<p class="text-xl font-semibold">Keep your time, sanity, and luscious locks!</p>
-		<Button
-			href="https://github.com/axzilla/boilerbrew-starter"
-			target="_blank"
-			size="lg"
-			class="mt-4">Start Saving Now!</Button
+		<Button href="https://github.com/axzilla/boilerbrew" target="_blank" size="lg" class="mt-4"
+			>Start Saving Now!</Button
 		>
 	</div>
 </SectionContainer>
