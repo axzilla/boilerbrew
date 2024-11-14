@@ -15,7 +15,7 @@
 		seconds = 0;
 
 	function updateCountdown() {
-		const launchDate = new Date('2024-09-01T00:00:00').getTime(); // Setzen Sie hier Ihr Zieldatum
+		const launchDate = new Date('2026-09-01T00:00:00').getTime(); // Setzen Sie hier Ihr Zieldatum
 		const now = new Date().getTime();
 		const distance = launchDate - now;
 
@@ -66,31 +66,8 @@
 	</div>
 
 	<div class="max-w-md gap-2 flex flex-col mx-auto mb-12 items-center">
-		<form
-			action="?/sendEmail"
-			method="POST"
-			use:enhance
-			class="w-full flex flex-col justify-center items-center gap-4"
-		>
-			<FormField {form} name="email" class="w-full">
-				<FormControl let:attrs>
-					<Input
-						{...attrs}
-						bind:value={$formData.email}
-						placeholder="Enter your email"
-						type="email"
-						class="w-full"
-					/>
-				</FormControl>
-				<FormFieldErrors />
-			</FormField>
-			<Button disabled={!$formData.email} type="submit" class="w-full"
-				>Secure My Early-Bird Discount</Button
-			>
-		</form>
-		<p class="font-bold text-muted-foreground">- OR -</p>
 		<div class="flex flex-col w-full">
-			<Button href="#pricing" variant="default">Get Lite Version Now</Button>
+			<Button href="#pricing" variant="default">Get Pro Version Now</Button>
 		</div>
 	</div>
 </SectionContainer>

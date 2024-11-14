@@ -9,7 +9,7 @@
 		seconds = 0;
 
 	function updateCountdown() {
-		const launchDate = new Date('2024-09-01T00:00:00').getTime();
+		const launchDate = new Date('2026-09-01T00:00:00').getTime();
 		const now = new Date().getTime();
 		const distance = launchDate - now;
 

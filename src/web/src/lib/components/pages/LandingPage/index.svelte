@@ -4,10 +4,8 @@
 		PricingSection,
 		FeatureSection,
 		FaqSection,
-		// ToolsSection,
-		// DemoSection,
-		// CountdownSection,
-		// StickyCountdownSection,
+		CountdownSection,
+		StickyCountdownSection,
 		SeenInSection,
 		AvatarSection
 	} from './components';
@@ -15,11 +13,9 @@
 
 <HeroSection />
 <SeenInSection />
-<!-- <ToolsSection /> -->
 <PricingSection />
 <FeatureSection />
-<!-- <DemoSection /> -->
 <FaqSection />
-<!-- <CountdownSection /> -->
-<!-- <StickyCountdownSection /> -->
+<CountdownSection />
+<StickyCountdownSection />
 <AvatarSection />
